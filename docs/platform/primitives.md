@@ -76,8 +76,12 @@ approval:
   architecture_change: human
 ```
 
-Codex could execute it today. OpenHands tomorrow. Claude next week. **A human developer could
-execute exactly the same work item.**
+Codex could execute it today. OpenHands tomorrow. Claude Code next week. **A human developer
+could execute exactly the same work item.**
+
+`scope.writes` is also the field that becomes enforceable: it is what a harness permission rule or
+a blocking hook checks on every tool call — see
+[How this is enforced in practice](../agents/runtime.md#how-this-is-enforced-in-practice).
 
 That's a much more durable abstraction than any framework you could adopt instead.
 

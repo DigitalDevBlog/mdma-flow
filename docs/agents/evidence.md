@@ -48,6 +48,11 @@ evidence:
 confidence: 0.96
 ```
 
+For anything an agent *produced* rather than observed, record the **model and its version**
+alongside the evidence. It costs one field, and it is the only thing that will let you answer
+"did that change in behaviour arrive with the model upgrade?" — see
+[Decoupling from the model](runtime.md#decoupling-from-the-model).
+
 AI-generated understanding then becomes **reviewable engineering evidence** rather than
 mysterious model knowledge. Provenance is also what lets
 [learned knowledge](knowledge.md#leave-the-world-smarter) be re-verified when the evidence it
@@ -110,3 +115,15 @@ is part of the audit trail — the "what did they actually do?" row in
 [Agent Identity & Permissions](../governance/agent-identity.md#identity-is-what-makes-the-audit-trail-real).
 Emit it with the same tooling as the rest of your systems — OpenTelemetry and existing
 monitoring — rather than a bespoke agent log.
+
+!!! example "In the harnesses"
+    * **Claude Code** — session transcripts as JSONL, plus hooks at each lifecycle point you can
+      use to emit your own events.
+    * **Codex** — rollout files per session; `--ephemeral` skips them for CI runs.
+    * **OpenHands** — `--headless --json` emits one JSON object per agent event, designed to be
+      parsed by a pipeline.
+    * **GitHub Copilot** — enterprise audit events tagged with `actor_is_agent` and a session ID.
+
+    All four record *what happened*. None records *why* in the sense this page means it —
+    hypotheses formed, evidence weighed, alternatives rejected. That belongs to the work item's
+    trace, and it is yours to write.

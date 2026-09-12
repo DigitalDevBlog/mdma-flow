@@ -64,6 +64,24 @@ under what authority, with what evidence*.
 | Against which requirement? | The work item the change set was bound to |
 | What proved it correct? | The validation evidence attached to the PR |
 
+!!! example "In the harnesses"
+    * **GitHub Copilot** — the strongest story, because the platform issues it: commits are
+      attributed to the agent with the dispatching human as co-author and are signed; the agent has
+      its own [secret scope](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/configure-secrets-and-variables)
+      separate from Actions and Codespaces; and
+      [audit events](https://docs.github.com/en/copilot/reference/agentic-audit-log-events) carry an
+      `actor_is_agent` flag, the initiating user and a session ID.
+    * **Claude Code** — session transcripts plus [hook](https://code.claude.com/docs/en/hooks)
+      observability at each lifecycle point. That is a record, not an audit log: it lives on the
+      machine that ran the agent.
+    * **Codex** — session rollout files, which CI runs can skip entirely with `--ephemeral`.
+    * **OpenHands** — in the commercial tiers, every conversation is logged and tied to a user,
+      with cost attribution per organisation, user and conversation.
+
+    The pattern is consistent: attribution is solid where a *platform* issues the identity, and thin
+    where the agent runs on a developer's machine. If your agents run locally, the audit trail is
+    something your control plane records — nobody records it for you.
+
 !!! danger "The anti-pattern to avoid"
     Running agents under a developer's personal access token. It collapses identity, inflates
     permissions to whatever that human happens to have, and makes the audit trail
@@ -131,6 +149,11 @@ This is the same principle as any good secrets-management architecture, and it d
 injection above: there is no key in the context to exfiltrate, and no network route to exfiltrate
 it to. The pattern generalises to every tool an agent uses — see
 [The Agent Runtime](../agents/runtime.md#separate-intelligence-from-capabilities).
+
+Harness support for this is partial at best. OpenHands can inject declared secrets as environment
+variables and masks their values in command output; Copilot gives its cloud agent a dedicated
+secret scope. But no harness documents a guarantee that a credential never reaches the model's
+context. Treat the capability service as *your* control, not something the harness provides.
 
 ## Budget and blast radius
 

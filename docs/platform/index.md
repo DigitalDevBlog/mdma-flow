@@ -68,6 +68,7 @@ framework. This is the site's one stack table, grouped by the layers of the
 | **Reasoning** | Agent execution | Codex / Claude Code / OpenHands SDK |
 | | Stateful agent workflows | LangGraph / Microsoft Agent Framework |
 | | Agent guidance | AGENTS.md + Skills |
+| | Agent SDK / embedding | Claude Agent SDK / Codex SDK / Copilot SDK / OpenHands SDK |
 | | Tool interoperability | MCP |
 | **Work & ownership** | Task source | Jira / Linear / GitHub Issues |
 | | Organisational orchestration | Symphony / OpenHands |
@@ -75,6 +76,7 @@ framework. This is the site's one stack table, grouped by the layers of the
 | | Architecture ownership | CODEOWNERS + custom domain metadata |
 | | Software catalog | Backstage |
 | **Control plane** | Policy enforcement | OPA |
+| | In-harness enforcement | Permission rules + blocking hooks — see [Harness Capabilities](harness-capabilities.md) |
 | | DAG execution | Argo Workflows (Tekton where the job is CI-shaped) |
 | | Guardrails | GitHub rulesets |
 | | Governance | audit trail + policy control |
@@ -84,6 +86,7 @@ framework. This is the site's one stack table, grouped by the layers of the
 | | Secrets | Vault / cloud-native secrets |
 | | Infrastructure | Terraform / Ansible |
 | **Verification** | Existing CI/CD | Jenkins / GitHub Actions / GitLab CI |
+| | Agent invocation from CI | Headless mode with structured output |
 | | Quality | native test frameworks + characterization/contract tests |
 | | Architecture validation | executable architecture tests |
 | | Security scanning | existing SAST / SCA / SBOM tooling |
@@ -104,8 +107,10 @@ at what to design around instead.
 
 * [Reference Architecture](reference-architecture.md) — the layered platform, and one flow through
   it end to end
-* [Orchestration Landscape](landscape.md) — Codex and Symphony, OpenHands, LangGraph, Microsoft
-  Agent Framework, GitButler
+* [Orchestration Landscape](landscape.md) — Codex and Symphony, OpenHands, Claude Code, Copilot,
+  LangGraph, Microsoft Agent Framework, GitButler
+* [Harness Capabilities](harness-capabilities.md) — the requirements checklist, and how four
+  harnesses answer it
 * [Building on the Mature Stack](mature-stack.md) — Argo, Tekton, Jenkins, OPA, Backstage, and
   the test frameworks you already have
 * [Five Primitives](primitives.md) — the abstraction that makes all of them replaceable

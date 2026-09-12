@@ -80,6 +80,7 @@ nav:
       - Overview: platform/index.md
       - Reference Architecture: platform/reference-architecture.md
       - Orchestration Landscape: platform/landscape.md
+      - Harness Capabilities: platform/harness-capabilities.md
       - Building on the Mature Stack: platform/mature-stack.md
       - Five Primitives: platform/primitives.md
   - Modernization:

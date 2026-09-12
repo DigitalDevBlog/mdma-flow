@@ -109,6 +109,28 @@ and consume the result.
 
 The same applies to GitHub Actions, GitLab CI or whatever else already gates your releases.
 
+### The other direction: CI invoking the agent
+
+The boundary works in reverse too. A pipeline step can run an agent non-interactively and consume a
+structured result:
+
+!!! example "In the harnesses"
+    * **Claude Code** — [`claude -p --bare --output-format json`](https://code.claude.com/docs/en/headless),
+      where `--bare` skips auto-discovery of hooks, skills and instruction files so the run is
+      reproducible, and `--allowedTools` pins what it may do.
+    * **Codex** — [`codex exec --json`](https://learn.chatgpt.com/docs/cli/reference), with
+      `--output-schema` to constrain the final message and `--ephemeral` to avoid persisting
+      session files on a shared runner.
+    * **OpenHands** — [`--headless --json`](https://docs.openhands.dev/openhands/usage/cli/headless),
+      one JSON object per event — but headless always auto-approves, so the sandbox and hooks are
+      the only remaining controls.
+    * **GitHub Copilot** — [`-p` in the CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference)
+      for a single non-interactive run.
+
+Two rules keep this safe: run the agent in the pipeline's own sandbox with a scoped token, and
+treat its output as a *proposal* that the same pipeline then verifies. An agent step that both
+writes and judges its own work has removed the gate the pipeline exists for.
+
 ## Policy as code: OPA
 
 [Open Policy Agent](https://openpolicyagent.org/) lets you express rules as policy-as-code and
@@ -145,6 +167,10 @@ allow if {
     data.leases[input.work_item.scope.domain] == input.work_item.id
 }
 ```
+
+A harness hook is where that decision lands in practice: a `PreToolUse` hook queries OPA and denies
+the call when the answer is no — see
+[How this is enforced in practice](../agents/runtime.md#how-this-is-enforced-in-practice).
 
 Notice what that means: **the AI doesn't enforce these rules. OPA does.** Even if the agent
 concludes *"I think I'm allowed to change this"*, the answer is simply `DENIED`. The
@@ -215,6 +241,11 @@ infrastructure you already trust.
 The [Model Context Protocol](https://modelcontextprotocol.io/) is useful for standardizing how
 agents reach tools and external systems — GitHub, Jira, the filesystem, documentation, build
 infrastructure — through one protocol instead of bespoke integrations.
+
+It was created by Anthropic and has since been adopted across harnesses: Claude Code, Codex,
+Copilot's cloud agent and CLI, and OpenHands all act as MCP clients. That cross-vendor adoption is
+what makes it worth using — a tool you expose once stays reachable from whichever harness you run
+next year.
 
 But MCP does not solve:
 

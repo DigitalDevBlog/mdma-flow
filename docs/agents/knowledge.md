@@ -34,6 +34,17 @@ Repository memory, for example, might contain:
 
 That knowledge is dramatically more valuable than simply vectorizing the source code.
 
+!!! example "In the harnesses"
+    Only one of the four ships a documented persistent memory store: Claude Code writes
+    [per-project memory files](https://code.claude.com/docs/en/memory), an index loaded at startup
+    plus topic files loaded on demand. The others rely on repository files and conversation
+    history.
+
+    That is a reason for care rather than enthusiasm. Harness memory is per user and per machine:
+    it does not survive a new laptop, it is invisible to colleagues, and no reviewer ever sees it.
+    It is a cache, not a knowledge base — which is exactly why durable knowledge has to land in the
+    repository.
+
 ## Don't reduce memory to a vector database
 
 Vector search is useful, but an engineering knowledge system needs several representations:

@@ -36,7 +36,25 @@ Each reviewer in that chain is deliberately a different agent from the one that 
 change — see [Roles & Review](../agents/roles.md#separate-proposer-and-reviewer).
 
 GitHub now provides agentic code review as part of its workflow, while explicitly noting that
-agent-generated PRs still deserve proper review.
+agent-generated PRs still deserve proper review. That is now the norm rather than a
+differentiator, and the implementations differ in ways that matter for pipeline design.
+
+!!! example "In the harnesses"
+    * **Claude Code** — [code review](https://code.claude.com/docs/en/code-review) runs several
+      specialized agents over a diff in parallel, each looking for a different class of issue,
+      then applies a verification step that filters false positives before ranking what survives.
+    * **GitHub Copilot** — [automatic review](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-automatic-review)
+      can be required by repository ruleset, and now gives a full agentic review to pull requests
+      its own cloud agent opened.
+    * **Codex** — [approval review](https://learn.chatgpt.com/docs/agent-approvals-security) routes
+      risky actions to a reviewer sub-agent that scores them and fails closed when it cannot parse
+      a result.
+    * **OpenHands** — a critic scores work during execution and drives iterative refinement,
+      though it is explicitly experimental.
+
+Two things vary across that list, and both matter: **when** the review happens — during execution,
+on the diff, or at an approval gate — and **whether a failed review blocks anything**. Only the
+ruleset case is a gate. The rest produce advice, until your pipeline decides to treat it as more.
 
 ## Risk-based governance
 

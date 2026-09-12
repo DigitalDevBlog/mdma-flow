@@ -70,6 +70,17 @@ Checked September 2026; this is the area of the site that dates fastest.
 | 46 | [Headless mode — OpenHands Docs](https://docs.openhands.dev/openhands/usage/cli/headless) |
 | 47 | [Enterprise vs open source — OpenHands Docs](https://docs.openhands.dev/enterprise/enterprise-vs-oss) |
 | 48 | [Security API reference — OpenHands Docs](https://docs.openhands.dev/sdk/api-reference/openhands.sdk.security) |
+| 49 | [Memory — Claude Code Docs](https://code.claude.com/docs/en/memory) |
+| 50 | [Skills — Claude Code Docs](https://code.claude.com/docs/en/skills) |
+| 51 | [Code review — Claude Code Docs](https://code.claude.com/docs/en/code-review) |
+| 52 | [CLI reference — Codex Docs](https://learn.chatgpt.com/docs/cli/reference) |
+| 53 | [Customization overview — Codex Docs](https://learn.chatgpt.com/docs/customization/overview) |
+| 54 | [Agent approvals and security — Codex Docs](https://learn.chatgpt.com/docs/agent-approvals-security) |
+| 55 | [Agentic audit log events — GitHub Docs](https://docs.github.com/en/copilot/reference/agentic-audit-log-events) |
+| 56 | [Configure automatic review — GitHub Docs](https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-automatic-review) |
+| 57 | [Copilot CLI programmatic reference — GitHub Docs](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference) |
+| 58 | [Configure secrets and variables — GitHub Docs](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/configure-secrets-and-variables) |
+| 59 | [Hooks — OpenHands Docs](https://docs.openhands.dev/sdk/guides/hooks) |
 
 !!! note "On citations"
     Claims attributed to a vendor above describe what that vendor documents about its own

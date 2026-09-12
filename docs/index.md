@@ -55,3 +55,5 @@ this site, each term has exactly one meaning:
 | **Reasoning layer** | The probabilistic part — planner and agents. It proposes | "AI agent control plane" in the infographics |
 | **Control plane** | The deterministic part — policy, orchestration, leases, budgets, audit. It disposes | policy layer, orchestration layer |
 | **Orchestrator** | The deterministic scheduler inside the control plane; [deliberately dumb](agents/runtime.md#keep-the-orchestrator-dumb) | — |
+| **Harness** | The program that runs an agent loop: tools, permissions, sandboxing, hooks, subagents. Claude Code, Codex, Copilot and OpenHands are harnesses — [compared here](platform/harness-capabilities.md) | agent runtime, coding agent, CLI |
+| **Model** | The reasoning engine a harness calls. Named nowhere in a work item: tasks declare a [capability tier](agents/runtime.md#decoupling-from-the-model) and configuration maps it | LLM |

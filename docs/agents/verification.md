@@ -134,6 +134,27 @@ Now autonomous iteration becomes much safer. Every failure is an input to the ne
 review finding — the same economics as
 [executable architecture](../governance/executable-architecture.md#why-this-changes-the-economics).
 
+## Wiring verifiers into the harness
+
+Three mechanisms do most of the work, and each exists in more than one harness:
+
+!!! example "In the harnesses"
+    * **Run the verifier automatically.** Claude Code and
+      [OpenHands](https://docs.openhands.dev/sdk/guides/hooks) can run checks from `Stop` hooks —
+      OpenHands explicitly recommends migrating pre-commit style checks to them — and Codex hooks
+      act on `Stop` and `SubagentStop`, able to refuse to let a turn end.
+    * **Protect the verifier from the agent.** Claude Code's `deny: Edit(tests/golden/**)`, Codex's
+      filesystem `deny` globs and Copilot's `--deny-tool` all express "not this path". OpenHands
+      cannot: with no path-scoped rules, that check has to live inside a hook script.
+    * **Return a machine-readable verdict.** `claude -p --output-format json`,
+      `codex exec --json --output-schema`, `openhands --headless --json` and Copilot's `-p` each
+      give a pipeline something to parse instead of prose to interpret.
+
+    One caveat for CI: OpenHands' headless mode always auto-approves, so there its confirmation
+    policy is not a control at all — the sandbox and the hooks are what remain.
+
+The third mechanism is what makes an agent a step in a pipeline rather than a person at a keyboard.
+
 !!! tip "Evidence is attached, not asserted"
     The verifier outputs *are* the work item's `required_evidence`. Attached to the change set,
     they become the [validation evidence](../platform/primitives.md) a reviewer or auditor reads

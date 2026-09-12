@@ -35,6 +35,43 @@ with repository-specific practices. Codex Skills follow a similar philosophy: en
 standards, scripts and workflows as reusable agent capabilities rather than relying on someone
 remembering the right prompt.
 
+Two conventions have since converged across harnesses: a **repository instruction file** loaded at
+startup, and **on-demand capabilities** — skills — that load only when relevant.
+
+!!! example "In the harnesses"
+    * **Claude Code** — loads [`CLAUDE.md`](https://code.claude.com/docs/en/memory) from the
+      working directory upwards, with `@path` imports, so `AGENTS.md` is picked up by importing or
+      symlinking it. Path-scoped rules live in `.claude/rules/*.md` behind a `paths:` field, and
+      [skills](https://code.claude.com/docs/en/skills) in `.claude/skills/<name>/SKILL.md`.
+    * **Codex** — walks `AGENTS.md` from the project root down to the working directory, closer
+      files winning, plus a global one;
+      [skills](https://learn.chatgpt.com/docs/customization/overview) live under `.agents/skills/`.
+    * **GitHub Copilot** — reads `.github/copilot-instructions.md`, **path-scoped**
+      `.github/instructions/**/*.instructions.md` with frontmatter, and also `AGENTS.md` and
+      `CLAUDE.md` for the cloud agent and CLI. Its
+      [support matrix](https://docs.github.com/en/copilot/reference/custom-instructions-support) is
+      per surface — worth reading before assuming a file is loaded everywhere.
+    * **OpenHands** — reads `AGENTS.md`, `CLAUDE.md` and `GEMINI.md`, with skills under
+      `.agents/skills/<name>/SKILL.md` carrying optional triggers and paths.
+
+Two things follow.
+
+**Write for the neutral file.** `AGENTS.md` is read, in some form, by all four. Keep it
+authoritative and make harness-specific files thin pointers to it — a one-line `CLAUDE.md` that
+imports `AGENTS.md` costs nothing and stops the two drifting apart.
+
+**Path-scoped instructions are your ownership domains in a second form.** Copilot's
+`.instructions.md` frontmatter, Claude Code's `.claude/rules/` and OpenHands' skill paths all
+answer the question your [`domains.yml`](../ownership/codeowners.md#the-extension-agents-need)
+answers: *which guidance applies to this part of the tree?* Generate them from the same source, or
+they will disagree within a quarter.
+
+!!! warning "Instructions guide; they do not enforce"
+    OpenHands is explicit that path-triggered rules only inject guidance and do not restrict
+    actions — and that is true of every instruction file above. A path rule tells an agent what you
+    would prefer. A [permission rule or a blocking hook](../agents/runtime.md#how-this-is-enforced-in-practice)
+    is what stops it. Use the first for intent, the second for boundaries.
+
 I would go even further:
 
 ```kroki-d2
