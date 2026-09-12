@@ -1,6 +1,6 @@
 # Modernization
 
-[![AI agents for software modernization in medical devices: the challenge, the vision, a modernization control plane with specialized agents, an agent hierarchy, the transformation approach, domain knowledge, feature migration, vulnerability remediation, regulatory evidence, and what stays outside the generic agent](../images/medical-device-modernization-overview.png)](../images/medical-device-modernization-overview.png)
+[![AI agents for software modernization in medical devices: the challenge, the vision, a modernization control plane with specialized agents, an agent hierarchy, the transformation approach, a domain-knowledge example from an industrial control system, feature migration, vulnerability remediation, regulatory evidence, and what stays outside the generic agent](../images/medical-device-modernization-overview.png)](../images/medical-device-modernization-overview.png)
 
 *Modernizing safety-critical software, on one page. Select the image to open it at full size.*
 
