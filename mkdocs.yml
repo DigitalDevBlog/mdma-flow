@@ -25,6 +25,9 @@ theme:
 extra_css:
   - stylesheets/extra.css
 
+extra_javascript:
+  - javascripts/enlarge.js
+
 markdown_extensions:
   - admonition
   - pymdownx.details

@@ -12,12 +12,12 @@ between them.
 until the earlier work is done:
 
 ```kroki-d2
-direction: down
+direction: right
 
-arch: "Understand architecture"
-bounds: "Define module boundaries"
-refactor: "Refactor module"
-integ: "Run integration tests"
+arch: "Understand\narchitecture"
+bounds: "Define module\nboundaries"
+refactor: "Refactor\nmodule"
+integ: "Run integration\ntests"
 
 arch -> bounds -> refactor -> integ
 ```
@@ -53,18 +53,18 @@ For agents, a DAG is useful because it tells the orchestrator **what must happen
 can happen in parallel**:
 
 ```kroki-d2
-direction: down
+direction: right
 
-analyze: "Analyse codebase"
+analyze: "Analyse\ncodebase"
 tests: "Analyse tests"
-deps: "Analyse dependencies"
-design: "Design refactoring" {
+deps: "Analyse\ndependencies"
+design: "Design\nrefactoring" {
   style.fill: "#fff9db"
 }
 ma: "Module A"
 mb: "Module B"
 mc: "Module C"
-integ: "Integration test" {
+integ: "Integration\ntest" {
   style.fill: "#e6fcf5"
 }
 

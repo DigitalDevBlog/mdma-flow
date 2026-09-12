@@ -46,27 +46,50 @@ unify -> plan: "next"
 | Problem / forbidden | `style.fill: "#ffe3e3"`, `style.stroke: "#c92a2a"` |
 | Implicit or forbidden edge | `style.stroke-dash: 4` |
 
-Keep labels quoted, use `\n` for line breaks, and prefer `direction: down` for pipelines,
-`direction: right` for fan-outs.
+Keep labels quoted and use `\n` for line breaks. Use `direction: down` for short pipelines and
+fan-ins, and `direction: right` for anything longer than about four steps — see below for why that
+choice matters more than it looks.
 
 ### Keeping diagrams proportional
 
-Kroki returns each diagram at its intrinsic size, and the theme scales it down to the content
-column. A diagram 2,500px tall dominates the page; one 2,500px wide is scaled to a third and its
-text becomes unreadable. One rule keeps the set consistent:
+> **Aspect ratio is the only thing that matters. Aim for wider than tall.**
 
-> **No wider than ~1300px, no taller than ~1500px.** Measure rather than eyeball.
+Kroki's D2 output carries a `viewBox` and no `width` or `height`, so the SVG has **no intrinsic
+pixel size**. It always stretches to the full width of the content column, and its height follows
+from the aspect ratio. The numbers in `viewBox="0 0 1045 284"` describe proportions, not pixels — no
+diagram is ever "1,045px wide" to a reader.
 
-Two D2 behaviours matter for hitting that, both found by measuring:
+At a content column of roughly 830px:
+
+| Aspect (width ÷ height) | Rendered height | Reads as |
+|-------------------------|-----------------|----------|
+| 3.7 | ~225px | a banner |
+| 1.0 | ~830px | a full screen |
+| 0.3 | ~2,700px | three screens of a single diagram |
+
+So a ten-step vertical pipeline is not "a big diagram" — it is a diagram whose aspect ratio is 0.3,
+and it will fill several screens however short its labels are. Lay the chain out with
+`direction: right`, or group its steps into `grid-columns` stages.
+
+Two D2 behaviours make that harder than it sounds, both found by measuring rather than by reading:
 
 | Behaviour | Consequence |
 |-----------|-------------|
 | `direction:` inside a container is ignored | Nested `direction: right` does nothing — use `grid-columns: N` to place children side by side |
-| Edges *between children of a grid container* inflate the layout badly | A three-cell grid with internal arrows measured 2,309px wide; the same grid without them measured 761px |
+| Edges *between children of a grid container* inflate the layout badly | A three-cell grid with internal arrows came out 2,309 × 388; the same grid without them, 761 × 1,292 |
 
-So: group related steps with `grid-columns`, draw edges **between containers** rather than between
-their children, and let the grid convey ordering inside a stage. To check a diagram before
-committing it, POST the source to Kroki and read the `width` and `height` off the returned SVG.
+So group related steps with `grid-columns`, draw edges **between containers** rather than between
+their children, and let the grid convey ordering within a stage.
+
+Two backstops in the theme cover diagrams that are legitimately tall:
+
+* `stylesheets/extra.css` caps every diagram at 70% of the viewport height, so none can take over
+  the page.
+* `javascripts/enlarge.js` wraps each one in a link to the full-size image, so capping loses
+  nothing.
+
+To check a diagram before committing it, POST the source to Kroki and read the `viewBox`: width ÷
+height is the aspect, and roughly 830 ÷ aspect is the height a reader will actually see.
 
 ## PlantUML
 
