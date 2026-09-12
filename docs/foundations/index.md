@@ -76,11 +76,11 @@ everything at and below it is serial.
 | Parallel *without collision* | Isolated environments, ownership domains, architectural decomposition | [Isolation](isolation.md), [Ownership](../ownership/index.md), [Decomposition](../decomposition/index.md) |
 | Serial *without becoming a bottleneck* | Small PRs, automated evidence, merge queue | [Integration](../integration/index.md) |
 
-Most tooling in 2026 is strong on the first half and thin on the second — and thinnest of all on
+Most tooling in 2026 is strong on the first half and thin on the second, and thinnest of all on
 the part between them: deciding *who is allowed to write what, right now*. That gap is the
 subject of the [Ownership](../ownership/index.md) section.
 
 !!! note "Nothing here is model-specific"
     Every mechanism on this site works the same whether the writer is Codex, Claude Code,
-    OpenHands, or a human being with an IDE. That is the point — see
+    OpenHands, or a human being with an IDE. That is the point: see
     [Five Primitives](../platform/primitives.md).

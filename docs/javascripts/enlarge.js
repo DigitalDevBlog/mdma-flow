@@ -2,7 +2,7 @@
    dominates the page. To make sure nothing is lost by that, every content
    image becomes openable at full size in a new tab.
 
-   Images that are already inside a link are left alone — the two infographics
+   Images that are already inside a link are left alone: the two infographics
    link to themselves. */
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll(".md-typeset p > img").forEach(function (img) {

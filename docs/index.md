@@ -4,8 +4,8 @@ The important shift is to stop treating the AI agent as *"a very smart IDE autoc
 developer"* and instead treat agents as **participants in the engineering system**.
 
 The strongest practices emerging in 2026 are not new inventions. They are combinations of
-well-proven software-engineering mechanisms — ownership boundaries, small changes, CI, merge
-queues, isolated environments — with newer agent orchestration on top.
+well-proven software-engineering mechanisms (ownership boundaries, small changes, CI, merge
+queues, isolated environments) with newer agent orchestration on top.
 
 !!! quote "The principle everything here follows from"
     **Parallelize reasoning and implementation aggressively, but serialize mutation of shared
@@ -14,7 +14,7 @@ queues, isolated environments — with newer agent orchestration on top.
     That principle matters much more than which model you use.
 
 The same shape repeats inside each agent: a probabilistic model proposes, and deterministic
-machinery — permissions, ownership, isolation, tests, policy — decides what is allowed to stand.
+machinery (permissions, ownership, isolation, tests, policy) decides what is allowed to stand.
 See [Engineering Agents](agents/index.md#the-deepest-principle).
 
 ## What you'll find here
@@ -46,14 +46,14 @@ this site, each term has exactly one meaning:
 
 | Term | Meaning here | Also called elsewhere |
 |------|--------------|-----------------------|
-| **Work item** | The unit of planned work: objective, scope, dependencies, constraints, budget, required evidence, approval. One schema at task and programme scope — see [Five Primitives](platform/primitives.md#a-work-item-concretely) | task, goal, executable contract |
+| **Work item** | The unit of planned work: objective, scope, dependencies, constraints, budget, required evidence, approval. One schema at task and programme scope: see [Five Primitives](platform/primitives.md#a-work-item-concretely) | task, goal, executable contract |
 | **Change set** | The reviewable, revertible output of one work item: one branch, one PR | patch, diff |
 | **Validation evidence** | The verifier outputs attached to a change set | verification results |
 | **Ownership domain** | A set of paths matching an architectural boundary; the unit of write leases and review authority | module, component |
 | **Write lease** | [Single Write Authority](ownership/single-write-authority.md) over one domain, held by one active change set | lock |
 | **Change surface** | A work item's declared `writes` (inside its domain) and `reads` (dependencies, not permissions) | reads / writes |
-| **Reasoning layer** | The probabilistic part — planner and agents. It proposes | "AI agent control plane" in the infographics |
-| **Control plane** | The deterministic part — policy, orchestration, leases, budgets, audit. It disposes | policy layer, orchestration layer |
-| **Orchestrator** | The deterministic scheduler inside the control plane; [deliberately dumb](agents/runtime.md#keep-the-orchestrator-dumb) | — |
-| **Harness** | The program that runs an agent loop: tools, permissions, sandboxing, hooks, subagents. Claude Code, Codex, Copilot and OpenHands are harnesses — [compared here](platform/harness-capabilities.md) | agent runtime, coding agent, CLI |
+| **Reasoning layer** | The probabilistic part: planner and agents. It proposes | "AI agent control plane" in the infographics |
+| **Control plane** | The deterministic part: policy, orchestration, leases, budgets, audit. It disposes | policy layer, orchestration layer |
+| **Orchestrator** | The deterministic scheduler inside the control plane; [deliberately dumb](agents/runtime.md#keep-the-orchestrator-dumb) | none |
+| **Harness** | The program that runs an agent loop: tools, permissions, sandboxing, hooks, subagents. Claude Code, Codex, Copilot and OpenHands are harnesses: [compared here](platform/harness-capabilities.md) | agent runtime, coding agent, CLI |
 | **Model** | The reasoning engine a harness calls. Named nowhere in a work item: tasks declare a [capability tier](agents/runtime.md#decoupling-from-the-model) and configuration maps it | LLM |

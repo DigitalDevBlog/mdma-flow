@@ -7,13 +7,13 @@
 !!! note "Reading the infographic against this site's vocabulary"
     * The top band, labelled *AI agent control plane*, is what this site calls the **reasoning
       layer**. Here, *control plane* always means the deterministic layer that enforces policy,
-      leases and budgets — see [Vocabulary](../index.md#vocabulary).
+      leases and budgets: see [Vocabulary](../index.md#vocabulary).
     * Its end-to-end flow ends at "PRs merged". On this site, merging always goes through the
       [merge queue](../integration/merge-queue.md), validated against the latest base.
 
 [Foundations](../foundations/index.md) shows the *coordination* view: how work flows from
 intent through isolated execution into a single controlled gate. This page shows the
-complementary *platform* view — which layers the system is built from, which of them are new,
+complementary *platform* view: which layers the system is built from, which of them are new,
 and which you should reuse.
 
 ## Layers
@@ -26,19 +26,19 @@ direction: down
 user: "User / API\nwork items • constraints • approvals" {
   shape: person
 }
-planner: "PLANNER — reasoning\ngoal → DAG of work items" {
+planner: "PLANNER: reasoning\ngoal → DAG of work items" {
   style.fill: "#f3f0ff"
 }
-control: "CONTROL PLANE — deterministic" {
+control: "CONTROL PLANE: deterministic" {
   grid-columns: 3
   style.fill: "#fff9db"
   policy: "Policy engine\nOPA"
   orch: "Orchestrator\nleases • budgets"
   wf: "Workflow engine\nArgo / Tekton"
 }
-exec: "SANDBOX — worktree • container • VM" {
+exec: "SANDBOX: worktree • container • VM" {
   grid-columns: 2
-  agents: "AGENTS — reasoning\nimplement • review" {
+  agents: "AGENTS: reasoning\nimplement • review" {
     style.fill: "#f3f0ff"
   }
   cap: "CAPABILITY LAYER\ncode • git • build • test"
@@ -48,7 +48,7 @@ trunk: "Merge queue → trunk" {
   shape: cylinder
   style.fill: "#e6fcf5"
 }
-knowledge: "KNOWLEDGE — shared\ncode graph • domain model\nrequirements • decisions" {
+knowledge: "KNOWLEDGE: shared\ncode graph • domain model\nrequirements • decisions" {
   shape: stored_data
   style.fill: "#e7f5ff"
 }
@@ -66,14 +66,14 @@ Read it as alternating layers. The planner and the agents **reason**: they propo
 changes. Everything between and around them is **deterministic**: it decides whether a plan is
 allowed, schedules it, isolates it, verifies what comes out and gates what goes into trunk.
 
-| Reasoning layer — probabilistic | Control plane and automation — deterministic |
+| Reasoning layer: probabilistic | Control plane and automation: deterministic |
 |---------------------------------|----------------------------------------------|
 | Understands | Executes |
 | Reasons | Validates |
 | Plans | Enforces |
 | Suggests | Verifies and records |
 
-When the two disagree, the deterministic side wins. That is the whole design in one sentence —
+When the two disagree, the deterministic side wins. That is the whole design in one sentence:
 developed in [Engineering Agents](../agents/index.md#the-deepest-principle).
 
 ## What is new, and what isn't
@@ -88,10 +88,10 @@ Most of this architecture is not new at all:
 | The verification loop | CI |
 | Transactions and change history | Git |
 | Repeatable, isolated execution | Containers |
-| **Turning a goal into a trustworthy task graph** | **Nothing yet — this is the new layer** |
+| **Turning a goal into a trustworthy task graph** | **Nothing yet: this is the new layer** |
 
 So I **wouldn't start by building a generic agent framework.** I'd prototype a thin reasoning
-layer over these existing systems, governed by a deterministic control plane — and spend the
+layer over these existing systems, governed by a deterministic control plane, and spend the
 engineering effort on the one row that is actually new. The reuse side is covered in
 [Building on the Mature Stack](mature-stack.md).
 

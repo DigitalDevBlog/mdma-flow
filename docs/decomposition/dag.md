@@ -84,7 +84,7 @@ Here Module A, B and C can potentially be worked on simultaneously by three agen
 integration test cannot start until all three are finished.
 
 !!! quote "A DAG, in one sentence"
-    **A map of work showing dependencies — and therefore revealing safe opportunities for
+    **A map of work showing dependencies, and therefore revealing safe opportunities for
     parallel execution.**
 
 ## A migration, as a DAG
@@ -132,7 +132,7 @@ feature are five writers to an undefined set of files. Five agents launched agai
 DAG nodes are five writers to five disjoint scopes.
 
 In a mature setup, a planning agent derives this graph from the goal and a deterministic
-orchestrator executes it — planning is where reasoning is needed, scheduling is not. See
+orchestrator executes it; planning is where reasoning is needed, scheduling is not. See
 [The Agent Runtime](../agents/runtime.md#keep-the-orchestrator-dumb).
 
 ## Dependencies aren't enough: change surfaces
@@ -166,16 +166,16 @@ scope:
     - src/common/**
 ```
 
-`reads` is a declaration, not a permission. Every agent can still read the whole repository —
+`reads` is a declaration, not a permission. Every agent can still read the whole repository:
 [restricting reads makes agents dumber](../ownership/index.md). The list tells the scheduler which
 *other* changes would invalidate this one, so that when something it depends on lands, the task
 is re-verified against the new base.
 
 These two can run concurrently: their writes are disjoint and they only share a read. If both
-declared a write to `src/common/**`, don't run them in parallel and reconcile afterwards — that
+declared a write to `src/common/**`, don't run them in parallel and reconcile afterwards; that
 after-the-fact merge is exactly where [silent semantic conflicts](../foundations/semantic-conflicts.md)
 slip through. Either serialize them with a DAG edge, or pull the `common` change out into its own
-change set that lands first — the [shared-kernel rule](../ownership/codeowners.md#the-shared-model-problem).
+change set that lands first: the [shared-kernel rule](../ownership/codeowners.md#the-shared-model-problem).
 
 A change surface is finer-grained than an ownership domain, not an alternative to it. Its
 `writes` must fall inside the domain the task holds a
@@ -187,12 +187,12 @@ Three different kinds of conflict, three different mechanisms:
 
 | Conflict | Handled by |
 |----------|------------|
-| Logical dependency — what must finish first | The DAG |
-| Code conflict — who may write where, right now | Change surfaces and [Single Write Authority](../ownership/single-write-authority.md) |
-| Semantic conflict — changes that are individually fine and jointly broken | [Contracts](contracts.md) and the [merge queue](../integration/merge-queue.md) |
+| Logical dependency: what must finish first | The DAG |
+| Code conflict: who may write where, right now | Change surfaces and [Single Write Authority](../ownership/single-write-authority.md) |
+| Semantic conflict: changes that are individually fine and jointly broken | [Contracts](contracts.md) and the [merge queue](../integration/merge-queue.md) |
 
 The DAG handles *logical dependencies*; write ownership handles *code conflicts*. Neither handles
-the third row on its own — that is the subject of
+the third row on its own: that is the subject of
 [Semantic Conflicts](../foundations/semantic-conflicts.md).
 
 ## What a node needs to carry
@@ -203,7 +203,7 @@ each node carries:
 | Field | Purpose |
 |-------|---------|
 | Objective | What this node changes, in one sentence |
-| Ownership domain | The write scope — see [Single Write Authority](../ownership/single-write-authority.md) |
+| Ownership domain | The write scope: see [Single Write Authority](../ownership/single-write-authority.md) |
 | Change surface | Declared writes (inside the domain) and reads, so the scheduler can detect overlap before work starts |
 | Dependencies | Node IDs that must complete first |
 | Required evidence | The tests and checks that define "done" |
@@ -219,12 +219,12 @@ almost everything else depends on it.
 That ordering is not stylistic. In a modernization context you are porting behaviour you do not
 fully understand, and the only durable definition of "correct" is the behaviour of the system
 you're replacing. Capturing it first turns every downstream node into something an agent can
-verify itself against — which is what makes unattended execution safe enough to be worth doing.
+verify itself against, which is what makes unattended execution safe enough to be worth doing.
 The technique is developed further in
 [Modernization Workflows](../modernization/workflows.md#characterize-before-you-transform).
 
 !!! tip "Don't write the scheduler yourself"
-    Executing a DAG of containerized jobs — dependencies, parallelism, retries, artefacts — is a
+    Executing a DAG of containerized jobs (dependencies, parallelism, retries, artefacts) is a
     solved problem. Mature workflow engines already do it; see
     [Building on the Mature Stack](../platform/mature-stack.md#argo-workflows).
 
@@ -232,4 +232,4 @@ The technique is developed further in
     Real migrations discover work. Treat the graph as living state that the planning phase
     updates as nodes complete, not as an upfront artefact that gets stale by week two. A
     workflow engine executes a *snapshot* of the graph; the living graph belongs to the planning
-    layer — see [Replanning a living DAG](../platform/mature-stack.md#replanning-a-living-dag).
+    layer: see [Replanning a living DAG](../platform/mature-stack.md#replanning-a-living-dag).

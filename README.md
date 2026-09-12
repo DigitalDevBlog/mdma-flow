@@ -1,7 +1,7 @@
 # Multi-Developer, Multi-Agent
 
 Documentation site on how to run a real engineering organisation where **many developers and
-many coding agents** work on the same codebase — ownership boundaries, work decomposition,
+many coding agents** work on the same codebase: ownership boundaries, work decomposition,
 integration control and governance.
 
 Live site: <https://digitaldevblog.github.io/mdma-flow/latest/>

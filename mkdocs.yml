@@ -43,12 +43,12 @@ plugins:
       # set explicitly so the env override is self-documenting. Run a local Kroki with
       # `docker run -p 8000:8000 yuzutech/kroki` and `export KROKI_SERVER_URL=http://localhost:8000`
       # for fully offline builds.
-      # (mkdocs-kroki-plugin pinned to 0.9.0 — PascalCase config API.)
+      # (mkdocs-kroki-plugin pinned to 0.9.0, which uses the PascalCase config API.)
       ServerURL: !ENV [KROKI_SERVER_URL, "https://kroki.io"]
       FencePrefix: kroki-
 
-# diagrams.md is an authoring reference (kroki engine demos), not part of the argument —
-# kept in the repo but unlinked from the nav. not_in_nav suppresses the --strict "not in nav" warning.
+# diagrams.md is an authoring reference (kroki engine demos), not part of the argument.
+# It is kept in the repo but unlinked from the nav. not_in_nav suppresses the --strict "not in nav" warning.
 not_in_nav: |
   /diagrams.md
 

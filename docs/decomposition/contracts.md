@@ -61,7 +61,7 @@ regeneration and downstream notification automatically.
 
 ## Applies well beyond RPC
 
-The mechanism is the *declared, testable boundary* — not the protobuf. The same technique works
+The mechanism is the *declared, testable boundary*, not the protobuf. The same technique works
 with:
 
 * OpenAPI / JSON Schema for HTTP services

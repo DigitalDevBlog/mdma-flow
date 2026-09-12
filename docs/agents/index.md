@@ -18,7 +18,7 @@ such as:
 * "Modernize this C++ component while preserving its medical-device behaviour."
 
 That is increasingly feasible. The important insight, though, is that **the generic part should
-mostly be the agent infrastructure and reasoning loop — not an expectation that one giant agent
+mostly be the agent infrastructure and reasoning loop, not an expectation that one giant agent
 can autonomously do everything.**
 
 !!! quote "A useful mental model"
@@ -161,19 +161,19 @@ out: "Trusted outcome" {
 ai -> shell -> out
 ```
 
-It is the same idea as the principle on the [home page](../index.md) — *parallelize reasoning,
-serialize mutation of shared state* — applied inside a single agent instead of across many. In
+It is the same idea as the principle on the [home page](../index.md): *parallelize reasoning,
+serialize mutation of shared state*, applied inside a single agent instead of across many. In
 both cases the model proposes and deterministic machinery disposes. That is the difference between
 an impressive coding-agent demo and an industrial AI engineering system.
 
 ## Pages in this section
 
-* [The Agent Runtime](runtime.md) — the agent platform as an operating system: capabilities,
+* [The Agent Runtime](runtime.md): the agent platform as an operating system: capabilities,
   tools, permissions, budgets, model routing
-* [Verification](verification.md) — work items as executable contracts, and verifier-driven
+* [Verification](verification.md): work items as executable contracts, and verifier-driven
   development
-* [Memory & Knowledge](knowledge.md) — memory types, the software knowledge graph, context
+* [Memory & Knowledge](knowledge.md): memory types, the software knowledge graph, context
   engineering
-* [Evidence & Uncertainty](evidence.md) — confidence, provenance, facts versus hypotheses, traces
-* [Roles & Review](roles.md) — specialized agents, proposer versus reviewer, and why to start
+* [Evidence & Uncertainty](evidence.md): confidence, provenance, facts versus hypotheses, traces
+* [Roles & Review](roles.md): specialized agents, proposer versus reviewer, and why to start
   with one agent

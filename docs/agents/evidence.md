@@ -1,7 +1,7 @@
 # Evidence & Uncertainty
 
 [Verification](verification.md) proves *changes*. But agents produce a second kind of output as
-well: *claims* — about what code does, why it exists, what depends on it. In regulated
+well: *claims*, about what code does, why it exists, what depends on it. In regulated
 engineering, claims need the same discipline as changes.
 
 ## Agents must be allowed to say "unknown"
@@ -26,7 +26,7 @@ recommended_action:
 ```
 
 This is especially important in regulated engineering. **A good agent knows when the evidence is
-insufficient** — and a good platform treats that answer as a success, not a failure to complete.
+insufficient**, and a good platform treats that answer as a success, not a failure to complete.
 
 ## Provenance
 
@@ -50,7 +50,7 @@ confidence: 0.96
 
 For anything an agent *produced* rather than observed, record the **model and its version**
 alongside the evidence. It costs one field, and it is the only thing that will let you answer
-"did that change in behaviour arrive with the model upgrade?" — see
+"did that change in behaviour arrive with the model upgrade?": see
 [Decoupling from the model](runtime.md#decoupling-from-the-model).
 
 AI-generated understanding then becomes **reviewable engineering evidence** rather than
@@ -79,7 +79,7 @@ HYPOTHESIS:  This ordering is required for image quality.
 ASSUMPTION:  Ordering must remain unchanged during refactoring.
 ```
 
-The agent can then go looking for evidence — and a reviewer can see at a glance which parts of a
+The agent can then go looking for evidence, and a reviewer can see at a glance which parts of a
 proposal rest on observation and which on belief. Hypotheses are also natural targets for
 [characterization tests](../modernization/workflows.md#characterize-before-you-transform): a
 test either confirms the ordering matters or shows that it doesn't.
@@ -111,19 +111,19 @@ Goal
 ```
 
 That trace is invaluable for debugging the agent system itself, and in a regulated environment it
-is part of the audit trail — the "what did they actually do?" row in
+is part of the audit trail: the "what did they actually do?" row in
 [Agent Identity & Permissions](../governance/agent-identity.md#identity-is-what-makes-the-audit-trail-real).
-Emit it with the same tooling as the rest of your systems — OpenTelemetry and existing
-monitoring — rather than a bespoke agent log.
+Emit it with the same tooling as the rest of your systems, OpenTelemetry and existing
+monitoring, rather than a bespoke agent log.
 
 !!! example "In the harnesses"
-    * **Claude Code** — session transcripts as JSONL, plus hooks at each lifecycle point you can
+    * **Claude Code**: session transcripts as JSONL, plus hooks at each lifecycle point you can
       use to emit your own events.
-    * **Codex** — rollout files per session; `--ephemeral` skips them for CI runs.
-    * **OpenHands** — `--headless --json` emits one JSON object per agent event, designed to be
+    * **Codex**: rollout files per session; `--ephemeral` skips them for CI runs.
+    * **OpenHands**: `--headless --json` emits one JSON object per agent event, designed to be
       parsed by a pipeline.
-    * **GitHub Copilot** — enterprise audit events tagged with `actor_is_agent` and a session ID.
+    * **GitHub Copilot**: enterprise audit events tagged with `actor_is_agent` and a session ID.
 
-    All four record *what happened*. None records *why* in the sense this page means it —
+    All four record *what happened*. None records *why* in the sense this page means it:
     hypotheses formed, evidence weighed, alternatives rejected. That belongs to the work item's
     trace, and it is yours to write.

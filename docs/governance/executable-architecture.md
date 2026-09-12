@@ -70,7 +70,7 @@ is a check that says no.
 |---------------|-----------------|
 | An architecture document | Ignored unless it happens to be in context |
 | A review convention | Caught late, after the work is done, by a scarce human |
-| `AGENTS.md` | Usually respected — but not guaranteed |
+| `AGENTS.md` | Usually respected, but not guaranteed |
 | A failing check | Fixed by the agent itself, before anyone looks |
 
 This is exactly the kind of **machine-legible environment** that current agent-first engineering
@@ -78,7 +78,7 @@ practices increasingly emphasise. OpenAI, for example, describes exposing tests,
 state, logs, metrics and observability directly to agents so they can verify their own work.
 
 !!! tip "Self-correction is the real prize"
-    A violation caught by a check is not a review finding — it is an input to the agent's next
+    A violation caught by a check is not a review finding; it is an input to the agent's next
     iteration. Every rule you make executable moves work from the reviewer's queue into the
     agent's inner loop, which is the only place where extra iterations are cheap.
 
@@ -86,10 +86,10 @@ state, logs, metrics and observability directly to agents so they can verify the
 
 You do not need a complete architecture description to benefit. Encode, in this order:
 
-1. **Layering** — the dependency direction rules you already believe in
-2. **Module boundaries** — which packages may import which
-3. **Forbidden dependencies** — specific known-bad edges, including third-party ones
-4. **Public API surface** — what is allowed to be referenced from outside a module
-5. **Ownership conformance** — changes stay inside the declared [domain paths](../ownership/codeowners.md)
+1. **Layering**: the dependency direction rules you already believe in
+2. **Module boundaries**: which packages may import which
+3. **Forbidden dependencies**: specific known-bad edges, including third-party ones
+4. **Public API surface**: what is allowed to be referenced from outside a module
+5. **Ownership conformance**: changes stay inside the declared [domain paths](../ownership/codeowners.md)
 
 Each one converts a class of review comment into a build failure.

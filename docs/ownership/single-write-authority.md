@@ -76,7 +76,7 @@ The lease has three properties worth being precise about:
 |----------|-----|
 | **Scoped** to a domain, not the repo | Otherwise parallelism collapses to one |
 | **Time-boxed** to an active change set | A lease that outlives its PR is a lock you forgot to release |
-| **Explicit** — recorded, not implied | An agent can't respect a boundary it can't read |
+| **Explicit**: recorded, not implied | An agent can't respect a boundary it can't read |
 
 !!! note "Per branch and per domain are two different rules"
     *One writer per branch* is the [isolation](../foundations/isolation.md) rule: no two agents
@@ -93,7 +93,7 @@ theory transfers remarkably well:
 | Database concept | Agent equivalent |
 |------------------|------------------|
 | Lock | Write lease on an ownership domain |
-| Transaction | Change set — begins with a lease, ends with a merge or an abort |
+| Transaction | Change set: begins with a lease, ends with a merge or an abort |
 | Commit / rollback | Merge through the queue / discard the branch |
 | Snapshot isolation (MVCC) | Each worktree starts from a fixed base commit |
 | Serialization | A DAG edge between work items that write the same domain |
@@ -124,7 +124,7 @@ b -> acquire: "waits" {
 }
 ```
 
-**Optimistic** concurrency still has a place — *between* domains. Two writers in different
+**Optimistic** concurrency still has a place: *between* domains. Two writers in different
 domains both start from commit 123:
 
 ```kroki-d2
@@ -133,8 +133,8 @@ direction: down
 base: "trunk @ 123" {
   shape: cylinder
 }
-a: "A — domain X\nproduces change set"
-b: "B — domain Y\nproduces change set"
+a: "A: domain X\nproduces change set"
+b: "B: domain Y\nproduces change set"
 land: "A merges\ntrunk @ 124" {
   style.fill: "#e6fcf5"
 }

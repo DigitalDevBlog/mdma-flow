@@ -80,10 +80,10 @@ A merge queue only works if it isn't the thing everyone routes around:
 |----------|------------|
 | Long CI | Split into a fast required suite and a slower post-merge suite; parallelize by domain |
 | Batch failures | Bisect the batch automatically and eject only the offending PR |
-| Flaky tests | Quarantine aggressively — a flaky required test converts the queue into a lottery |
+| Flaky tests | Quarantine aggressively: a flaky required test converts the queue into a lottery |
 | Queue depth | Smaller PRs (see [Integration](index.md)) and domain-scoped test selection |
 
 !!! danger "Never grant agents merge rights to a protected branch"
     Agents create branches, commits and PRs. The queue merges. Keeping that boundary means a
-    misbehaving agent produces a rejected PR rather than a broken trunk — see
+    misbehaving agent produces a rejected PR rather than a broken trunk: see
     [Agent Identity & Permissions](../governance/agent-identity.md).

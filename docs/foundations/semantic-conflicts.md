@@ -45,8 +45,8 @@ of:
 * a behaviour that a test asserts and a refactor quietly relaxes
 * an assumption about *when* something is called, not just how
 
-Agents make this worse for a specific reason: they are fast, confident, and — unlike a human
-teammate — they don't overhear anything. Two engineers changing `process()` in the same week
+Agents make this worse for a specific reason: they are fast, confident, and (unlike a human
+teammate) they don't overhear anything. Two engineers changing `process()` in the same week
 usually find out at standup. Two agents never do.
 
 !!! danger "The failure mode to design against"

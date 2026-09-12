@@ -5,20 +5,20 @@
 *Modernizing safety-critical software, on one page. Select the image to open it at full size.*
 
 !!! note "Reading the infographic against this site"
-    * Its **agent hierarchy** — a Modernization Director over understanding and transformation
-      agents — is the *mature target*, not a starting configuration. Start with
+    * Its **agent hierarchy**, a Modernization Director over understanding and transformation
+      agents, is the *mature target*, not a starting configuration. Start with
       [one agent per work item](../agents/roles.md#dont-start-with-multi-agent) and grow along the
       [maturity path](maturity.md).
     * *Single writer per task/branch* is the [isolation](../foundations/isolation.md) rule.
       Ownership adds a second, independent one:
       [single writer per domain](../ownership/single-write-authority.md).
     * Its *modernization control plane* includes the reasoning agents. On this site, *control
-      plane* means only the deterministic layer — see [Vocabulary](../index.md#vocabulary).
+      plane* means only the deterministic layer: see [Vocabulary](../index.md#vocabulary).
 
 Software modernization is where everything on this site converges. Complex, long-lived,
 safety-critical software typically combines accumulated legacy complexity, insufficient or
 outdated tests, tightly coupled architecture, lost or implicit domain knowledge, vulnerabilities
-in code and dependencies, the need to move features between code bases — and strict regulatory
+in code and dependencies, the need to move features between code bases, and strict regulatory
 requirements such as IEC 62304 and ISO 14971, with clinical behaviour and performance that must
 not change. The result is high cost, high risk and slow delivery.
 
@@ -44,11 +44,11 @@ The capabilities I would develop fall into five groups:
 | requirement tracing | regression detection | language / framework migration | implementation | change-impact analysis |
 | technical-debt analysis | differential testing | vulnerability remediation | equivalence verification | |
 
-Notice that these aren't individual agents. **They are capabilities that agents compose** — the
+Notice that these aren't individual agents. **They are capabilities that agents compose**: the
 same way the [runtime](../agents/runtime.md#separate-intelligence-from-capabilities) composes tools
 into roles. A workflow is a [DAG](../decomposition/dag.md) over them.
 
-## Small, verifiable steps — never free-running
+## Small, verifiable steps: never free-running
 
 Every modernization workflow has the same inner rhythm:
 
@@ -83,7 +83,7 @@ GenericAgent.modernizeAnything()
 
 Instead, make the machinery generic and plug the domain in:
 
-| Generic — the platform | Domain-specific — plugged in |
+| Generic: the platform | Domain-specific: plugged in |
 |------------------------|------------------------------|
 | planning | domain ontology (e.g. ultrasound, product family) |
 | tool invocation | capabilities and tooling (e.g. C++ toolchains) |
@@ -130,7 +130,7 @@ Because every change set already carries its [validation evidence](../governance
 and every claim its [provenance](../agents/evidence.md#provenance), the platform can assemble
 regulatory evidence as it works rather than after the fact: code changes and their rationale,
 affected requirements, risks and architecture, test changes and results, dependency changes,
-security impact, and the traceability between them — aligned with IEC 62304 (software
+security impact, and the traceability between them: aligned with IEC 62304 (software
 lifecycle), ISO 14971 (risk management) and FDA cybersecurity guidance.
 
 !!! quote "The deepest opportunity"
@@ -139,6 +139,6 @@ lifecycle), ISO 14971 (risk management) and FDA cybersecurity guidance.
 
 ## Pages in this section
 
-* [Workflows](workflows.md) — characterization, feature migration, vulnerability remediation,
+* [Workflows](workflows.md): characterization, feature migration, vulnerability remediation,
   architecture recovery
-* [Maturity Path](maturity.md) — the order in which to build all of this
+* [Maturity Path](maturity.md): the order in which to build all of this

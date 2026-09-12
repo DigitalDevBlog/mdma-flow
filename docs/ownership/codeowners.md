@@ -11,7 +11,7 @@ individuals or teams, and GitHub can require approval from those owners before m
 /src/platform/         @platform-team
 ```
 
-That solves *review authority*. It does not solve *write authority* — nothing stops four agents
+That solves *review authority*. It does not solve *write authority*: nothing stops four agents
 opening four overlapping PRs against `/src/reconstruction/` at the same time, each of which will
 eventually be reviewed by the same overloaded team.
 
@@ -80,8 +80,8 @@ domains -> policy
 
 ## The `shared-model` problem
 
-Note the third entry above. Every codebase has a shared kernel — the domain model, the core
-types, the cross-cutting interfaces — and that is exactly where agent parallelism hurts most,
+Note the third entry above. Every codebase has a shared kernel (the domain model, the core
+types, the cross-cutting interfaces) and that is exactly where agent parallelism hurts most,
 because every task has a reason to touch it.
 
 Two rules help:

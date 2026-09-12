@@ -26,21 +26,21 @@ distributed execution
 
 ## Reading the path
 
-**Stages 1–2 are about one agent being trustworthy.** Nothing later works without a
+**Stages 1 and 2 are about one agent being trustworthy.** Nothing later works without a
 closed verification loop; skipping to parallelism with an agent that can't verify its own work
 just produces unverified work faster.
 
 **Stage 3 is where the [work item](../platform/primitives.md) arrives.** It is the smallest
-primitive and the one everything else attaches to — which is why it is the thing to
+primitive and the one everything else attaches to: which is why it is the thing to
 [build first](../platform/primitives.md#where-to-invest).
 
 **Stage 5 is where the rest of this site becomes load-bearing.** Before it, one agent works at a
 time and ownership is trivial. From it onwards, [semantic conflicts](../foundations/semantic-conflicts.md),
-write leases and the merge queue decide whether parallelism helps or hurts — and your architecture
+write leases and the merge queue decide whether parallelism helps or hurts, and your architecture
 decides how much parallelism is available at all.
 
 **Stage 6 comes late on purpose.** Splitting one agent into specialists is only worth it once you
-can see a bottleneck the split removes — see
+can see a bottleneck the split removes: see
 [Don't start with multi-agent](../agents/roles.md#dont-start-with-multi-agent). The agent hierarchy
 in the [modernization overview](index.md) lives here, not at stage 1.
 

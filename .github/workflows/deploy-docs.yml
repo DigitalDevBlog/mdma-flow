@@ -40,7 +40,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      # Docs version is read from package.json — bumped at every real release.
+      # Docs version is read from package.json, bumped at every real release.
       - name: Derive docs version from package.json
         id: version
         run: |

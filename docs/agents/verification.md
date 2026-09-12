@@ -8,8 +8,8 @@ Don't make tasks merely prompts. Instead of:
 
 > "Please modernize the ultrasound reconstruction module."
 
-represent the work structurally. This is the [work item](../platform/primitives.md) — the same
-schema — one level up, at programme scope:
+represent the work structurally. This is the [work item](../platform/primitives.md): the same
+schema, one level up, at programme scope:
 
 ```yaml
 work_item:
@@ -40,13 +40,13 @@ approval:
   release_merge: human
 ```
 
-A planner decomposes it into child work items — like `US-18432` on
-[Five Primitives](../platform/primitives.md#a-work-item-concretely) — each inheriting these
+A planner decomposes it into child work items, like `US-18432` on
+[Five Primitives](../platform/primitives.md#a-work-item-concretely), each inheriting these
 constraints and narrowing the scope.
 
 Now the agent has something much more powerful than natural-language instructions: **an
 executable contract.** `constraints` say what must stay true. `required_evidence` says how
-anyone — agent, reviewer or auditor — will know.
+anyone, agent, reviewer or auditor, will know.
 
 ## Verification is the heart of autonomous engineering
 
@@ -95,7 +95,7 @@ The model is probabilistic. **The verification pipeline should be as determinist
 
 This is why software engineering is an unusually attractive domain for agents. We already have
 compilers, type systems, linters, tests, simulators, static analysers, model checkers, coverage
-tools and version control — and [architecture rules can be made executable](../governance/executable-architecture.md)
+tools and version control, and [architecture rules can be made executable](../governance/executable-architecture.md)
 too.
 
 ## Verifier-driven development
@@ -140,7 +140,7 @@ a3 -> r3
 ```
 
 Now autonomous iteration becomes much safer. Every failure is an input to the next attempt, not a
-review finding — the same economics as
+review finding: the same economics as
 [executable architecture](../governance/executable-architecture.md#why-this-changes-the-economics).
 
 ## Wiring verifiers into the harness
@@ -149,8 +149,8 @@ Three mechanisms do most of the work, and each exists in more than one harness:
 
 !!! example "In the harnesses"
     * **Run the verifier automatically.** Claude Code and
-      [OpenHands](https://docs.openhands.dev/sdk/guides/hooks) can run checks from `Stop` hooks —
-      OpenHands explicitly recommends migrating pre-commit style checks to them — and Codex hooks
+      [OpenHands](https://docs.openhands.dev/sdk/guides/hooks) can run checks from `Stop` hooks;
+      OpenHands explicitly recommends migrating pre-commit style checks to them, and Codex hooks
       act on `Stop` and `SubagentStop`, able to refuse to let a turn end.
     * **Protect the verifier from the agent.** Claude Code's `deny: Edit(tests/golden/**)`, Codex's
       filesystem `deny` globs and Copilot's `--deny-tool` all express "not this path". OpenHands
@@ -160,16 +160,16 @@ Three mechanisms do most of the work, and each exists in more than one harness:
       give a pipeline something to parse instead of prose to interpret.
 
     One caveat for CI: OpenHands' headless mode always auto-approves, so there its confirmation
-    policy is not a control at all — the sandbox and the hooks are what remain.
+    policy is not a control at all; the sandbox and the hooks are what remain.
 
 The third mechanism is what makes an agent a step in a pipeline rather than a person at a keyboard.
 
 !!! tip "Evidence is attached, not asserted"
     The verifier outputs *are* the work item's `required_evidence`. Attached to the change set,
-    they become the [validation evidence](../platform/primitives.md) a reviewer or auditor reads
-    — instead of trusting a model's self-report, which is optimistic by construction.
+    they become the [validation evidence](../platform/primitives.md) a reviewer or auditor reads,
+    instead of trusting a model's self-report, which is optimistic by construction.
 
 !!! warning "Verifiers must be outside the agent's write scope"
     An agent that can edit the tests it is judged by will, eventually, pass by editing the tests.
     Keep verification code, golden data and thresholds outside the change surface of the work
-    item being verified — or require a human to approve any change to them.
+    item being verified, or require a human to approve any change to them.

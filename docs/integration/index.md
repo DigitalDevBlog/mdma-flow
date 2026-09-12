@@ -48,7 +48,7 @@ against CI and review feedback rather than producing one enormous artefact.
     The **unit of agent productivity shouldn't be LOC**. It should be something closer to
     *independently verifiable changes*.
 
-Lines of code is not merely a bad metric here — it is an actively inverted one. The cheapest
+Lines of code is not merely a bad metric here; it is an actively inverted one. The cheapest
 thing an agent can do is write more code; the expensive things are understanding the existing
 system, changing the least necessary, and proving the change is correct. Counting output rewards
 exactly the wrong half.
@@ -67,5 +67,5 @@ involved:
 
 ## Pages in this section
 
-* [Merge Queue](merge-queue.md) — the serialization point everything above funnels into
-* [Stacked PRs](stacked-prs.md) — how to keep changes small when the work genuinely is large
+* [Merge Queue](merge-queue.md): the serialization point everything above funnels into
+* [Stacked PRs](stacked-prs.md): how to keep changes small when the work genuinely is large

@@ -19,7 +19,7 @@ their dependencies, resources and execution environments, and I'll execute it re
 
 [Argo Workflows](https://argoproj.github.io/workflows/) is one of them. It is Kubernetes-native,
 represents workflows explicitly as DAGs, runs each job as a container, and uses the dependency
-graph to decide which jobs can execute concurrently — exactly the model on
+graph to decide which jobs can execute concurrently: exactly the model on
 [Work as a DAG](../decomposition/dag.md).
 
 Argo already handles most of the unglamorous infrastructure work:
@@ -45,8 +45,8 @@ CI/CD: architecture recovery, characterization runs, differential testing, migra
 
 ### Replanning a living DAG
 
-There is a tension to resolve here. [The DAG is a plan, not a prophecy](../decomposition/dag.md)
-— real work discovers work. But an Argo workflow is submitted as a fixed graph.
+There is a tension to resolve here. [The DAG is a plan, not a prophecy](../decomposition/dag.md):
+real work discovers work. But an Argo workflow is submitted as a fixed graph.
 
 The resolution is to keep the two roles apart:
 
@@ -73,13 +73,13 @@ out -> planner: "replan" {
 
 * **The planning layer owns the graph.** The living DAG is state, stored alongside the work
   items, versioned like any other artefact.
-* **Each Argo run executes a snapshot** — the currently ready frontier, or one wave of it.
+* **Each Argo run executes a snapshot**: the currently ready frontier, or one wave of it.
 * **Results feed back.** When nodes complete, fail or report discovered work, the planner adds,
   splits or re-orders work items and submits the next snapshot. Argo can fan out dynamically
-  within a run, but *structural* change — new work, new dependencies, a different decomposition —
+  within a run, but *structural* change (new work, new dependencies, a different decomposition)
   belongs to the planner.
 * **Leases belong to work items, not to runs.** A replan never silently hands a domain to a
-  second writer, because the write lease survives from one snapshot to the next — see
+  second writer, because the write lease survives from one snapshot to the next: see
   [Single Write Authority](../ownership/single-write-authority.md).
 
 ## Don't throw away Jenkins
@@ -104,7 +104,7 @@ and consume the result.
     **Agents should orchestrate existing engineering knowledge rather than replace it.**
 
     That pipeline may contain ten years of institutional knowledge about how the product
-    actually builds and gets verified. It is incredibly valuable to the agent — and it is already
+    actually builds and gets verified. It is incredibly valuable to the agent, and it is already
     trusted by the people who will review the agent's work.
 
 The same applies to GitHub Actions, GitLab CI or whatever else already gates your releases.
@@ -115,16 +115,16 @@ The boundary works in reverse too. A pipeline step can run an agent non-interact
 structured result:
 
 !!! example "In the harnesses"
-    * **Claude Code** — [`claude -p --bare --output-format json`](https://code.claude.com/docs/en/headless),
+    * **Claude Code**: [`claude -p --bare --output-format json`](https://code.claude.com/docs/en/headless),
       where `--bare` skips auto-discovery of hooks, skills and instruction files so the run is
       reproducible, and `--allowedTools` pins what it may do.
-    * **Codex** — [`codex exec --json`](https://learn.chatgpt.com/docs/cli/reference), with
+    * **Codex**: [`codex exec --json`](https://learn.chatgpt.com/docs/cli/reference), with
       `--output-schema` to constrain the final message and `--ephemeral` to avoid persisting
       session files on a shared runner.
-    * **OpenHands** — [`--headless --json`](https://docs.openhands.dev/openhands/usage/cli/headless),
-      one JSON object per event — but headless always auto-approves, so the sandbox and hooks are
+    * **OpenHands**: [`--headless --json`](https://docs.openhands.dev/openhands/usage/cli/headless),
+      one JSON object per event, but headless always auto-approves, so the sandbox and hooks are
       the only remaining controls.
-    * **GitHub Copilot** — [`-p` in the CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference)
+    * **GitHub Copilot**: [`-p` in the CLI](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference)
       for a single non-interactive run.
 
 Two rules keep this safe: run the agent in the pipeline's own sandbox with a scoped token, and
@@ -135,7 +135,7 @@ writes and judges its own work has removed the gate the pipeline exists for.
 
 [Open Policy Agent](https://openpolicyagent.org/) lets you express rules as policy-as-code and
 evaluate them deterministically. It is already used for policy enforcement in CI/CD, Kubernetes,
-applications and API gateways — and it maps directly onto the deterministic shell around the agent
+applications and API gateways, and it maps directly onto the deterministic shell around the agent
 described in [Engineering Agents](../agents/index.md#the-deepest-principle).
 
 Policies can look like:
@@ -150,7 +150,7 @@ Safety-related code:    requires a second reviewer
 CVE remediation:        SAST must pass before commit
 ```
 
-Note that these are all about **writes and actions**, never reads — consistent with
+Note that these are all about **writes and actions**, never reads; this is consistent with
 [Ownership](../ownership/index.md): every agent may read the whole repository. In Rego, the
 write-scope rule is the work item's change surface checked against the domain metadata:
 
@@ -169,12 +169,12 @@ allow if {
 ```
 
 A harness hook is where that decision lands in practice: a `PreToolUse` hook queries OPA and denies
-the call when the answer is no — see
+the call when the answer is no: see
 [How this is enforced in practice](../agents/runtime.md#how-this-is-enforced-in-practice).
 
 Notice what that means: **the AI doesn't enforce these rules. OPA does.** Even if the agent
 concludes *"I think I'm allowed to change this"*, the answer is simply `DENIED`. The
-[progressive-autonomy table](../governance/index.md#progressive-autonomy) belongs here too — it is
+[progressive-autonomy table](../governance/index.md#progressive-autonomy) belongs here too: it is
 policy, not prose.
 
 ## Backstage
@@ -239,12 +239,12 @@ infrastructure you already trust.
 ## MCP is an interoperability layer, not the architecture
 
 The [Model Context Protocol](https://modelcontextprotocol.io/) is useful for standardizing how
-agents reach tools and external systems — GitHub, Jira, the filesystem, documentation, build
-infrastructure — through one protocol instead of bespoke integrations.
+agents reach tools and external systems (GitHub, Jira, the filesystem, documentation, build
+infrastructure) through one protocol instead of bespoke integrations.
 
 It was created by Anthropic and has since been adopted across harnesses: Claude Code, Codex,
 Copilot's cloud agent and CLI, and OpenHands all act as MCP clients. That cross-vendor adoption is
-what makes it worth using — a tool you expose once stays reachable from whichever harness you run
+what makes it worth using: a tool you expose once stays reachable from whichever harness you run
 next year.
 
 But MCP does not solve:
@@ -258,7 +258,7 @@ But MCP does not solve:
 * recovery
 
 It is closer to an interoperability layer. Treat MCP servers as one way of implementing the
-[capability layer](../agents/runtime.md#separate-intelligence-from-capabilities) — with the
+[capability layer](../agents/runtime.md#separate-intelligence-from-capabilities), with the
 credentials held by the server, never by the model.
 
 ## What stays custom
@@ -267,12 +267,12 @@ Reuse is not the same as building nothing. The line runs like this:
 
 | Reuse | Build |
 |-------|-------|
-| DAG execution — Argo / Tekton | Work items and the living DAG |
-| CI and test execution — Jenkins, native frameworks | Ownership domains, leases, change surfaces |
-| Policy evaluation — OPA | The policies themselves, derived from domains and risk classes |
-| Software catalog — Backstage | The domain knowledge model on top of it |
-| Isolation — worktrees, containers, Kubernetes | The reasoning layer: planning, agents, review |
+| DAG execution: Argo / Tekton | Work items and the living DAG |
+| CI and test execution: Jenkins, native frameworks | Ownership domains, leases, change surfaces |
+| Policy evaluation: OPA | The policies themselves, derived from domains and risk classes |
+| Software catalog: Backstage | The domain knowledge model on top of it |
+| Isolation: worktrees, containers, Kubernetes | The reasoning layer: planning, agents, review |
 
 The left column has an operational history. The right column is the part that encodes how *your*
-organisation works — which is why [Five Primitives](primitives.md#where-to-invest) argues for
+organisation works, which is why [Five Primitives](primitives.md#where-to-invest) argues for
 making it first-class.

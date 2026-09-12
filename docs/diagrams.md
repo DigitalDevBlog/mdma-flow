@@ -6,7 +6,7 @@ Diagrams on this site are authored **as code** and rendered at build time by
 
 !!! info "How rendering works"
     The plugin sends the diagram source to a Kroki server (default `https://kroki.io`,
-    overridable with the `KROKI_SERVER_URL` environment variable — e.g. a local Docker Kroki for
+    overridable with the `KROKI_SERVER_URL` environment variable, e.g. a local Docker Kroki for
     fully offline builds) and embeds the returned SVG. A network-reachable Kroki server is
     required at build time.
 
@@ -47,7 +47,7 @@ unify -> plan: "next"
 | Implicit or forbidden edge | `style.stroke-dash: 4` |
 
 Keep labels quoted and use `\n` for line breaks. Use `direction: down` for short pipelines and
-fan-ins, and `direction: right` for anything longer than about four steps — see below for why that
+fan-ins, and `direction: right` for anything longer than about four steps: see below for why that
 choice matters more than it looks.
 
 ### Keeping diagrams proportional
@@ -56,7 +56,7 @@ choice matters more than it looks.
 
 Kroki's D2 output carries a `viewBox` and no `width` or `height`, so the SVG has **no intrinsic
 pixel size**. It always stretches to the full width of the content column, and its height follows
-from the aspect ratio. The numbers in `viewBox="0 0 1045 284"` describe proportions, not pixels — no
+from the aspect ratio. The numbers in `viewBox="0 0 1045 284"` describe proportions, not pixels; no
 diagram is ever "1,045px wide" to a reader.
 
 At a content column of roughly 830px:
@@ -67,7 +67,7 @@ At a content column of roughly 830px:
 | 1.0 | ~830px | a full screen |
 | 0.3 | ~2,700px | three screens of a single diagram |
 
-So a ten-step vertical pipeline is not "a big diagram" — it is a diagram whose aspect ratio is 0.3,
+So a ten-step vertical pipeline is not "a big diagram"; it is a diagram whose aspect ratio is 0.3,
 and it will fill several screens however short its labels are. Lay the chain out with
 `direction: right`, or group its steps into `grid-columns` stages.
 
@@ -75,7 +75,7 @@ Two D2 behaviours make that harder than it sounds, both found by measuring rathe
 
 | Behaviour | Consequence |
 |-----------|-------------|
-| `direction:` inside a container is ignored | Nested `direction: right` does nothing — use `grid-columns: N` to place children side by side |
+| `direction:` inside a container is ignored | Nested `direction: right` does nothing: use `grid-columns: N` to place children side by side |
 | Edges *between children of a grid container* inflate the layout badly | A three-cell grid with internal arrows came out 2,309 × 388; the same grid without them, 761 × 1,292 |
 
 So group related steps with `grid-columns`, draw edges **between containers** rather than between
@@ -93,7 +93,7 @@ height is the aspect, and roughly 830 ÷ aspect is the height a reader will actu
 
 ## PlantUML
 
-Used where the diagram is really a *flow* with forks and branches — activity diagrams need no
+Used where the diagram is really a *flow* with forks and branches; activity diagrams need no
 extra layout engine and read well.
 
 ````markdown

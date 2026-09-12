@@ -36,28 +36,28 @@ standards, scripts and workflows as reusable agent capabilities rather than rely
 remembering the right prompt.
 
 Two conventions have since converged across harnesses: a **repository instruction file** loaded at
-startup, and **on-demand capabilities** — skills — that load only when relevant.
+startup, and **on-demand capabilities** (skills) that load only when relevant.
 
 !!! example "In the harnesses"
-    * **Claude Code** — loads [`CLAUDE.md`](https://code.claude.com/docs/en/memory) from the
+    * **Claude Code**: loads [`CLAUDE.md`](https://code.claude.com/docs/en/memory) from the
       working directory upwards, with `@path` imports, so `AGENTS.md` is picked up by importing or
       symlinking it. Path-scoped rules live in `.claude/rules/*.md` behind a `paths:` field, and
       [skills](https://code.claude.com/docs/en/skills) in `.claude/skills/<name>/SKILL.md`.
-    * **Codex** — walks `AGENTS.md` from the project root down to the working directory, closer
+    * **Codex**: walks `AGENTS.md` from the project root down to the working directory, closer
       files winning, plus a global one;
       [skills](https://learn.chatgpt.com/docs/customization/overview) live under `.agents/skills/`.
-    * **GitHub Copilot** — reads `.github/copilot-instructions.md`, **path-scoped**
+    * **GitHub Copilot**: reads `.github/copilot-instructions.md`, **path-scoped**
       `.github/instructions/**/*.instructions.md` with frontmatter, and also `AGENTS.md` and
       `CLAUDE.md` for the cloud agent and CLI. Its
       [support matrix](https://docs.github.com/en/copilot/reference/custom-instructions-support) is
-      per surface — worth reading before assuming a file is loaded everywhere.
-    * **OpenHands** — reads `AGENTS.md`, `CLAUDE.md` and `GEMINI.md`, with skills under
+      per surface: worth reading before assuming a file is loaded everywhere.
+    * **OpenHands**: reads `AGENTS.md`, `CLAUDE.md` and `GEMINI.md`, with skills under
       `.agents/skills/<name>/SKILL.md` carrying optional triggers and paths.
 
 Two things follow.
 
 **Write for the neutral file.** `AGENTS.md` is read, in some form, by all four. Keep it
-authoritative and make harness-specific files thin pointers to it — a one-line `CLAUDE.md` that
+authoritative and make harness-specific files thin pointers to it: a one-line `CLAUDE.md` that
 imports `AGENTS.md` costs nothing and stops the two drifting apart.
 
 **Path-scoped instructions are your ownership domains in a second form.** Copilot's
@@ -68,7 +68,7 @@ they will disagree within a quarter.
 
 !!! warning "Instructions guide; they do not enforce"
     OpenHands is explicit that path-triggered rules only inject guidance and do not restrict
-    actions — and that is true of every instruction file above. A path rule tells an agent what you
+    actions. That is true of every instruction file above. A path rule tells an agent what you
     would prefer. A [permission rule or a blocking hook](../agents/runtime.md#how-this-is-enforced-in-practice)
     is what stops it. Use the first for intent, the second for boundaries.
 
@@ -104,18 +104,18 @@ reviewed, diffable and shared by every agent and every human who clones it.
 
 That last row is worth dwelling on. The best test of a repository's agent documentation is
 whether a new human engineer could onboard from it. If it isn't good enough for them, it isn't
-good enough for an agent either — agents are just less likely to complain.
+good enough for an agent either. Agents are just less likely to complain.
 
 ## The layering that works
 
-* **`AGENTS.md`** — short, stable, and about *this repository*: how to build, how to test, what
+* **`AGENTS.md`**: short, stable, and about *this repository*: how to build, how to test, what
   conventions are non-negotiable, what never to touch. Keep it short enough that it is always
   worth loading.
-* **`.agents/*.md`** — task-shaped guides loaded on demand: how a migration is done here, how
+* **`.agents/*.md`**: task-shaped guides loaded on demand: how a migration is done here, how
   security review works here.
-* **`docs/decisions/`** — ADRs. Agents reproduce decisions they can read and re-litigate ones
+* **`docs/decisions/`**: ADRs. Agents reproduce decisions they can read and re-litigate ones
   they can't.
-* **`scripts/`** — the executable layer. Anything a document *asks* someone to do is better as a
+* **`scripts/`**: the executable layer. Anything a document *asks* someone to do is better as a
   script the agent can run and the CI can enforce.
 
 !!! warning "Documentation that lies is worse than none"

@@ -32,7 +32,7 @@ That allows:
 
 > **Understand by observing before transforming.**
 
-Agents are well suited to generating these characterization harnesses — it is exactly the kind of
+Agents are well suited to generating these characterization harnesses; it is exactly the kind of
 careful, tedious, high-volume work humans postpone. For old C and C++ medical-device software it
 can be enormously valuable, and it is why characterization sits near the root of the
 [migration DAG](../decomposition/dag.md#characterization-tests-come-first-for-a-reason): it turns
@@ -141,8 +141,8 @@ sbom -> known -> dep -> cand -> api -> src -> scan -> val
 ```
 
 This is the canonical case for [verifier-driven development](../agents/verification.md#verifier-driven-development):
-the scanner, the build and the tests define success, not the agent. At portfolio scale — the same
-CVE across twenty repositories — it is also the canonical [end-to-end flow](../platform/reference-architecture.md#one-flow-end-to-end).
+the scanner, the build and the tests define success, not the agent. At portfolio scale (the same
+CVE across twenty repositories) it is also the canonical [end-to-end flow](../platform/reference-architecture.md#one-flow-end-to-end).
 
 ## Architecture recovery
 
@@ -179,7 +179,7 @@ discover -> derive -> out
 ```
 
 Future agents then consume these artefacts instead of rediscovering everything. That is how the
-system gradually acquires organisational intelligence — provided the artefacts follow the same
+system gradually acquires organisational intelligence, provided the artefacts follow the same
 rules as any other [learned knowledge](../agents/knowledge.md#leave-the-world-smarter): committed
 to the repository, reviewed, and re-derived when the code moves.
 
@@ -188,4 +188,4 @@ Two by-products are worth calling out:
 * **Recovered module boundaries are the first draft of your ownership domains.** They are the
   natural input to [`domains.yml`](../ownership/codeowners.md#the-extension-agents-need).
 * **The dependency graph is an honest modularity score.** It predicts how many agents can work in
-  parallel before they do — see [Platform](../platform/index.md#agent-scalability-is-architecture-scalability).
+  parallel before they do: see [Platform](../platform/index.md#agent-scalability-is-architecture-scalability).

@@ -4,7 +4,7 @@ There are now credible orchestration systems. This space has changed considerabl
 2026.
 
 One caveat up front: there is not yet one mature, generic software-engineering agent framework
-with years of proven use behind it. The agent layer is young. What sits underneath it is not —
+with years of proven use behind it. The agent layer is young. What sits underneath it is not:
 see [Building on the Mature Stack](mature-stack.md).
 
 ## Codex + Symphony
@@ -45,7 +45,7 @@ OpenAI describes Symphony as turning the project-management board into a control
 tasks get agents, agents execute continuously, humans review outcomes.
 
 That's substantially closer to an organisational model than the traditional single-developer
-coding session — the board becomes the queue, and the review becomes the interface.
+coding session: the board becomes the queue, and the review becomes the interface.
 
 !!! warning "Symphony is a preview, not a product"
     OpenAI describes Symphony as a low-key engineering preview for trusted environments, and has
@@ -67,7 +67,7 @@ that edit code, use a command line, execute programs, browse for information, op
 sandboxes, coordinate, and are evaluated against software-engineering benchmarks.
 
 If I were prototyping a modernization platform tomorrow, OpenHands would be one of the first
-codebases I would dissect — without necessarily making it the platform's control plane.
+codebases I would dissect, without necessarily making it the platform's control plane.
 
 Two things to know before you read its material. The paper describes the 2024 platform, while the
 current generation is the Software Agent SDK plus an Agent Server behind an HTTP and WebSocket
@@ -112,7 +112,7 @@ ordered orchestration of changes across large codebases, which is directly relev
 parallel-agent modernization.
 
 !!! note "Why the control plane matters more than the model"
-    For regulated software, the differentiating capability is not code quality — it is policy,
+    For regulated software, the differentiating capability is not code quality: it is policy,
     isolation and auditability. Models improve every few months and are swappable. A control
     plane is where your compliance story lives.
 
@@ -125,7 +125,7 @@ before it runs, [subagents](https://code.claude.com/docs/en/sub-agents) with the
 restricted tools, and worktree isolation per session or per subagent.
 
 The [Agent SDK](https://code.claude.com/docs/en/agent-sdk/overview) exposes the same harness
-programmatically in Python and TypeScript — the direct counterpart to the OpenHands SDK, and the
+programmatically in Python and TypeScript: the direct counterpart to the OpenHands SDK, and the
 thing to look at if you are embedding agents in your own control plane rather than driving a CLI.
 For pipelines, [`claude -p --bare --output-format json`](https://code.claude.com/docs/en/headless)
 runs non-interactively and returns a structured result; `--bare` skips auto-discovery of hooks,
@@ -136,7 +136,7 @@ multi-agent team mode is experimental and does not isolate teammates into worktr
 
 ## GitHub Copilot cloud agent
 
-Copilot's asynchronous agent — renamed from *coding agent* in April 2026 — takes the opposite
+Copilot's asynchronous agent, renamed from *coding agent* in April 2026, takes the opposite
 approach to isolation. Instead of running on your machine it runs in an ephemeral GitHub Actions
 environment and pushes to its own branch.
 
@@ -148,7 +148,7 @@ isn't attributed to a person. Commits are attributed to the agent with the dispa
 co-author, and enterprise audit events carry an `actor_is_agent` flag and a session ID.
 
 That is close to the [agent identity](../governance/agent-identity.md) model argued for on this
-site — imposed by the platform instead of by your control plane. The trade-off is the other side
+site, imposed by the platform instead of by your control plane. The trade-off is the other side
 of the same coin: the isolation is not yours to configure, and the egress firewall covers neither
 MCP servers nor setup steps.
 
@@ -182,7 +182,7 @@ verify -> human
 ```
 
 Its strength for this kind of work is that **state transitions are explicit rather than buried in
-agent conversations** — which is what makes them inspectable, resumable and auditable.
+agent conversations**, which is what makes them inspectable, resumable and auditable.
 
 [Microsoft Agent Framework](https://github.com/microsoft/agent-framework) is the other serious
 candidate, particularly in an enterprise environment. One important 2026 detail: don't start a
@@ -200,7 +200,7 @@ library.
     LangGraph and Microsoft Agent Framework structure how agents reason and hand off state.
     Neither is a control plane in the sense used on this site: they don't hold write leases,
     enforce policy or gate trunk. **Your architecture should survive replacing the agent
-    framework** — see [Reference Architecture](reference-architecture.md).
+    framework**: see [Reference Architecture](reference-architecture.md).
 
 ## GitButler
 
@@ -237,9 +237,9 @@ environment isolation via worktrees, containers or VMs**. It's nevertheless wort
 | Codex + worktrees | Execution and isolation on a developer's machine | Organisational allocation and policy |
 | Claude Code | Permission rules and blocking hooks; subagents with restricted tools | No ownership model; no per-task budget ceiling |
 | Copilot cloud agent | Platform-enforced identity, branch scope and merge restrictions | Isolation you don't control; firewall gaps around MCP |
-| Symphony | Turning a task board into a control plane | Ownership and semantic conflict — and it is an unmaintained preview |
-| OpenHands Enterprise | Policy, sandboxing, audit — the control plane | Being young; a larger commitment |
-| LangGraph | Explicit, durable, resumable agent state | Ownership, policy and integration — it is a library, not a platform |
+| Symphony | Turning a task board into a control plane | Ownership and semantic conflict, and it is an unmaintained preview |
+| OpenHands Enterprise | Policy, sandboxing, audit: the control plane | Being young; a larger commitment |
+| LangGraph | Explicit, durable, resumable agent state | Ownership, policy and integration: it is a library, not a platform |
 | Microsoft Agent Framework | Enterprise integration: identity, .NET, Azure | Ownership, policy and integration, as with LangGraph |
 | GitButler | Ergonomics of parallel change in one tree | Hard isolation at scale |
 

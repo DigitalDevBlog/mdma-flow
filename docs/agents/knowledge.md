@@ -2,12 +2,12 @@
 
 [Knowledge in the Repo](../governance/repo-knowledge.md) is about *authored* knowledge: versioned
 files that humans and agents both read, reviewed like code. This page is about *derived* and
-*learned* knowledge — the indexes, graphs and memories an agent platform builds and queries.
+*learned* knowledge: the indexes, graphs and memories an agent platform builds and queries.
 
 The two have a strict relationship:
 
 > **The repository stays the source of truth.** Everything on this page is either rebuildable
-> from sources — code, history, trackers, repo-resident docs — or is a proposal on its way into
+> from sources, code, history, trackers, repo-resident docs, or is a proposal on its way into
 > the repository.
 
 ## Memory is not just conversation history
@@ -42,7 +42,7 @@ That knowledge is dramatically more valuable than simply vectorizing the source 
 
     That is a reason for care rather than enthusiasm. Harness memory is per user and per machine:
     it does not survive a new laptop, it is invisible to colleagues, and no reviewer ever sees it.
-    It is a cache, not a knowledge base — which is exactly why durable knowledge has to land in the
+    It is a cache, not a knowledge base, which is exactly why durable knowledge has to land in the
     repository.
 
 ## Don't reduce memory to a vector database
@@ -87,7 +87,7 @@ Different questions need different retrieval mechanisms:
 |----------|------------------|
 | "What depends on `FrameProcessor`?" | The code graph |
 | "Why was this architecture selected?" | ADRs, Git history, issues and documentation |
-| "Who owns this, and how critical is it?" | Metadata — [domain metadata](../ownership/codeowners.md) and the [software catalog](../platform/mature-stack.md#backstage) |
+| "Who owns this, and how critical is it?" | Metadata: [domain metadata](../ownership/codeowners.md) and the [software catalog](../platform/mature-stack.md#backstage) |
 
 ## Make domain understanding first-class
 
@@ -203,17 +203,17 @@ Suppose that during a vulnerability remediation the agent discovers:
 > interoperability.
 
 Store that, with its evidence, and the next agent benefits. Repository understanding grows a
-little with every task — a compounding effect that is arguably worth more than any single change.
+little with every task: a compounding effect that is arguably worth more than any single change.
 
 !!! warning "Agent-written memory can lie too"
-    The rule from [Knowledge in the Repo](../governance/repo-knowledge.md) — *documentation that
-    lies is worse than none* — applies doubly to memory an agent wrote. So:
+    The rule from [Knowledge in the Repo](../governance/repo-knowledge.md), *documentation that
+    lies is worse than none*, applies doubly to memory an agent wrote. So:
 
     * Every learned entry carries **provenance**: the files, lines, commits and documents it rests
-      on — see [Evidence & Uncertainty](evidence.md#provenance).
+      on: see [Evidence & Uncertainty](evidence.md#provenance).
     * It enters as a **hypothesis**, not a fact, until a human reviews it or a verifier confirms
       it.
-    * Durable knowledge lands **in the repository, through a PR** — for example under
-      `docs/domain/` — and the graph is rebuilt from it.
+    * Durable knowledge lands **in the repository, through a PR**, for example under
+      `docs/domain/`, and the graph is rebuilt from it.
     * An entry is **re-verified when the code it cites changes.** A claim anchored to
       `TemporalFilter.cpp:42-193` is stale the moment those lines are.

@@ -42,7 +42,7 @@ integration -> tests
 integration -> docs
 ```
 
-Now agents have natural isolation boundaries — boundaries that already exist in the code, rather
+Now agents have natural isolation boundaries: boundaries that already exist in the code, rather
 than boundaries invented by whoever wrote the prompt.
 
 ## What this rewards
@@ -68,6 +68,6 @@ Interestingly, agents expose architecture quality very quickly.
 
 ## Pages in this section
 
-* [Work as a DAG](dag.md) — representing the decomposition so an orchestrator can act on it
-* [Contracts as Barriers](contracts.md) — the technique that lets separated work proceed
+* [Work as a DAG](dag.md): representing the decomposition so an orchestrator can act on it
+* [Contracts as Barriers](contracts.md): the technique that lets separated work proceed
   simultaneously instead of merely separately

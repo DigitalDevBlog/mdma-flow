@@ -80,20 +80,20 @@ Codex could execute it today. OpenHands tomorrow. Claude Code next week. **A hum
 could execute exactly the same work item.**
 
 `scope.writes` is also the field that becomes enforceable: it is what a harness permission rule or
-a blocking hook checks on every tool call — see
+a blocking hook checks on every tool call: see
 [How this is enforced in practice](../agents/runtime.md#how-this-is-enforced-in-practice).
 
 That's a much more durable abstraction than any framework you could adopt instead.
 
 ### Two scales, one schema
 
-The same shape works one level up. A programme-level goal — *modernize the reconstruction
-module* — is a work item with a wide scope, programme-wide constraints, and evidence that is the
+The same shape works one level up. A programme-level goal, *modernize the reconstruction
+module*, is a work item with a wide scope, programme-wide constraints, and evidence that is the
 union of its children's. A planner decomposes it into items like the one above, each inheriting
 the parent's constraints and narrowing its scope to one domain.
 
 `constraints` and `required_evidence` are the fields that turn a work item from a description
-into an **executable contract** — see [Verification](../agents/verification.md).
+into an **executable contract**: see [Verification](../agents/verification.md).
 
 ## What each primitive is load-bearing for
 
@@ -106,7 +106,7 @@ into an **executable contract** — see [Verification](../agents/verification.md
 | **Validation evidence** | The proof, attached to the change | Trust in a model's self-report, which is optimistic by construction |
 
 Notice that none of the five names a vendor, and none of them names a model. That is the test:
-if a primitive can't survive swapping the agent for a person, it isn't a primitive — it's a
+if a primitive can't survive swapping the agent for a person, it isn't a primitive; it's a
 product feature.
 
 ## Single Write Authority at the centre
@@ -116,18 +116,18 @@ The idea that ties the five together is the one from
 
 > **Single Write Authority per architectural domain per integration epoch.**
 
-Not "only one agent may change the repository" — that would destroy the parallelism you are
+Not "only one agent may change the repository": that would destroy the parallelism you are
 building all of this for. One writer *per domain*, *while a change set is active*.
 
 ## Where to invest
 
-Given the kind of modernization platform this is aimed at — domain discovery, characterization
-testing, modularization, feature migration, vulnerability removal — I'd make the **work
+Given the kind of modernization platform this is aimed at (domain discovery, characterization
+testing, modularization, feature migration, vulnerability removal), I'd make the **work
 allocation / ownership / dependency-control layer** a first-class part of the architecture,
 rather than treating it as a Git implementation detail.
 
 Be precise about what "build" means here. It does not mean building a DAG scheduler, a CI
-system or a policy engine — those exist and are mature; see
+system or a policy engine: those exist and are mature; see
 [Building on the Mature Stack](mature-stack.md). It means the thin layer that decides *what*
 runs and *who may write where*: work items, ownership domains, leases and the living DAG. A
 workflow engine can execute the graph; only you can say which domain a task may write to.
@@ -138,5 +138,5 @@ has been replaced twice.
 
 !!! tip "If you build one thing first"
     Build the work item. It is the smallest primitive, it forces you to name your domains and
-    your evidence, and everything else — leases, sandboxes, review routing, audit — attaches to
+    your evidence, and everything else (leases, sandboxes, review routing, audit) attaches to
     it later without rework.

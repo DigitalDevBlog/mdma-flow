@@ -50,7 +50,7 @@ This leads to something I think will become increasingly important:
     **Agent concurrency is an empirical measure of architectural modularity.**
 
 If 20 agents cannot safely work independently on your application, that's valuable architectural
-feedback — arguably more honest feedback than any architecture review will give you, because it
+feedback, arguably more honest feedback than any architecture review will give you, because it
 is measured rather than asserted.
 
 It also reframes the investment question. "Should we spend on agent tooling or on modularisation?"
@@ -76,7 +76,7 @@ framework. This is the site's one stack table, grouped by the layers of the
 | | Architecture ownership | CODEOWNERS + custom domain metadata |
 | | Software catalog | Backstage |
 | **Control plane** | Policy enforcement | OPA |
-| | In-harness enforcement | Permission rules + blocking hooks — see [Harness Capabilities](harness-capabilities.md) |
+| | In-harness enforcement | Permission rules + blocking hooks: see [Harness Capabilities](harness-capabilities.md) |
 | | DAG execution | Argo Workflows (Tekton where the job is CI-shaped) |
 | | Guardrails | GitHub rulesets |
 | | Governance | audit trail + policy control |
@@ -105,12 +105,12 @@ at what to design around instead.
 
 ## Pages in this section
 
-* [Reference Architecture](reference-architecture.md) — the layered platform, and one flow through
+* [Reference Architecture](reference-architecture.md): the layered platform, and one flow through
   it end to end
-* [Orchestration Landscape](landscape.md) — Codex and Symphony, OpenHands, Claude Code, Copilot,
+* [Orchestration Landscape](landscape.md): Codex and Symphony, OpenHands, Claude Code, Copilot,
   LangGraph, Microsoft Agent Framework, GitButler
-* [Harness Capabilities](harness-capabilities.md) — the requirements checklist, and how four
+* [Harness Capabilities](harness-capabilities.md): the requirements checklist, and how four
   harnesses answer it
-* [Building on the Mature Stack](mature-stack.md) — Argo, Tekton, Jenkins, OPA, Backstage, and
+* [Building on the Mature Stack](mature-stack.md): Argo, Tekton, Jenkins, OPA, Backstage, and
   the test frameworks you already have
-* [Five Primitives](primitives.md) — the abstraction that makes all of them replaceable
+* [Five Primitives](primitives.md): the abstraction that makes all of them replaceable
