@@ -1,0 +1,7 @@
+{
+  "name": "mdma-flow",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Engineering practices for codebases where many developers and many coding agents work in parallel.",
+  "license": "CC-BY-4.0"
+}

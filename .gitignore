@@ -1,0 +1,13 @@
+# Docs site (MkDocs)
+/site/
+/.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+.vscode/
+.idea/

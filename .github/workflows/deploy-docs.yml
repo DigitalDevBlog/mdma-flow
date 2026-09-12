@@ -1,0 +1,59 @@
+name: Deploy Docs
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "requirements.txt"
+      - "package.json"
+      - ".github/workflows/deploy-docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-docs-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Docs version is read from package.json — bumped at every real release.
+      - name: Derive docs version from package.json
+        id: version
+        run: |
+          FULL_VERSION=$(python3 -c "import json; print(json.load(open('package.json'))['version'])")
+          MINOR_VERSION=$(echo "$FULL_VERSION" | cut -d. -f1,2)
+          echo "full=$FULL_VERSION" >> "$GITHUB_OUTPUT"
+          echo "minor=$MINOR_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy with mike
+        env:
+          MINOR_VERSION: ${{ steps.version.outputs.minor }}
+          FULL_VERSION: ${{ steps.version.outputs.full }}
+        run: |
+          mike deploy --push --update-aliases \
+            "$MINOR_VERSION" latest \
+            --title "$FULL_VERSION"

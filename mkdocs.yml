@@ -1,0 +1,95 @@
+site_name: Multi-Developer, Multi-Agent
+site_description: Engineering practices for codebases where many developers and many coding agents work in parallel.
+site_url: https://digitaldevblog.github.io/mdma-flow/
+repo_url: https://github.com/DigitalDevBlog/mdma-flow
+repo_name: DigitalDevBlog/mdma-flow
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - toc:
+      permalink: true
+
+# NOTE: declaring `plugins:` overrides the default [search], so search is listed explicitly.
+plugins:
+  - search
+  - kroki:
+      # ServerURL already defaults to $KROKI_SERVER_URL || https://kroki.io;
+      # set explicitly so the env override is self-documenting. Run a local Kroki with
+      # `docker run -p 8000:8000 yuzutech/kroki` and `export KROKI_SERVER_URL=http://localhost:8000`
+      # for fully offline builds.
+      # (mkdocs-kroki-plugin pinned to 0.9.0 — PascalCase config API.)
+      ServerURL: !ENV [KROKI_SERVER_URL, "https://kroki.io"]
+      FencePrefix: kroki-
+
+# diagrams.md is an authoring reference (kroki engine demos), not part of the argument —
+# kept in the repo but unlinked from the nav. not_in_nav suppresses the --strict "not in nav" warning.
+not_in_nav: |
+  /diagrams.md
+
+nav:
+  - Home: index.md
+  - Foundations:
+      - Overview: foundations/index.md
+      - Isolated Write Contexts: foundations/isolation.md
+      - Semantic Conflicts: foundations/semantic-conflicts.md
+  - Ownership:
+      - Overview: ownership/index.md
+      - Single Write Authority: ownership/single-write-authority.md
+      - CODEOWNERS & Domain Metadata: ownership/codeowners.md
+  - Decomposition:
+      - Overview: decomposition/index.md
+      - Work as a DAG: decomposition/dag.md
+      - Contracts as Barriers: decomposition/contracts.md
+  - Integration:
+      - Overview: integration/index.md
+      - Merge Queue: integration/merge-queue.md
+      - Stacked PRs: integration/stacked-prs.md
+  - Governance:
+      - Overview: governance/index.md
+      - Executable Architecture: governance/executable-architecture.md
+      - Knowledge in the Repo: governance/repo-knowledge.md
+      - Agent Identity & Permissions: governance/agent-identity.md
+  - Agents:
+      - Overview: agents/index.md
+      - The Agent Runtime: agents/runtime.md
+      - Verification: agents/verification.md
+      - Memory & Knowledge: agents/knowledge.md
+      - Evidence & Uncertainty: agents/evidence.md
+      - Roles & Review: agents/roles.md
+  - Platform:
+      - Overview: platform/index.md
+      - Reference Architecture: platform/reference-architecture.md
+      - Orchestration Landscape: platform/landscape.md
+      - Building on the Mature Stack: platform/mature-stack.md
+      - Five Primitives: platform/primitives.md
+  - Modernization:
+      - Overview: modernization/index.md
+      - Workflows: modernization/workflows.md
+      - Maturity Path: modernization/maturity.md
+  - Sources: sources.md
+
+# Antora-style version switcher, backed by mike (deploys versions to the gh-pages branch).
+# The dropdown only appears when viewed via `mike serve` / a mike-deployed site.
+extra:
+  version:
+    provider: mike

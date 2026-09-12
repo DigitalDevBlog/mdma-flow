@@ -1,0 +1,7 @@
+# Documentation tooling for "Multi-Developer, Multi-Agent"
+mkdocs-material>=9.5
+# Antora-style doc versioning + version switcher
+mike
+# Diagram-as-code rendering via Kroki (D2 / PlantUML / Mermaid / ...)
+# PINNED to 0.9.0 — v1.x pulls in a dependency that injects build-time warnings.
+mkdocs-kroki-plugin==0.9.0
