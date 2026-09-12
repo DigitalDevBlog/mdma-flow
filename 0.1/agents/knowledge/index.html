@@ -1724,6 +1724,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../platform/harness-capabilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Harness Capabilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../platform/mature-stack/" class="md-nav__link">
         
   
@@ -2118,6 +2146,17 @@ the repository.</p>
 "Algorithm Y originated from product generation Z."
 </code></pre></div>
 <p>That knowledge is dramatically more valuable than simply vectorizing the source code.</p>
+<div class="admonition example">
+<p class="admonition-title">In the harnesses</p>
+<p>Only one of the four ships a documented persistent memory store: Claude Code writes
+<a href="https://code.claude.com/docs/en/memory">per-project memory files</a>, an index loaded at startup
+plus topic files loaded on demand. The others rely on repository files and conversation
+history.</p>
+<p>That is a reason for care rather than enthusiasm. Harness memory is per user and per machine:
+it does not survive a new laptop, it is invisible to colleagues, and no reviewer ever sees it.
+It is a cache, not a knowledge base — which is exactly why durable knowledge has to land in the
+repository.</p>
+</div>
 <h2 id="dont-reduce-memory-to-a-vector-database">Don't reduce memory to a vector database<a class="headerlink" href="#dont-reduce-memory-to-a-vector-database" title="Permanent link">&para;</a></h2>
 <p>Vector search is useful, but an engineering knowledge system needs several representations:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNo9UEFqAzEMvPsVYq9NP7CHQqHQUy-hH1BsNSuya7uWlsaE_L2yHXIaz1gaaRS4kFdOcYaQ_qJzhXKaYToaCGsqFV5gYXm8tKC_UJEJbg5AFsw0g68rx0DF3Z3SVa3722CU2PdE24lC4HiWyZRgSkheDvD-cewKm8IiOxm7u3PBvJjy2fAxx6jU7ZTWXu-NelwHCZSbIWWyFaJn6mpbQmsejhspGv8yCKg4PFtIC2xZFs6tRZqt4A9pBb-iDJ82WkkURFH3rhWTCv3udrmNovYR_Wzw-gbtAE_SozxZW8P9AyQ0chA=?"></p>

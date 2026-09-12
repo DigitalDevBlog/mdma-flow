@@ -1680,6 +1680,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../platform/harness-capabilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Harness Capabilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../platform/mature-stack/" class="md-nav__link">
         
   
@@ -2006,6 +2034,43 @@ instructions <strong>inside the repository</strong>.</p>
 with repository-specific practices. Codex Skills follow a similar philosophy: encode team
 standards, scripts and workflows as reusable agent capabilities rather than relying on someone
 remembering the right prompt.</p>
+<p>Two conventions have since converged across harnesses: a <strong>repository instruction file</strong> loaded at
+startup, and <strong>on-demand capabilities</strong> — skills — that load only when relevant.</p>
+<div class="admonition example">
+<p class="admonition-title">In the harnesses</p>
+<ul>
+<li><strong>Claude Code</strong> — loads <a href="https://code.claude.com/docs/en/memory"><code>CLAUDE.md</code></a> from the
+  working directory upwards, with <code>@path</code> imports, so <code>AGENTS.md</code> is picked up by importing or
+  symlinking it. Path-scoped rules live in <code>.claude/rules/*.md</code> behind a <code>paths:</code> field, and
+  <a href="https://code.claude.com/docs/en/skills">skills</a> in <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.</li>
+<li><strong>Codex</strong> — walks <code>AGENTS.md</code> from the project root down to the working directory, closer
+  files winning, plus a global one;
+  <a href="https://learn.chatgpt.com/docs/customization/overview">skills</a> live under <code>.agents/skills/</code>.</li>
+<li><strong>GitHub Copilot</strong> — reads <code>.github/copilot-instructions.md</code>, <strong>path-scoped</strong>
+  <code>.github/instructions/**/*.instructions.md</code> with frontmatter, and also <code>AGENTS.md</code> and
+  <code>CLAUDE.md</code> for the cloud agent and CLI. Its
+  <a href="https://docs.github.com/en/copilot/reference/custom-instructions-support">support matrix</a> is
+  per surface — worth reading before assuming a file is loaded everywhere.</li>
+<li><strong>OpenHands</strong> — reads <code>AGENTS.md</code>, <code>CLAUDE.md</code> and <code>GEMINI.md</code>, with skills under
+  <code>.agents/skills/&lt;name&gt;/SKILL.md</code> carrying optional triggers and paths.</li>
+</ul>
+</div>
+<p>Two things follow.</p>
+<p><strong>Write for the neutral file.</strong> <code>AGENTS.md</code> is read, in some form, by all four. Keep it
+authoritative and make harness-specific files thin pointers to it — a one-line <code>CLAUDE.md</code> that
+imports <code>AGENTS.md</code> costs nothing and stops the two drifting apart.</p>
+<p><strong>Path-scoped instructions are your ownership domains in a second form.</strong> Copilot's
+<code>.instructions.md</code> frontmatter, Claude Code's <code>.claude/rules/</code> and OpenHands' skill paths all
+answer the question your <a href="../../ownership/codeowners/#the-extension-agents-need"><code>domains.yml</code></a>
+answers: <em>which guidance applies to this part of the tree?</em> Generate them from the same source, or
+they will disagree within a quarter.</p>
+<div class="admonition warning">
+<p class="admonition-title">Instructions guide; they do not enforce</p>
+<p>OpenHands is explicit that path-triggered rules only inject guidance and do not restrict
+actions — and that is true of every instruction file above. A path rule tells an agent what you
+would prefer. A <a href="../../agents/runtime/#how-this-is-enforced-in-practice">permission rule or a blocking hook</a>
+is what stops it. Use the first for intent, the second for boundaries.</p>
+</div>
 <p>I would go even further:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNpVjrEOwjAQQ_d8hVVmYIKhAxsTGzNLSFwaNb1USaqCEP9OAmJg8ul89jvrIk12QVrYsIhSPbVNLZqThMXT3oh-HrUkSIij9v5xkYGc4AS5p4v4BBo8FZB6PbHFxJiCqJfinaZUHYvMWV89MfxaGxU5hWKeiyDOnglbpMF5X4fMlP9LbTDzSMl1kx-em66clvyK-850u6bgvr9jfUAFV60M9QYQM0vF?"></p>
 <h2 id="why-the-repository-is-the-right-home">Why the repository is the right home<a class="headerlink" href="#why-the-repository-is-the-right-home" title="Permanent link">&para;</a></h2>

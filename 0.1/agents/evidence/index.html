@@ -1702,6 +1702,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../platform/harness-capabilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Harness Capabilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../platform/mature-stack/" class="md-nav__link">
         
   
@@ -2054,6 +2082,10 @@ insufficient</strong> — and a good platform treats that answer as a success, n
 
 <span class="nt">confidence</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.96</span>
 </code></pre></div>
+<p>For anything an agent <em>produced</em> rather than observed, record the <strong>model and its version</strong>
+alongside the evidence. It costs one field, and it is the only thing that will let you answer
+"did that change in behaviour arrive with the model upgrade?" — see
+<a href="../runtime/#decoupling-from-the-model">Decoupling from the model</a>.</p>
 <p>AI-generated understanding then becomes <strong>reviewable engineering evidence</strong> rather than
 mysterious model knowledge. Provenance is also what lets
 <a href="../knowledge/#leave-the-world-smarter">learned knowledge</a> be re-verified when the evidence it
@@ -2127,6 +2159,20 @@ is part of the audit trail — the "what did they actually do?" row in
 <a href="../../governance/agent-identity/#identity-is-what-makes-the-audit-trail-real">Agent Identity &amp; Permissions</a>.
 Emit it with the same tooling as the rest of your systems — OpenTelemetry and existing
 monitoring — rather than a bespoke agent log.</p>
+<div class="admonition example">
+<p class="admonition-title">In the harnesses</p>
+<ul>
+<li><strong>Claude Code</strong> — session transcripts as JSONL, plus hooks at each lifecycle point you can
+  use to emit your own events.</li>
+<li><strong>Codex</strong> — rollout files per session; <code>--ephemeral</code> skips them for CI runs.</li>
+<li><strong>OpenHands</strong> — <code>--headless --json</code> emits one JSON object per agent event, designed to be
+  parsed by a pipeline.</li>
+<li><strong>GitHub Copilot</strong> — enterprise audit events tagged with <code>actor_is_agent</code> and a session ID.</li>
+</ul>
+<p>All four record <em>what happened</em>. None records <em>why</em> in the sense this page means it —
+hypotheses formed, evidence weighed, alternatives rejected. That belongs to the work item's
+trace, and it is yours to write.</p>
+</div>
 
 
 

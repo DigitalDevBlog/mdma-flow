@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://digitaldevblog.github.io/mdma-flow/0.1/platform/mature-stack/">
       
       
-        <link rel="prev" href="../landscape/">
+        <link rel="prev" href="../harness-capabilities/">
       
       
         <link rel="next" href="../primitives/">
@@ -1608,6 +1608,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../harness-capabilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Harness Capabilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -1706,6 +1734,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Don&#39;t throw away Jenkins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-other-direction-ci-invoking-the-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The other direction: CI invoking the agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2041,6 +2086,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Don&#39;t throw away Jenkins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-other-direction-ci-invoking-the-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The other direction: CI invoking the agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2204,6 +2266,28 @@ actually builds and gets verified. It is incredibly valuable to the agent — an
 trusted by the people who will review the agent's work.</p>
 </div>
 <p>The same applies to GitHub Actions, GitLab CI or whatever else already gates your releases.</p>
+<h3 id="the-other-direction-ci-invoking-the-agent">The other direction: CI invoking the agent<a class="headerlink" href="#the-other-direction-ci-invoking-the-agent" title="Permanent link">&para;</a></h3>
+<p>The boundary works in reverse too. A pipeline step can run an agent non-interactively and consume a
+structured result:</p>
+<div class="admonition example">
+<p class="admonition-title">In the harnesses</p>
+<ul>
+<li><strong>Claude Code</strong> — <a href="https://code.claude.com/docs/en/headless"><code>claude -p --bare --output-format json</code></a>,
+  where <code>--bare</code> skips auto-discovery of hooks, skills and instruction files so the run is
+  reproducible, and <code>--allowedTools</code> pins what it may do.</li>
+<li><strong>Codex</strong> — <a href="https://learn.chatgpt.com/docs/cli/reference"><code>codex exec --json</code></a>, with
+  <code>--output-schema</code> to constrain the final message and <code>--ephemeral</code> to avoid persisting
+  session files on a shared runner.</li>
+<li><strong>OpenHands</strong> — <a href="https://docs.openhands.dev/openhands/usage/cli/headless"><code>--headless --json</code></a>,
+  one JSON object per event — but headless always auto-approves, so the sandbox and hooks are
+  the only remaining controls.</li>
+<li><strong>GitHub Copilot</strong> — <a href="https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference"><code>-p</code> in the CLI</a>
+  for a single non-interactive run.</li>
+</ul>
+</div>
+<p>Two rules keep this safe: run the agent in the pipeline's own sandbox with a scoped token, and
+treat its output as a <em>proposal</em> that the same pipeline then verifies. An agent step that both
+writes and judges its own work has removed the gate the pipeline exists for.</p>
 <h2 id="policy-as-code-opa">Policy as code: OPA<a class="headerlink" href="#policy-as-code-opa" title="Permanent link">&para;</a></h2>
 <p><a href="https://openpolicyagent.org/">Open Policy Agent</a> lets you express rules as policy-as-code and
 evaluate them deterministically. It is already used for policy enforcement in CI/CD, Kubernetes,
@@ -2233,6 +2317,9 @@ write-scope rule is the work item's change surface checked against the domain me
 <span class="w">    </span><span class="k">data</span><span class="p">.</span><span class="n">leases</span><span class="p">[</span><span class="nb">input</span><span class="p">.</span><span class="n">work_item</span><span class="p">.</span><span class="n">scope</span><span class="p">.</span><span class="n">domain</span><span class="p">]</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">input</span><span class="p">.</span><span class="n">work_item</span><span class="p">.</span><span class="n">id</span>
 <span class="p">}</span>
 </code></pre></div>
+<p>A harness hook is where that decision lands in practice: a <code>PreToolUse</code> hook queries OPA and denies
+the call when the answer is no — see
+<a href="../../agents/runtime/#how-this-is-enforced-in-practice">How this is enforced in practice</a>.</p>
 <p>Notice what that means: <strong>the AI doesn't enforce these rules. OPA does.</strong> Even if the agent
 concludes <em>"I think I'm allowed to change this"</em>, the answer is simply <code>DENIED</code>. The
 <a href="../../governance/#progressive-autonomy">progressive-autonomy table</a> belongs here too — it is
@@ -2346,6 +2433,10 @@ infrastructure you already trust.</p>
 <p>The <a href="https://modelcontextprotocol.io/">Model Context Protocol</a> is useful for standardizing how
 agents reach tools and external systems — GitHub, Jira, the filesystem, documentation, build
 infrastructure — through one protocol instead of bespoke integrations.</p>
+<p>It was created by Anthropic and has since been adopted across harnesses: Claude Code, Codex,
+Copilot's cloud agent and CLI, and OpenHands all act as MCP clients. That cross-vendor adoption is
+what makes it worth using — a tool you expose once stays reachable from whichever harness you run
+next year.</p>
 <p>But MCP does not solve:</p>
 <ul>
 <li>planning</li>

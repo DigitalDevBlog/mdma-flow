@@ -1702,6 +1702,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../platform/harness-capabilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Harness Capabilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../platform/mature-stack/" class="md-nav__link">
         
   
@@ -2071,6 +2099,26 @@ under what authority, with what evidence</em>.</p>
 </tr>
 </tbody>
 </table>
+<div class="admonition example">
+<p class="admonition-title">In the harnesses</p>
+<ul>
+<li><strong>GitHub Copilot</strong> — the strongest story, because the platform issues it: commits are
+  attributed to the agent with the dispatching human as co-author and are signed; the agent has
+  its own <a href="https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/configure-secrets-and-variables">secret scope</a>
+  separate from Actions and Codespaces; and
+  <a href="https://docs.github.com/en/copilot/reference/agentic-audit-log-events">audit events</a> carry an
+  <code>actor_is_agent</code> flag, the initiating user and a session ID.</li>
+<li><strong>Claude Code</strong> — session transcripts plus <a href="https://code.claude.com/docs/en/hooks">hook</a>
+  observability at each lifecycle point. That is a record, not an audit log: it lives on the
+  machine that ran the agent.</li>
+<li><strong>Codex</strong> — session rollout files, which CI runs can skip entirely with <code>--ephemeral</code>.</li>
+<li><strong>OpenHands</strong> — in the commercial tiers, every conversation is logged and tied to a user,
+  with cost attribution per organisation, user and conversation.</li>
+</ul>
+<p>The pattern is consistent: attribution is solid where a <em>platform</em> issues the identity, and thin
+where the agent runs on a developer's machine. If your agents run locally, the audit trail is
+something your control plane records — nobody records it for you.</p>
+</div>
 <div class="admonition danger">
 <p class="admonition-title">The anti-pattern to avoid</p>
 <p>Running agents under a developer's personal access token. It collapses identity, inflates
@@ -2111,6 +2159,10 @@ service that holds it:</p>
 injection above: there is no key in the context to exfiltrate, and no network route to exfiltrate
 it to. The pattern generalises to every tool an agent uses — see
 <a href="../../agents/runtime/#separate-intelligence-from-capabilities">The Agent Runtime</a>.</p>
+<p>Harness support for this is partial at best. OpenHands can inject declared secrets as environment
+variables and masks their values in command output; Copilot gives its cloud agent a dedicated
+secret scope. But no harness documents a guarantee that a credential never reaches the model's
+context. Treat the capability service as <em>your</em> control, not something the harness provides.</p>
 <h2 id="budget-and-blast-radius">Budget and blast radius<a class="headerlink" href="#budget-and-blast-radius" title="Permanent link">&para;</a></h2>
 <p>Two constraints that are easy to forget because humans have them implicitly:</p>
 <ul>

@@ -1611,6 +1611,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../harness-capabilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Harness Capabilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../mature-stack/" class="md-nav__link">
         
   
@@ -2100,8 +2128,11 @@ first:</p>
 <span class="w">  </span><span class="nt">code_owner</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reconstruction-team</span>
 <span class="w">  </span><span class="nt">architecture_change</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">human</span>
 </code></pre></div>
-<p>Codex could execute it today. OpenHands tomorrow. Claude next week. <strong>A human developer could
-execute exactly the same work item.</strong></p>
+<p>Codex could execute it today. OpenHands tomorrow. Claude Code next week. <strong>A human developer
+could execute exactly the same work item.</strong></p>
+<p><code>scope.writes</code> is also the field that becomes enforceable: it is what a harness permission rule or
+a blocking hook checks on every tool call — see
+<a href="../../agents/runtime/#how-this-is-enforced-in-practice">How this is enforced in practice</a>.</p>
 <p>That's a much more durable abstraction than any framework you could adopt instead.</p>
 <h3 id="two-scales-one-schema">Two scales, one schema<a class="headerlink" href="#two-scales-one-schema" title="Permanent link">&para;</a></h3>
 <p>The same shape works one level up. A programme-level goal — <em>modernize the reconstruction
