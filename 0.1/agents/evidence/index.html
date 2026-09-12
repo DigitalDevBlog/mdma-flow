@@ -2050,7 +2050,7 @@
 
 <h1 id="evidence-uncertainty">Evidence &amp; Uncertainty<a class="headerlink" href="#evidence-uncertainty" title="Permanent link">&para;</a></h1>
 <p><a href="../verification/">Verification</a> proves <em>changes</em>. But agents produce a second kind of output as
-well: <em>claims</em> — about what code does, why it exists, what depends on it. In regulated
+well: <em>claims</em>, about what code does, why it exists, what depends on it. In regulated
 engineering, claims need the same discipline as changes.</p>
 <h2 id="agents-must-be-allowed-to-say-unknown">Agents must be allowed to say "unknown"<a class="headerlink" href="#agents-must-be-allowed-to-say-unknown" title="Permanent link">&para;</a></h2>
 <p>One dangerous agent behaviour is confident guessing. An agent should be able to return:</p>
@@ -2067,7 +2067,7 @@ engineering, claims need the same discipline as changes.</p>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">request domain expert review</span>
 </code></pre></div>
 <p>This is especially important in regulated engineering. <strong>A good agent knows when the evidence is
-insufficient</strong> — and a good platform treats that answer as a success, not a failure to complete.</p>
+insufficient</strong>, and a good platform treats that answer as a success, not a failure to complete.</p>
 <h2 id="provenance">Provenance<a class="headerlink" href="#provenance" title="Permanent link">&para;</a></h2>
 <p>Every significant conclusion should be traceable. Instead of:</p>
 <blockquote>
@@ -2086,7 +2086,7 @@ insufficient</strong> — and a good platform treats that answer as a success, n
 </code></pre></div>
 <p>For anything an agent <em>produced</em> rather than observed, record the <strong>model and its version</strong>
 alongside the evidence. It costs one field, and it is the only thing that will let you answer
-"did that change in behaviour arrive with the model upgrade?" — see
+"did that change in behaviour arrive with the model upgrade?": see
 <a href="../runtime/#decoupling-from-the-model">Decoupling from the model</a>.</p>
 <p>AI-generated understanding then becomes <strong>reviewable engineering evidence</strong> rather than
 mysterious model knowledge. Provenance is also what lets
@@ -2130,7 +2130,7 @@ INFERENCE:   A appears responsible for detector calibration.
 HYPOTHESIS:  This ordering is required for image quality.
 ASSUMPTION:  Ordering must remain unchanged during refactoring.
 </code></pre></div>
-<p>The agent can then go looking for evidence — and a reviewer can see at a glance which parts of a
+<p>The agent can then go looking for evidence, and a reviewer can see at a glance which parts of a
 proposal rest on observation and which on belief. Hypotheses are also natural targets for
 <a href="../../modernization/workflows/#characterize-before-you-transform">characterization tests</a>: a
 test either confirms the ordering matters or shows that it doesn't.</p>
@@ -2157,21 +2157,21 @@ Goal
  → PR #4821
 </code></pre></div>
 <p>That trace is invaluable for debugging the agent system itself, and in a regulated environment it
-is part of the audit trail — the "what did they actually do?" row in
+is part of the audit trail: the "what did they actually do?" row in
 <a href="../../governance/agent-identity/#identity-is-what-makes-the-audit-trail-real">Agent Identity &amp; Permissions</a>.
-Emit it with the same tooling as the rest of your systems — OpenTelemetry and existing
-monitoring — rather than a bespoke agent log.</p>
+Emit it with the same tooling as the rest of your systems, OpenTelemetry and existing
+monitoring, rather than a bespoke agent log.</p>
 <div class="admonition example">
 <p class="admonition-title">In the harnesses</p>
 <ul>
-<li><strong>Claude Code</strong> — session transcripts as JSONL, plus hooks at each lifecycle point you can
+<li><strong>Claude Code</strong>: session transcripts as JSONL, plus hooks at each lifecycle point you can
   use to emit your own events.</li>
-<li><strong>Codex</strong> — rollout files per session; <code>--ephemeral</code> skips them for CI runs.</li>
-<li><strong>OpenHands</strong> — <code>--headless --json</code> emits one JSON object per agent event, designed to be
+<li><strong>Codex</strong>: rollout files per session; <code>--ephemeral</code> skips them for CI runs.</li>
+<li><strong>OpenHands</strong>: <code>--headless --json</code> emits one JSON object per agent event, designed to be
   parsed by a pipeline.</li>
-<li><strong>GitHub Copilot</strong> — enterprise audit events tagged with <code>actor_is_agent</code> and a session ID.</li>
+<li><strong>GitHub Copilot</strong>: enterprise audit events tagged with <code>actor_is_agent</code> and a session ID.</li>
 </ul>
-<p>All four record <em>what happened</em>. None records <em>why</em> in the sense this page means it —
+<p>All four record <em>what happened</em>. None records <em>why</em> in the sense this page means it:
 hypotheses formed, evidence weighed, alternatives rejected. That belongs to the work item's
 trace, and it is yours to write.</p>
 </div>

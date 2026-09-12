@@ -2055,8 +2055,8 @@
 <blockquote>
 <p>"Please modernize the ultrasound reconstruction module."</p>
 </blockquote>
-<p>represent the work structurally. This is the <a href="../../platform/primitives/">work item</a> — the same
-schema — one level up, at programme scope:</p>
+<p>represent the work structurally. This is the <a href="../../platform/primitives/">work item</a>: the same
+schema, one level up, at programme scope:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">work_item</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">MOD-212</span>
 <span class="w">  </span><span class="nt">objective</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Eliminate the deprecated imaging API and improve modularity of reconstruction</span>
@@ -2084,12 +2084,12 @@ schema — one level up, at programme scope:</p>
 <span class="w">  </span><span class="nt">architecture_change</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">human</span>
 <span class="w">  </span><span class="nt">release_merge</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">human</span>
 </code></pre></div>
-<p>A planner decomposes it into child work items — like <code>US-18432</code> on
-<a href="../../platform/primitives/#a-work-item-concretely">Five Primitives</a> — each inheriting these
+<p>A planner decomposes it into child work items, like <code>US-18432</code> on
+<a href="../../platform/primitives/#a-work-item-concretely">Five Primitives</a>, each inheriting these
 constraints and narrowing the scope.</p>
 <p>Now the agent has something much more powerful than natural-language instructions: <strong>an
 executable contract.</strong> <code>constraints</code> say what must stay true. <code>required_evidence</code> says how
-anyone — agent, reviewer or auditor — will know.</p>
+anyone, agent, reviewer or auditor, will know.</p>
 <h2 id="verification-is-the-heart-of-autonomous-engineering">Verification is the heart of autonomous engineering<a class="headerlink" href="#verification-is-the-heart-of-autonomous-engineering" title="Permanent link">&para;</a></h2>
 <p>Don't ask:</p>
 <blockquote>
@@ -2105,7 +2105,7 @@ requirements?</p>
 <p>The model is probabilistic. <strong>The verification pipeline should be as deterministic as possible.</strong></p>
 <p>This is why software engineering is an unusually attractive domain for agents. We already have
 compilers, type systems, linters, tests, simulators, static analysers, model checkers, coverage
-tools and version control — and <a href="../../governance/executable-architecture/">architecture rules can be made executable</a>
+tools and version control, and <a href="../../governance/executable-architecture/">architecture rules can be made executable</a>
 too.</p>
 <h2 id="verifier-driven-development">Verifier-driven development<a class="headerlink" href="#verifier-driven-development" title="Permanent link">&para;</a></h2>
 <p>Suppose the goal is <em>"Remove this CVE."</em> The agent shouldn't decide when it has succeeded.
@@ -2120,7 +2120,7 @@ performance:         within tolerance
 <p>Then the agent iterates against the verifiers, not against its own judgement:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNqlkDFLRDEMx_d-itCbFV6LgjcIbxGENwi3uvT60iPYa480noj43U17IDe4uTXtr_nln5UYo1AtW1jrRzEmTFuwswgeTwKTNdzrFkMpyPAy73avZf9OeYWn-Xmx8GUAmnxmvE2Us6KblNCjt7_3Tbi-YX-JDy64YM23Ce5K4lTS60vbi0KwSfufwl8plOVRL8sQ_NUU71NMd_2r7gBuHoEnDd8PY9q6b8hnbBDr8URZl4HMla1mGbDTEAPuHipKCh2C5oAUKFM5QM-kuB-4Nz-CB29P?"></p>
 <p>Now autonomous iteration becomes much safer. Every failure is an input to the next attempt, not a
-review finding — the same economics as
+review finding: the same economics as
 <a href="../../governance/executable-architecture/#why-this-changes-the-economics">executable architecture</a>.</p>
 <h2 id="wiring-verifiers-into-the-harness">Wiring verifiers into the harness<a class="headerlink" href="#wiring-verifiers-into-the-harness" title="Permanent link">&para;</a></h2>
 <p>Three mechanisms do most of the work, and each exists in more than one harness:</p>
@@ -2128,8 +2128,8 @@ review finding — the same economics as
 <p class="admonition-title">In the harnesses</p>
 <ul>
 <li><strong>Run the verifier automatically.</strong> Claude Code and
-  <a href="https://docs.openhands.dev/sdk/guides/hooks">OpenHands</a> can run checks from <code>Stop</code> hooks —
-  OpenHands explicitly recommends migrating pre-commit style checks to them — and Codex hooks
+  <a href="https://docs.openhands.dev/sdk/guides/hooks">OpenHands</a> can run checks from <code>Stop</code> hooks;
+  OpenHands explicitly recommends migrating pre-commit style checks to them, and Codex hooks
   act on <code>Stop</code> and <code>SubagentStop</code>, able to refuse to let a turn end.</li>
 <li><strong>Protect the verifier from the agent.</strong> Claude Code's <code>deny: Edit(tests/golden/**)</code>, Codex's
   filesystem <code>deny</code> globs and Copilot's <code>--deny-tool</code> all express "not this path". OpenHands
@@ -2139,20 +2139,20 @@ review finding — the same economics as
   give a pipeline something to parse instead of prose to interpret.</li>
 </ul>
 <p>One caveat for CI: OpenHands' headless mode always auto-approves, so there its confirmation
-policy is not a control at all — the sandbox and the hooks are what remain.</p>
+policy is not a control at all; the sandbox and the hooks are what remain.</p>
 </div>
 <p>The third mechanism is what makes an agent a step in a pipeline rather than a person at a keyboard.</p>
 <div class="admonition tip">
 <p class="admonition-title">Evidence is attached, not asserted</p>
 <p>The verifier outputs <em>are</em> the work item's <code>required_evidence</code>. Attached to the change set,
-they become the <a href="../../platform/primitives/">validation evidence</a> a reviewer or auditor reads
-— instead of trusting a model's self-report, which is optimistic by construction.</p>
+they become the <a href="../../platform/primitives/">validation evidence</a> a reviewer or auditor reads,
+instead of trusting a model's self-report, which is optimistic by construction.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Verifiers must be outside the agent's write scope</p>
 <p>An agent that can edit the tests it is judged by will, eventually, pass by editing the tests.
 Keep verification code, golden data and thresholds outside the change surface of the work
-item being verified — or require a human to approve any change to them.</p>
+item being verified, or require a human to approve any change to them.</p>
 </div>
 
 

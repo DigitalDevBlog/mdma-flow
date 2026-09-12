@@ -2095,11 +2095,11 @@
 <h1 id="memory-knowledge">Memory &amp; Knowledge<a class="headerlink" href="#memory-knowledge" title="Permanent link">&para;</a></h1>
 <p><a href="../../governance/repo-knowledge/">Knowledge in the Repo</a> is about <em>authored</em> knowledge: versioned
 files that humans and agents both read, reviewed like code. This page is about <em>derived</em> and
-<em>learned</em> knowledge — the indexes, graphs and memories an agent platform builds and queries.</p>
+<em>learned</em> knowledge: the indexes, graphs and memories an agent platform builds and queries.</p>
 <p>The two have a strict relationship:</p>
 <blockquote>
 <p><strong>The repository stays the source of truth.</strong> Everything on this page is either rebuildable
-from sources — code, history, trackers, repo-resident docs — or is a proposal on its way into
+from sources, code, history, trackers, repo-resident docs, or is a proposal on its way into
 the repository.</p>
 </blockquote>
 <h2 id="memory-is-not-just-conversation-history">Memory is not just conversation history<a class="headerlink" href="#memory-is-not-just-conversation-history" title="Permanent link">&para;</a></h2>
@@ -2156,7 +2156,7 @@ plus topic files loaded on demand. The others rely on repository files and conve
 history.</p>
 <p>That is a reason for care rather than enthusiasm. Harness memory is per user and per machine:
 it does not survive a new laptop, it is invisible to colleagues, and no reviewer ever sees it.
-It is a cache, not a knowledge base — which is exactly why durable knowledge has to land in the
+It is a cache, not a knowledge base, which is exactly why durable knowledge has to land in the
 repository.</p>
 </div>
 <h2 id="dont-reduce-memory-to-a-vector-database">Don't reduce memory to a vector database<a class="headerlink" href="#dont-reduce-memory-to-a-vector-database" title="Permanent link">&para;</a></h2>
@@ -2181,7 +2181,7 @@ repository.</p>
 </tr>
 <tr>
 <td>"Who owns this, and how critical is it?"</td>
-<td>Metadata — <a href="../../ownership/codeowners/">domain metadata</a> and the <a href="../../platform/mature-stack/#backstage">software catalog</a></td>
+<td>Metadata: <a href="../../ownership/codeowners/">domain metadata</a> and the <a href="../../platform/mature-stack/#backstage">software catalog</a></td>
 </tr>
 </tbody>
 </table>
@@ -2234,18 +2234,18 @@ engineering discipline of its own.</p>
 interoperability.</p>
 </blockquote>
 <p>Store that, with its evidence, and the next agent benefits. Repository understanding grows a
-little with every task — a compounding effect that is arguably worth more than any single change.</p>
+little with every task: a compounding effect that is arguably worth more than any single change.</p>
 <div class="admonition warning">
 <p class="admonition-title">Agent-written memory can lie too</p>
-<p>The rule from <a href="../../governance/repo-knowledge/">Knowledge in the Repo</a> — <em>documentation that
-lies is worse than none</em> — applies doubly to memory an agent wrote. So:</p>
+<p>The rule from <a href="../../governance/repo-knowledge/">Knowledge in the Repo</a>, <em>documentation that
+lies is worse than none</em>, applies doubly to memory an agent wrote. So:</p>
 <ul>
 <li>Every learned entry carries <strong>provenance</strong>: the files, lines, commits and documents it rests
-  on — see <a href="../evidence/#provenance">Evidence &amp; Uncertainty</a>.</li>
+  on: see <a href="../evidence/#provenance">Evidence &amp; Uncertainty</a>.</li>
 <li>It enters as a <strong>hypothesis</strong>, not a fact, until a human reviews it or a verifier confirms
   it.</li>
-<li>Durable knowledge lands <strong>in the repository, through a PR</strong> — for example under
-  <code>docs/domain/</code> — and the graph is rebuilt from it.</li>
+<li>Durable knowledge lands <strong>in the repository, through a PR</strong>, for example under
+  <code>docs/domain/</code>, and the graph is rebuilt from it.</li>
 <li>An entry is <strong>re-verified when the code it cites changes.</strong> A claim anchored to
   <code>TemporalFilter.cpp:42-193</code> is stale the moment those lines are.</li>
 </ul>

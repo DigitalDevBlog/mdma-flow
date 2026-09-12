@@ -1970,7 +1970,7 @@
 <div class="admonition info">
 <p class="admonition-title">How rendering works</p>
 <p>The plugin sends the diagram source to a Kroki server (default <code>https://kroki.io</code>,
-overridable with the <code>KROKI_SERVER_URL</code> environment variable — e.g. a local Docker Kroki for
+overridable with the <code>KROKI_SERVER_URL</code> environment variable, e.g. a local Docker Kroki for
 fully offline builds) and embeds the returned SVG. A network-reachable Kroki server is
 required at build time.</p>
 </div>
@@ -2019,7 +2019,7 @@ required at build time.</p>
 </tbody>
 </table>
 <p>Keep labels quoted and use <code>\n</code> for line breaks. Use <code>direction: down</code> for short pipelines and
-fan-ins, and <code>direction: right</code> for anything longer than about four steps — see below for why that
+fan-ins, and <code>direction: right</code> for anything longer than about four steps: see below for why that
 choice matters more than it looks.</p>
 <h3 id="keeping-diagrams-proportional">Keeping diagrams proportional<a class="headerlink" href="#keeping-diagrams-proportional" title="Permanent link">&para;</a></h3>
 <blockquote>
@@ -2027,7 +2027,7 @@ choice matters more than it looks.</p>
 </blockquote>
 <p>Kroki's D2 output carries a <code>viewBox</code> and no <code>width</code> or <code>height</code>, so the SVG has <strong>no intrinsic
 pixel size</strong>. It always stretches to the full width of the content column, and its height follows
-from the aspect ratio. The numbers in <code>viewBox="0 0 1045 284"</code> describe proportions, not pixels — no
+from the aspect ratio. The numbers in <code>viewBox="0 0 1045 284"</code> describe proportions, not pixels; no
 diagram is ever "1,045px wide" to a reader.</p>
 <p>At a content column of roughly 830px:</p>
 <table>
@@ -2056,7 +2056,7 @@ diagram is ever "1,045px wide" to a reader.</p>
 </tr>
 </tbody>
 </table>
-<p>So a ten-step vertical pipeline is not "a big diagram" — it is a diagram whose aspect ratio is 0.3,
+<p>So a ten-step vertical pipeline is not "a big diagram"; it is a diagram whose aspect ratio is 0.3,
 and it will fill several screens however short its labels are. Lay the chain out with
 <code>direction: right</code>, or group its steps into <code>grid-columns</code> stages.</p>
 <p>Two D2 behaviours make that harder than it sounds, both found by measuring rather than by reading:</p>
@@ -2070,7 +2070,7 @@ and it will fill several screens however short its labels are. Lay the chain out
 <tbody>
 <tr>
 <td><code>direction:</code> inside a container is ignored</td>
-<td>Nested <code>direction: right</code> does nothing — use <code>grid-columns: N</code> to place children side by side</td>
+<td>Nested <code>direction: right</code> does nothing: use <code>grid-columns: N</code> to place children side by side</td>
 </tr>
 <tr>
 <td>Edges <em>between children of a grid container</em> inflate the layout badly</td>
@@ -2090,7 +2090,7 @@ their children, and let the grid convey ordering within a stage.</p>
 <p>To check a diagram before committing it, POST the source to Kroki and read the <code>viewBox</code>: width ÷
 height is the aspect, and roughly 830 ÷ aspect is the height a reader will actually see.</p>
 <h2 id="plantuml">PlantUML<a class="headerlink" href="#plantuml" title="Permanent link">&para;</a></h2>
-<p>Used where the diagram is really a <em>flow</em> with forks and branches — activity diagrams need no
+<p>Used where the diagram is really a <em>flow</em> with forks and branches; activity diagrams need no
 extra layout engine and read well.</p>
 <div class="highlight"><pre><span></span><code><span class="sb">```kroki-plantuml</span>
 <span class="s">@startuml</span>

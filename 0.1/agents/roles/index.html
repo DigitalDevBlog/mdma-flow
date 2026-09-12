@@ -2047,24 +2047,24 @@ so cheap roles stay cheap.</p>
 <div class="admonition example">
 <p class="admonition-title">In the harnesses</p>
 <ul>
-<li><strong>Claude Code</strong> — <a href="https://code.claude.com/docs/en/sub-agents">subagents</a> are Markdown files
+<li><strong>Claude Code</strong>: <a href="https://code.claude.com/docs/en/sub-agents">subagents</a> are Markdown files
   with YAML frontmatter in <code>.claude/agents/&lt;name&gt;.md</code>, each with its own context window, an
   optional <code>tools:</code> allowlist, its own <code>model:</code>, and optional <code>isolation: worktree</code>. Up to 20
   run concurrently by default.</li>
-<li><strong>Codex</strong> — <a href="https://learn.chatgpt.com/docs/agent-configuration/subagents">subagents</a> are
+<li><strong>Codex</strong>: <a href="https://learn.chatgpt.com/docs/agent-configuration/subagents">subagents</a> are
   TOML files in <code>.codex/agents/</code>, with their own instructions and an optional model. Note the
   difference: they <strong>inherit the parent's context and permissions</strong> by default, so they
   separate roles without separating context.</li>
-<li><strong>GitHub Copilot</strong> — <a href="https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/custom-agents">custom agents</a>
+<li><strong>GitHub Copilot</strong>: <a href="https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/custom-agents">custom agents</a>
   carry their own system prompt, a restricted tool set and optional MCP servers, and run in
   isolated execution with lifecycle events reported back to the parent session.</li>
-<li><strong>OpenHands</strong> — <a href="https://docs.openhands.dev/sdk/guides/agent-file-based">file-based agents</a>
+<li><strong>OpenHands</strong>: <a href="https://docs.openhands.dev/sdk/guides/agent-file-based">file-based agents</a>
   are Markdown with YAML frontmatter in <code>.agents/agents/</code>, carrying <code>tools:</code> and <code>model:</code>
   fields. Delegated sub-agents get their own conversation context but run <strong>synchronously</strong>,
   so there is no parallel fan-out.</li>
 </ul>
 </div>
-<p>You might even use different model providers for different roles — which is one more argument for
+<p>You might even use different model providers for different roles, which is one more argument for
 keeping the model out of your <a href="../../platform/primitives/">primitives</a>.</p>
 <h2 id="separate-proposer-and-reviewer">Separate proposer and reviewer<a class="headerlink" href="#separate-proposer-and-reviewer" title="Permanent link">&para;</a></h2>
 <p>Don't let the same agent be the only judge of its own work:</p>
@@ -2076,14 +2076,14 @@ keeping the model out of your <a href="../../platform/primitives/">primitives</a
 <p>That tends to work considerably better. The general form of the rule is
 <strong>planner ≠ implementer ≠ verifier</strong>: the agent that decomposes the work, the agent that changes
 the code, and the thing that decides whether the change is acceptable should never be the same
-actor. The last one should preferably not be an agent at all — see <a href="../verification/">Verification</a>.</p>
+actor. The last one should preferably not be an agent at all: see <a href="../verification/">Verification</a>.</p>
 <p>A read-only reviewer is directly expressible: restrict the reviewer role to read and search tools
 and it <em>cannot</em> edit what it is judging, whatever the model decides. OpenHands' own file-based
 agent example is called <code>code-reviewer</code>; Copilot's code review now gives a full agentic review to
 pull requests its own cloud agent opened; Codex can route approval decisions to a reviewer
 sub-agent that fails closed when it can't parse a result.</p>
 <p>What none of them enforces is that the reviewer must be a <em>different</em> agent from the author, or
-that its verdict gates anything. Both of those are yours to impose — see
+that its verdict gates anything. Both of those are yours to impose: see
 <a href="../../governance/">Governance</a>.</p>
 <h2 id="dont-start-with-multi-agent">Don't start with multi-agent<a class="headerlink" href="#dont-start-with-multi-agent" title="Permanent link">&para;</a></h2>
 <p>This is a trap. It is tempting to begin with a planner agent, an architect agent, a developer
@@ -2094,17 +2094,17 @@ agents talking endlessly to other agents.</p>
 <p>Then identify genuine bottlenecks, and only split roles where the separation provides value.
 There are two obvious cases:</p>
 <ul>
-<li><strong>Reviewer versus implementer</strong> — for the reasons above.</li>
-<li><strong>Parallel independent work</strong> — separate work items in separate domains.</li>
+<li><strong>Reviewer versus implementer</strong>: for the reasons above.</li>
+<li><strong>Parallel independent work</strong>: separate work items in separate domains.</li>
 </ul>
 <div class="admonition note">
-<p class="admonition-title">One agent per work item — many work items in parallel</p>
+<p class="admonition-title">One agent per work item, many work items in parallel</p>
 <p>This doesn't contradict the rest of the site. <em>Many agents</em>, elsewhere on this site, means
 many independent work items running in parallel, each handled by one agent in its own
 <a href="../../foundations/isolation/">isolated context</a>. What to avoid early is many agents <em>per work
-item</em> — a committee of role-agents negotiating over one change.</p>
+item</em>: a committee of role-agents negotiating over one change.</p>
 <p>The agent hierarchy in the <a href="../../modernization/">modernization overview</a> is a mature
-target — stage 6 of the <a href="../../modernization/maturity/">maturity path</a> — not a starting
+target, stage 6 of the <a href="../../modernization/maturity/">maturity path</a>, not a starting
 configuration.</p>
 <p>The harness defaults point the same way: 20 concurrent subagents in Claude Code, a
 configurable per-session cap in Codex, strictly synchronous delegation in OpenHands. None of

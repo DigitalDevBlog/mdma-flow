@@ -2081,7 +2081,7 @@ under what authority, with what evidence</em>.</p>
 <tbody>
 <tr>
 <td>Who made this change?</td>
-<td>Distinct agent identity — never a shared human account</td>
+<td>Distinct agent identity, never a shared human account</td>
 </tr>
 <tr>
 <td>What were they allowed to do?</td>
@@ -2104,22 +2104,22 @@ under what authority, with what evidence</em>.</p>
 <div class="admonition example">
 <p class="admonition-title">In the harnesses</p>
 <ul>
-<li><strong>GitHub Copilot</strong> — the strongest story, because the platform issues it: commits are
+<li><strong>GitHub Copilot</strong>: the strongest story, because the platform issues it: commits are
   attributed to the agent with the dispatching human as co-author and are signed; the agent has
   its own <a href="https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-cloud-agent/configure-secrets-and-variables">secret scope</a>
   separate from Actions and Codespaces; and
   <a href="https://docs.github.com/en/copilot/reference/agentic-audit-log-events">audit events</a> carry an
   <code>actor_is_agent</code> flag, the initiating user and a session ID.</li>
-<li><strong>Claude Code</strong> — session transcripts plus <a href="https://code.claude.com/docs/en/hooks">hook</a>
+<li><strong>Claude Code</strong>: session transcripts plus <a href="https://code.claude.com/docs/en/hooks">hook</a>
   observability at each lifecycle point. That is a record, not an audit log: it lives on the
   machine that ran the agent.</li>
-<li><strong>Codex</strong> — session rollout files, which CI runs can skip entirely with <code>--ephemeral</code>.</li>
-<li><strong>OpenHands</strong> — in the commercial tiers, every conversation is logged and tied to a user,
+<li><strong>Codex</strong>: session rollout files, which CI runs can skip entirely with <code>--ephemeral</code>.</li>
+<li><strong>OpenHands</strong>: in the commercial tiers, every conversation is logged and tied to a user,
   with cost attribution per organisation, user and conversation.</li>
 </ul>
 <p>The pattern is consistent: attribution is solid where a <em>platform</em> issues the identity, and thin
 where the agent runs on a developer's machine. If your agents run locally, the audit trail is
-something your control plane records — nobody records it for you.</p>
+something your control plane records; nobody records it for you.</p>
 </div>
 <div class="admonition danger">
 <p class="admonition-title">The anti-pattern to avoid</p>
@@ -2138,7 +2138,7 @@ injection:</p>
 <span class="cm">*/</span>
 </code></pre></div>
 <p>Source code, documents, tickets and websites must all be treated as <strong>untrusted data</strong>, never as
-instructions. The agent runtime — not the model — has to enforce:</p>
+instructions. The agent runtime, not the model, has to enforce:</p>
 <ul>
 <li>filesystem permissions</li>
 <li>network permissions</li>
@@ -2159,7 +2159,7 @@ service that holds it:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNpVUEFOxDAMvPcVVve8PXGhByRO8I00cVqLbFNsJ2iF-PvaYkFwSezM2DOTRIxRqe4zpPqxD0NYcdcZxme_R_gcAGQLB85wIEvdh69BejTCC-lrWyCGIyxUSK8gyJ0i3of0WnDKVIpxTznnx7SM9t6t7aFQCoriOy8kYvqO-VpGZcJuWGRM5oFCcawaZuxc-SJQrQp6n-pwfoLoRzVz6_br7Z_7WGpLhn8HdLbFmNyN6ZgXOFopwPjeUHT0jFN11rp57dXPzzBKK_o3pSjXNzynICb-YCI3PjptYQ==?"></p>
 <p>This is the same principle as any good secrets-management architecture, and it defuses the
 injection above: there is no key in the context to exfiltrate, and no network route to exfiltrate
-it to. The pattern generalises to every tool an agent uses — see
+it to. The pattern generalises to every tool an agent uses: see
 <a href="../../agents/runtime/#separate-intelligence-from-capabilities">The Agent Runtime</a>.</p>
 <p>Harness support for this is partial at best. OpenHands can inject declared secrets as environment
 variables and masks their values in command output; Copilot gives its cloud agent a dedicated
@@ -2169,7 +2169,7 @@ context. Treat the capability service as <em>your</em> control, not something th
 <p>Two constraints that are easy to forget because humans have them implicitly:</p>
 <ul>
 <li><strong>Budget.</strong> A human stops when the work feels disproportionate. An agent does not. A token or
-  wall-clock budget per work item is a correctness mechanism, not just a cost one — a task that
+  wall-clock budget per work item is a correctness mechanism, not just a cost one: a task that
   blows its budget is usually a task that was under-specified.</li>
 <li><strong>Network scope.</strong> An unattended agent with general internet access and repository credentials
   is a meaningful exfiltration surface. Default to a package mirror and the repository host;

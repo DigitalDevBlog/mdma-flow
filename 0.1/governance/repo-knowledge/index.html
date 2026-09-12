@@ -2037,29 +2037,29 @@ with repository-specific practices. Codex Skills follow a similar philosophy: en
 standards, scripts and workflows as reusable agent capabilities rather than relying on someone
 remembering the right prompt.</p>
 <p>Two conventions have since converged across harnesses: a <strong>repository instruction file</strong> loaded at
-startup, and <strong>on-demand capabilities</strong> — skills — that load only when relevant.</p>
+startup, and <strong>on-demand capabilities</strong> (skills) that load only when relevant.</p>
 <div class="admonition example">
 <p class="admonition-title">In the harnesses</p>
 <ul>
-<li><strong>Claude Code</strong> — loads <a href="https://code.claude.com/docs/en/memory"><code>CLAUDE.md</code></a> from the
+<li><strong>Claude Code</strong>: loads <a href="https://code.claude.com/docs/en/memory"><code>CLAUDE.md</code></a> from the
   working directory upwards, with <code>@path</code> imports, so <code>AGENTS.md</code> is picked up by importing or
   symlinking it. Path-scoped rules live in <code>.claude/rules/*.md</code> behind a <code>paths:</code> field, and
   <a href="https://code.claude.com/docs/en/skills">skills</a> in <code>.claude/skills/&lt;name&gt;/SKILL.md</code>.</li>
-<li><strong>Codex</strong> — walks <code>AGENTS.md</code> from the project root down to the working directory, closer
+<li><strong>Codex</strong>: walks <code>AGENTS.md</code> from the project root down to the working directory, closer
   files winning, plus a global one;
   <a href="https://learn.chatgpt.com/docs/customization/overview">skills</a> live under <code>.agents/skills/</code>.</li>
-<li><strong>GitHub Copilot</strong> — reads <code>.github/copilot-instructions.md</code>, <strong>path-scoped</strong>
+<li><strong>GitHub Copilot</strong>: reads <code>.github/copilot-instructions.md</code>, <strong>path-scoped</strong>
   <code>.github/instructions/**/*.instructions.md</code> with frontmatter, and also <code>AGENTS.md</code> and
   <code>CLAUDE.md</code> for the cloud agent and CLI. Its
   <a href="https://docs.github.com/en/copilot/reference/custom-instructions-support">support matrix</a> is
-  per surface — worth reading before assuming a file is loaded everywhere.</li>
-<li><strong>OpenHands</strong> — reads <code>AGENTS.md</code>, <code>CLAUDE.md</code> and <code>GEMINI.md</code>, with skills under
+  per surface: worth reading before assuming a file is loaded everywhere.</li>
+<li><strong>OpenHands</strong>: reads <code>AGENTS.md</code>, <code>CLAUDE.md</code> and <code>GEMINI.md</code>, with skills under
   <code>.agents/skills/&lt;name&gt;/SKILL.md</code> carrying optional triggers and paths.</li>
 </ul>
 </div>
 <p>Two things follow.</p>
 <p><strong>Write for the neutral file.</strong> <code>AGENTS.md</code> is read, in some form, by all four. Keep it
-authoritative and make harness-specific files thin pointers to it — a one-line <code>CLAUDE.md</code> that
+authoritative and make harness-specific files thin pointers to it: a one-line <code>CLAUDE.md</code> that
 imports <code>AGENTS.md</code> costs nothing and stops the two drifting apart.</p>
 <p><strong>Path-scoped instructions are your ownership domains in a second form.</strong> Copilot's
 <code>.instructions.md</code> frontmatter, Claude Code's <code>.claude/rules/</code> and OpenHands' skill paths all
@@ -2069,7 +2069,7 @@ they will disagree within a quarter.</p>
 <div class="admonition warning">
 <p class="admonition-title">Instructions guide; they do not enforce</p>
 <p>OpenHands is explicit that path-triggered rules only inject guidance and do not restrict
-actions — and that is true of every instruction file above. A path rule tells an agent what you
+actions. That is true of every instruction file above. A path rule tells an agent what you
 would prefer. A <a href="../../agents/runtime/#how-this-is-enforced-in-practice">permission rule or a blocking hook</a>
 is what stops it. Use the first for intent, the second for boundaries.</p>
 </div>
@@ -2116,17 +2116,17 @@ reviewed, diffable and shared by every agent and every human who clones it.</p>
 </table>
 <p>That last row is worth dwelling on. The best test of a repository's agent documentation is
 whether a new human engineer could onboard from it. If it isn't good enough for them, it isn't
-good enough for an agent either — agents are just less likely to complain.</p>
+good enough for an agent either. Agents are just less likely to complain.</p>
 <h2 id="the-layering-that-works">The layering that works<a class="headerlink" href="#the-layering-that-works" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><code>AGENTS.md</code></strong> — short, stable, and about <em>this repository</em>: how to build, how to test, what
+<li><strong><code>AGENTS.md</code></strong>: short, stable, and about <em>this repository</em>: how to build, how to test, what
   conventions are non-negotiable, what never to touch. Keep it short enough that it is always
   worth loading.</li>
-<li><strong><code>.agents/*.md</code></strong> — task-shaped guides loaded on demand: how a migration is done here, how
+<li><strong><code>.agents/*.md</code></strong>: task-shaped guides loaded on demand: how a migration is done here, how
   security review works here.</li>
-<li><strong><code>docs/decisions/</code></strong> — ADRs. Agents reproduce decisions they can read and re-litigate ones
+<li><strong><code>docs/decisions/</code></strong>: ADRs. Agents reproduce decisions they can read and re-litigate ones
   they can't.</li>
-<li><strong><code>scripts/</code></strong> — the executable layer. Anything a document <em>asks</em> someone to do is better as a
+<li><strong><code>scripts/</code></strong>: the executable layer. Anything a document <em>asks</em> someone to do is better as a
   script the agent can run and the CI can enforce.</li>
 </ul>
 <div class="admonition warning">

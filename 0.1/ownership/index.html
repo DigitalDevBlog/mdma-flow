@@ -2009,7 +2009,7 @@
 Ownership is the missing coordinate.</p>
 <p>In a human-only organisation, ownership is mostly social: teams know their areas, and the
 overlaps get negotiated in conversation. That mechanism does not survive contact with a dozen
-agents working simultaneously — agents don't negotiate, and they don't know what they weren't
+agents working simultaneously: agents don't negotiate, and they don't know what they weren't
 told.</p>
 <p>So ownership has to become <strong>explicit, scoped and machine-readable</strong>.</p>
 <h2 id="three-questions-an-ownership-model-has-to-answer">Three questions an ownership model has to answer<a class="headerlink" href="#three-questions-an-ownership-model-has-to-answer" title="Permanent link">&para;</a></h2>
@@ -2023,15 +2023,15 @@ told.</p>
 <tbody>
 <tr>
 <td>What are the units of ownership?</td>
-<td><strong>Ownership domains</strong> — path sets that correspond to architectural boundaries</td>
+<td><strong>Ownership domains</strong>: path sets that correspond to architectural boundaries</td>
 </tr>
 <tr>
 <td>Who may write to a domain <em>right now</em>?</td>
-<td><strong>Single Write Authority</strong> — a lease held by exactly one active change set</td>
+<td><strong>Single Write Authority</strong>: a lease held by exactly one active change set</td>
 </tr>
 <tr>
 <td>Who must approve a change to a domain?</td>
-<td><strong>Code owners</strong> — the existing <code>CODEOWNERS</code> mechanism, extended</td>
+<td><strong>Code owners</strong>: the existing <code>CODEOWNERS</code> mechanism, extended</td>
 </tr>
 </tbody>
 </table>
@@ -2041,15 +2041,15 @@ told.</p>
 first.</p>
 <div class="admonition note">
 <p class="admonition-title">Ownership is about <em>write</em> scope, not <em>read</em> scope</p>
-<p>Everyone — and every agent — should be able to read the whole repository. Restricting reads
+<p>Everyone, and every agent, should be able to read the whole repository. Restricting reads
 makes agents dumber. Restricting concurrent writes makes the system safer. These are
 opposite levers and it is worth being deliberate about pulling only one of them.</p>
 </div>
 <h2 id="pages-in-this-section">Pages in this section<a class="headerlink" href="#pages-in-this-section" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="single-write-authority/">Single Write Authority</a> — the core idea, and how to scope it so it
+<li><a href="single-write-authority/">Single Write Authority</a>: the core idea, and how to scope it so it
   doesn't just serialize your entire organisation</li>
-<li><a href="codeowners/">CODEOWNERS &amp; Domain Metadata</a> — what exists today, and the extension agents
+<li><a href="codeowners/">CODEOWNERS &amp; Domain Metadata</a>: what exists today, and the extension agents
   need</li>
 </ul>
 

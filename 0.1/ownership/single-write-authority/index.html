@@ -2070,7 +2070,7 @@ scope it correctly:</p>
 <td>A lease that outlives its PR is a lock you forgot to release</td>
 </tr>
 <tr>
-<td><strong>Explicit</strong> — recorded, not implied</td>
+<td><strong>Explicit</strong>: recorded, not implied</td>
 <td>An agent can't respect a boundary it can't read</td>
 </tr>
 </tbody>
@@ -2100,7 +2100,7 @@ theory transfers remarkably well:</p>
 </tr>
 <tr>
 <td>Transaction</td>
-<td>Change set — begins with a lease, ends with a merge or an abort</td>
+<td>Change set: begins with a lease, ends with a merge or an abort</td>
 </tr>
 <tr>
 <td>Commit / rollback</td>
@@ -2122,9 +2122,9 @@ theory transfers remarkably well:</p>
 </table>
 <p>Within a domain, the write path is <strong>pessimistic</strong>:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNqNUL1OwzAQ3v0UJ3erKJXagtQMSO2OQB2YWBz7HCwSJz07RFXFygP0EXkSfHH5GRi6nL77pPt-zjhCHV3rCzDt4IVQet8nrgC5yQgGchGhRhXw2QfSc9eoyvlqPp1KOAqAEA81XltX1-lqYq1dm1KKd9G0xtlD4u5HIMUbUiaeRiBFR2l56NDD4w4-P07QIFUI-x57lIJwNGUBpq_gTOQs_3njrdX2hr1LLlChj7BNZ0kwxHBZelziUv7wIVL7yhEmer1QC8Xa3z-C2R3kjoxyOUYd8TyHFSUvv18dlIvhr3N2mBkVXgpYJfkv5kmCDw==?"></p>
-<p><strong>Optimistic</strong> concurrency still has a place — <em>between</em> domains. Two writers in different
+<p><strong>Optimistic</strong> concurrency still has a place: <em>between</em> domains. Two writers in different
 domains both start from commit 123:</p>
-<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNp1kMFKQzEQRffzFUNcV1CrYBdS_QqFt5lkJu8F03klSdVSCv0Iv9AvMS-VWhBXuWFO7r0TDklcCaMukMd3BbCUZYGmpI2-4hKvrm8M7gAxD7SuA7eNQVkS7IEq9ohfh8_6ckVB8bnTdRp54ySjG0h7wSzFgK3g0zn48g8YSbmZriT1kjv9bTH_aVG2US59iLFyF3Lnnb81tUuSN4otJsmsysBUhDulvublcmZwXGOQD-pH_ePovb9nOzm2j8DZA9JJWaDpmFq2qtOlBYM9yWrS8ONabOAb2KVwYg==?"></p>
+<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNp1kEFPAyEQhe_zKyb0XBNtNbEHo_0VmuxlYIZdIp1tgKpN0_9e2JrVxHjiAR_vvYFDElfCqBvk8VMBLGXZoCnpoO_4jLd3K4MnQMwD7euFO8agLAnOQBV7ac92FBRfO92nkQ9OMrqBtBfMUgzYSm1n6u0fKpJys8OdpF5ypz_56-_8coxy40OMlVvIg3f-3tQWST6oHW0xybLKwFSEO6W-5uXyy-A6wCBf1I_6x9F7_8i2OU5fgMsnpFlZoLa0llPVtpmCwc6ymkz4dSw2cAFbEGyq?"></p>
 <p>That re-validation is exactly what the <a href="../../integration/merge-queue/">merge queue</a> does. So the
 rule is:</p>
 <blockquote>

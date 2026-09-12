@@ -2059,7 +2059,7 @@ not in their infrastructure.</p>
 <blockquote>
 <p><strong>Understand by observing before transforming.</strong></p>
 </blockquote>
-<p>Agents are well suited to generating these characterization harnesses — it is exactly the kind of
+<p>Agents are well suited to generating these characterization harnesses; it is exactly the kind of
 careful, tedious, high-volume work humans postpone. For old C and C++ medical-device software it
 can be enormously valuable, and it is why characterization sits near the root of the
 <a href="../../decomposition/dag/#characterization-tests-come-first-for-a-reason">migration DAG</a>: it turns
@@ -2092,13 +2092,13 @@ belongs in the work item's <code>required_evidence</code>, with its tolerance in
 changing externally observable behaviour</em>:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNptkL1OBDEMhHs_hRVKBB1IXIHEQYNOJ5DgBZzE4awL2VV-Fq0Q7469FQXVl8xE43GiVA5dprLDOH0VgOanzx26t_3L0cG5qKa3gxGXkQtX8pKlCzcHkWc1n3jmErmEFalQXpuoFahE9R4VEqkzjtng8BsQW18zXyfJWZ9cpJTuonfwAzSLCg-vz-gr0_lPXKvBSk2jBsZwovJh85tOUXk_JEe8xMZhVOkrmu5gIYt_59abmp5PtIgGoOpWSXf-rw3fppBurM32FXh1j9sv2EH3NdhuRq1r0G4bVDZqPPwC8ztuEw==?"></p>
 <p>This is the canonical case for <a href="../../agents/verification/#verifier-driven-development">verifier-driven development</a>:
-the scanner, the build and the tests define success, not the agent. At portfolio scale — the same
-CVE across twenty repositories — it is also the canonical <a href="../../platform/reference-architecture/#one-flow-end-to-end">end-to-end flow</a>.</p>
+the scanner, the build and the tests define success, not the agent. At portfolio scale (the same
+CVE across twenty repositories) it is also the canonical <a href="../../platform/reference-architecture/#one-flow-end-to-end">end-to-end flow</a>.</p>
 <h2 id="architecture-recovery">Architecture recovery<a class="headerlink" href="#architecture-recovery" title="Permanent link">&para;</a></h2>
 <p>Architecture recovery can itself be agentic. An agent can recursively discover:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNp1kTFPAzEMhff7FdExtwMIhhuQQO2IhDqz5BJfa0icI3FaToj_jp2iLsAU3_eek3e2xwyOMdFgfDpR13ksLh0hD6bf_JS9-eyM2Wf0K5dCjVQGcy0kw5zEtpOjIKe89ALHisELfdTTlKUwxMZR2_rtB7jKdgxQXsiSNwHHbDNCUVNMXk1Pydeg5KvzkPEIGqYV_0XByTrQ1uc6BnQGiSE31je_nQ_tjhnIA7nljFSbQjpp464SY4TztwoukYOZVdukaJEuRHOlyiI8ZAZ5RVDLVXgJsJ4wBNGu4G5y023_K--NECsGm90BWaZfM6xfSyK16uh8e24lw4BwEfYq_JFfF5XhvcoeIxDLPOmt5dd8DIVNtLMmvmzWrO7NeaxayY9030udp00=?"></p>
 <p>Future agents then consume these artefacts instead of rediscovering everything. That is how the
-system gradually acquires organisational intelligence — provided the artefacts follow the same
+system gradually acquires organisational intelligence, provided the artefacts follow the same
 rules as any other <a href="../../agents/knowledge/#leave-the-world-smarter">learned knowledge</a>: committed
 to the repository, reviewed, and re-derived when the code moves.</p>
 <p>Two by-products are worth calling out:</p>
@@ -2106,7 +2106,7 @@ to the repository, reviewed, and re-derived when the code moves.</p>
 <li><strong>Recovered module boundaries are the first draft of your ownership domains.</strong> They are the
   natural input to <a href="../../ownership/codeowners/#the-extension-agents-need"><code>domains.yml</code></a>.</li>
 <li><strong>The dependency graph is an honest modularity score.</strong> It predicts how many agents can work in
-  parallel before they do — see <a href="../../platform/#agent-scalability-is-architecture-scalability">Platform</a>.</li>
+  parallel before they do: see <a href="../../platform/#agent-scalability-is-architecture-scalability">Platform</a>.</li>
 </ul>
 
 

@@ -2035,7 +2035,7 @@ individuals or teams, and GitHub can require approval from those owners before m
 /src/security/         @security-team
 /src/platform/         @platform-team
 </code></pre></div>
-<p>That solves <em>review authority</em>. It does not solve <em>write authority</em> — nothing stops four agents
+<p>That solves <em>review authority</em>. It does not solve <em>write authority</em>: nothing stops four agents
 opening four overlapping PRs against <code>/src/reconstruction/</code> at the same time, each of which will
 eventually be reviewed by the same overloaded team.</p>
 <h2 id="the-extension-agents-need">The extension agents need<a class="headerlink" href="#the-extension-agents-need" title="Permanent link">&para;</a></h2>
@@ -2103,8 +2103,8 @@ describe ownership independently will disagree within a quarter, and the disagre
 surface as an agent doing something nobody authorised.</p>
 </div>
 <h2 id="the-shared-model-problem">The <code>shared-model</code> problem<a class="headerlink" href="#the-shared-model-problem" title="Permanent link">&para;</a></h2>
-<p>Note the third entry above. Every codebase has a shared kernel — the domain model, the core
-types, the cross-cutting interfaces — and that is exactly where agent parallelism hurts most,
+<p>Note the third entry above. Every codebase has a shared kernel (the domain model, the core
+types, the cross-cutting interfaces) and that is exactly where agent parallelism hurts most,
 because every task has a reason to touch it.</p>
 <p>Two rules help:</p>
 <ol>

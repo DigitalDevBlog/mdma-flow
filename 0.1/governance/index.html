@@ -2056,28 +2056,28 @@
 specialist review is itself automated, and human attention is spent where risk actually is:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNo1jrEOwjAMRPd8hRVm2OmAxAYzjCxp6hCLNi2JQ1Uh_h0b1Ok5d5HudZTRM42pgW6ckzE0TH0D9izAARM7LcHd5bSGsbCUV8EaFfSSXNDXTLysqcs-SnwUEMtAzbhWsQ5O1uxJCRlfhPMtzRHlS6bykOhZxaoAsYW3ASjRTdjAhLmMSd-89LgL1KvoJoSw71prPn932B5ANZXiplAZ5W_ZfAGND1C7?"></p>
 <p>Each reviewer in that chain is deliberately a different agent from the one that wrote the
-change — see <a href="../agents/roles/#separate-proposer-and-reviewer">Roles &amp; Review</a>.</p>
+change: see <a href="../agents/roles/#separate-proposer-and-reviewer">Roles &amp; Review</a>.</p>
 <p>GitHub now provides agentic code review as part of its workflow, while explicitly noting that
 agent-generated PRs still deserve proper review. That is now the norm rather than a
 differentiator, and the implementations differ in ways that matter for pipeline design.</p>
 <div class="admonition example">
 <p class="admonition-title">In the harnesses</p>
 <ul>
-<li><strong>Claude Code</strong> — <a href="https://code.claude.com/docs/en/code-review">code review</a> runs several
+<li><strong>Claude Code</strong>: <a href="https://code.claude.com/docs/en/code-review">code review</a> runs several
   specialized agents over a diff in parallel, each looking for a different class of issue,
   then applies a verification step that filters false positives before ranking what survives.</li>
-<li><strong>GitHub Copilot</strong> — <a href="https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-automatic-review">automatic review</a>
+<li><strong>GitHub Copilot</strong>: <a href="https://docs.github.com/en/copilot/how-tos/copilot-on-github/set-up-copilot/configure-automatic-review">automatic review</a>
   can be required by repository ruleset, and now gives a full agentic review to pull requests
   its own cloud agent opened.</li>
-<li><strong>Codex</strong> — <a href="https://learn.chatgpt.com/docs/agent-approvals-security">approval review</a> routes
+<li><strong>Codex</strong>: <a href="https://learn.chatgpt.com/docs/agent-approvals-security">approval review</a> routes
   risky actions to a reviewer sub-agent that scores them and fails closed when it cannot parse
   a result.</li>
-<li><strong>OpenHands</strong> — a critic scores work during execution and drives iterative refinement,
+<li><strong>OpenHands</strong>: a critic scores work during execution and drives iterative refinement,
   though it is explicitly experimental.</li>
 </ul>
 </div>
-<p>Two things vary across that list, and both matter: <strong>when</strong> the review happens — during execution,
-on the diff, or at an approval gate — and <strong>whether a failed review blocks anything</strong>. Only the
+<p>Two things vary across that list, and both matter: <strong>when</strong> the review happens (during execution,
+on the diff, or at an approval gate) and <strong>whether a failed review blocks anything</strong>. Only the
 ruleset case is a gate. The rest produce advice, until your pipeline decides to treat it as more.</p>
 <h2 id="risk-based-governance">Risk-based governance<a class="headerlink" href="#risk-based-governance" title="Permanent link">&para;</a></h2>
 <p>For something such as medical device software, I'd structure it as a fan-out of specialist
@@ -2090,7 +2090,7 @@ reviews producing evidence, followed by a risk decision:</p>
 <p>A change to a build script and a change to a dose-calculation algorithm are not the same object,
 and treating them identically is how organisations end up with review that is simultaneously too
 slow and too shallow. In a regulated context the risk classification is not overhead you are
-adding — it is something you are required to do anyway. Making it machine-readable lets it drive
+adding: it is something you are required to do anyway. Making it machine-readable lets it drive
 the pipeline instead of sitting in a document.</p>
 <h2 id="progressive-autonomy">Progressive autonomy<a class="headerlink" href="#progressive-autonomy" title="Permanent link">&para;</a></h2>
 <p>Human-in-the-loop should not mean <em>a human reviews every line an agent generates</em>. That destroys
@@ -2143,7 +2143,7 @@ most of the value, and past a handful of agents it quietly stops happening anywa
 </tbody>
 </table>
 <p>Autonomy is then granted progressively: an action class moves up the table as evidence
-accumulates that agents handle it well, and back down when they don't. The table is policy — it
+accumulates that agents handle it well, and back down when they don't. The table is policy; it
 belongs in a <a href="../platform/mature-stack/#policy-as-code-opa">policy engine</a>, not in a prompt.</p>
 <h2 id="what-the-evidence-has-to-include">What the evidence has to include<a class="headerlink" href="#what-the-evidence-has-to-include" title="Permanent link">&para;</a></h2>
 <p>For every change, regardless of who wrote it:</p>
@@ -2177,13 +2177,13 @@ belongs in a <a href="../platform/mature-stack/#policy-as-code-opa">policy engin
 </tr>
 </tbody>
 </table>
-<p>That last pair is what makes the whole thing auditable — and in a regulated environment,
+<p>That last pair is what makes the whole thing auditable. In a regulated environment,
 auditability is not an add-on to the workflow, it <em>is</em> the workflow.</p>
 <h2 id="pages-in-this-section">Pages in this section<a class="headerlink" href="#pages-in-this-section" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="executable-architecture/">Executable Architecture</a> — turning architecture rules into checks</li>
-<li><a href="repo-knowledge/">Knowledge in the Repo</a> — moving intelligence out of prompts and into files</li>
-<li><a href="agent-identity/">Agent Identity &amp; Permissions</a> — treating agents like service accounts</li>
+<li><a href="executable-architecture/">Executable Architecture</a>: turning architecture rules into checks</li>
+<li><a href="repo-knowledge/">Knowledge in the Repo</a>: moving intelligence out of prompts and into files</li>
+<li><a href="agent-identity/">Agent Identity &amp; Permissions</a>: treating agents like service accounts</li>
 </ul>
 
 

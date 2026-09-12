@@ -2089,7 +2089,7 @@ can happen in parallel</strong>:</p>
 integration test cannot start until all three are finished.</p>
 <div class="admonition quote">
 <p class="admonition-title">A DAG, in one sentence</p>
-<p><strong>A map of work showing dependencies — and therefore revealing safe opportunities for
+<p><strong>A map of work showing dependencies, and therefore revealing safe opportunities for
 parallel execution.</strong></p>
 </div>
 <h2 id="a-migration-as-a-dag">A migration, as a DAG<a class="headerlink" href="#a-migration-as-a-dag" title="Permanent link">&para;</a></h2>
@@ -2105,7 +2105,7 @@ dependencies can run in parallel, everything else waits.</p>
 feature are five writers to an undefined set of files. Five agents launched against five ready
 DAG nodes are five writers to five disjoint scopes.</p>
 <p>In a mature setup, a planning agent derives this graph from the goal and a deterministic
-orchestrator executes it — planning is where reasoning is needed, scheduling is not. See
+orchestrator executes it; planning is where reasoning is needed, scheduling is not. See
 <a href="../../agents/runtime/#keep-the-orchestrator-dumb">The Agent Runtime</a>.</p>
 <h2 id="dependencies-arent-enough-change-surfaces">Dependencies aren't enough: change surfaces<a class="headerlink" href="#dependencies-arent-enough-change-surfaces" title="Permanent link">&para;</a></h2>
 <p>One subtle but important point: <strong>the DAG alone does not guarantee that parallel work is
@@ -2131,15 +2131,15 @@ whose behaviour it depends on.</p>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/network/**</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">src/common/**</span>
 </code></pre></div>
-<p><code>reads</code> is a declaration, not a permission. Every agent can still read the whole repository —
+<p><code>reads</code> is a declaration, not a permission. Every agent can still read the whole repository:
 <a href="../../ownership/">restricting reads makes agents dumber</a>. The list tells the scheduler which
 <em>other</em> changes would invalidate this one, so that when something it depends on lands, the task
 is re-verified against the new base.</p>
 <p>These two can run concurrently: their writes are disjoint and they only share a read. If both
-declared a write to <code>src/common/**</code>, don't run them in parallel and reconcile afterwards — that
+declared a write to <code>src/common/**</code>, don't run them in parallel and reconcile afterwards; that
 after-the-fact merge is exactly where <a href="../../foundations/semantic-conflicts/">silent semantic conflicts</a>
 slip through. Either serialize them with a DAG edge, or pull the <code>common</code> change out into its own
-change set that lands first — the <a href="../../ownership/codeowners/#the-shared-model-problem">shared-kernel rule</a>.</p>
+change set that lands first: the <a href="../../ownership/codeowners/#the-shared-model-problem">shared-kernel rule</a>.</p>
 <p>A change surface is finer-grained than an ownership domain, not an alternative to it. Its
 <code>writes</code> must fall inside the domain the task holds a
 <a href="../../ownership/single-write-authority/">write lease</a> for; a task whose writes span two domains
@@ -2155,21 +2155,21 @@ split.</p>
 </thead>
 <tbody>
 <tr>
-<td>Logical dependency — what must finish first</td>
+<td>Logical dependency: what must finish first</td>
 <td>The DAG</td>
 </tr>
 <tr>
-<td>Code conflict — who may write where, right now</td>
+<td>Code conflict: who may write where, right now</td>
 <td>Change surfaces and <a href="../../ownership/single-write-authority/">Single Write Authority</a></td>
 </tr>
 <tr>
-<td>Semantic conflict — changes that are individually fine and jointly broken</td>
+<td>Semantic conflict: changes that are individually fine and jointly broken</td>
 <td><a href="../contracts/">Contracts</a> and the <a href="../../integration/merge-queue/">merge queue</a></td>
 </tr>
 </tbody>
 </table>
 <p>The DAG handles <em>logical dependencies</em>; write ownership handles <em>code conflicts</em>. Neither handles
-the third row on its own — that is the subject of
+the third row on its own: that is the subject of
 <a href="../../foundations/semantic-conflicts/">Semantic Conflicts</a>.</p>
 <h2 id="what-a-node-needs-to-carry">What a node needs to carry<a class="headerlink" href="#what-a-node-needs-to-carry" title="Permanent link">&para;</a></h2>
 <p>A DAG node is only useful if it is executable without re-interpretation. In practice that means
@@ -2188,7 +2188,7 @@ each node carries:</p>
 </tr>
 <tr>
 <td>Ownership domain</td>
-<td>The write scope — see <a href="../../ownership/single-write-authority/">Single Write Authority</a></td>
+<td>The write scope: see <a href="../../ownership/single-write-authority/">Single Write Authority</a></td>
 </tr>
 <tr>
 <td>Change surface</td>
@@ -2215,12 +2215,12 @@ almost everything else depends on it.</p>
 <p>That ordering is not stylistic. In a modernization context you are porting behaviour you do not
 fully understand, and the only durable definition of "correct" is the behaviour of the system
 you're replacing. Capturing it first turns every downstream node into something an agent can
-verify itself against — which is what makes unattended execution safe enough to be worth doing.
+verify itself against, which is what makes unattended execution safe enough to be worth doing.
 The technique is developed further in
 <a href="../../modernization/workflows/#characterize-before-you-transform">Modernization Workflows</a>.</p>
 <div class="admonition tip">
 <p class="admonition-title">Don't write the scheduler yourself</p>
-<p>Executing a DAG of containerized jobs — dependencies, parallelism, retries, artefacts — is a
+<p>Executing a DAG of containerized jobs (dependencies, parallelism, retries, artefacts) is a
 solved problem. Mature workflow engines already do it; see
 <a href="../../platform/mature-stack/#argo-workflows">Building on the Mature Stack</a>.</p>
 </div>
@@ -2229,7 +2229,7 @@ solved problem. Mature workflow engines already do it; see
 <p>Real migrations discover work. Treat the graph as living state that the planning phase
 updates as nodes complete, not as an upfront artefact that gets stale by week two. A
 workflow engine executes a <em>snapshot</em> of the graph; the living graph belongs to the planning
-layer — see <a href="../../platform/mature-stack/#replanning-a-living-dag">Replanning a living DAG</a>.</p>
+layer: see <a href="../../platform/mature-stack/#replanning-a-living-dag">Replanning a living DAG</a>.</p>
 </div>
 
 

@@ -2198,7 +2198,7 @@ very mature ecosystem underneath it, and I would reuse it rather than rebuild it
 their dependencies, resources and execution environments, and I'll execute it reliably.</em></p>
 <p><a href="https://argoproj.github.io/workflows/">Argo Workflows</a> is one of them. It is Kubernetes-native,
 represents workflows explicitly as DAGs, runs each job as a container, and uses the dependency
-graph to decide which jobs can execute concurrently — exactly the model on
+graph to decide which jobs can execute concurrently: exactly the model on
 <a href="../../decomposition/dag/">Work as a DAG</a>.</p>
 <p>Argo already handles most of the unglamorous infrastructure work:</p>
 <ul>
@@ -2232,20 +2232,20 @@ towards CI/CD: it describes itself as building blocks for constructing CI/CD sys
 <p>For a generic modernization factory I lean towards Argo, because the jobs extend well beyond
 CI/CD: architecture recovery, characterization runs, differential testing, migration waves.</p>
 <h3 id="replanning-a-living-dag">Replanning a living DAG<a class="headerlink" href="#replanning-a-living-dag" title="Permanent link">&para;</a></h3>
-<p>There is a tension to resolve here. <a href="../../decomposition/dag/">The DAG is a plan, not a prophecy</a>
-— real work discovers work. But an Argo workflow is submitted as a fixed graph.</p>
+<p>There is a tension to resolve here. <a href="../../decomposition/dag/">The DAG is a plan, not a prophecy</a>:
+real work discovers work. But an Argo workflow is submitted as a fixed graph.</p>
 <p>The resolution is to keep the two roles apart:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNptUMFKA0EMve9XhPWi2EpBL-6hUBC8il73Mt3JdENnM0sy07JI_92JFPXg6T1eyHsv8SQ4ZErcgU9nbpo5OmaUDto3Y8QHiG5B6bmOFfKIEOlk8svutefbc5IjUMZJ4R48zsgeeSDUuxY-GwDNS8SHQDFWy5vwGDYhtM2lUXZzVT4q6Jhy17NZCzq_QJDEmVCuDqOb0eoNZULOddfJIdXdXQWQwv8GhfDs9xaUSq7CO2qJWVcQHMUiqKuePemQTijowa5of46H9Rau_bTsJ8rtd12TLdqwupqz0d-PCRr_W0ezpCOuvdOxg6fa5gsuBnrM?"></p>
 <ul>
 <li><strong>The planning layer owns the graph.</strong> The living DAG is state, stored alongside the work
   items, versioned like any other artefact.</li>
-<li><strong>Each Argo run executes a snapshot</strong> — the currently ready frontier, or one wave of it.</li>
+<li><strong>Each Argo run executes a snapshot</strong>: the currently ready frontier, or one wave of it.</li>
 <li><strong>Results feed back.</strong> When nodes complete, fail or report discovered work, the planner adds,
   splits or re-orders work items and submits the next snapshot. Argo can fan out dynamically
-  within a run, but <em>structural</em> change — new work, new dependencies, a different decomposition —
+  within a run, but <em>structural</em> change (new work, new dependencies, a different decomposition)
   belongs to the planner.</li>
 <li><strong>Leases belong to work items, not to runs.</strong> A replan never silently hands a domain to a
-  second writer, because the write lease survives from one snapshot to the next — see
+  second writer, because the write lease survives from one snapshot to the next: see
   <a href="../../ownership/single-write-authority/">Single Write Authority</a>.</li>
 </ul>
 <h2 id="dont-throw-away-jenkins">Don't throw away Jenkins<a class="headerlink" href="#dont-throw-away-jenkins" title="Permanent link">&para;</a></h2>
@@ -2264,7 +2264,7 @@ regression suite"</em>, it should not recreate that test environment. It should 
 <p class="admonition-title">A central idea of the whole architecture</p>
 <p><strong>Agents should orchestrate existing engineering knowledge rather than replace it.</strong></p>
 <p>That pipeline may contain ten years of institutional knowledge about how the product
-actually builds and gets verified. It is incredibly valuable to the agent — and it is already
+actually builds and gets verified. It is incredibly valuable to the agent, and it is already
 trusted by the people who will review the agent's work.</p>
 </div>
 <p>The same applies to GitHub Actions, GitLab CI or whatever else already gates your releases.</p>
@@ -2274,16 +2274,16 @@ structured result:</p>
 <div class="admonition example">
 <p class="admonition-title">In the harnesses</p>
 <ul>
-<li><strong>Claude Code</strong> — <a href="https://code.claude.com/docs/en/headless"><code>claude -p --bare --output-format json</code></a>,
+<li><strong>Claude Code</strong>: <a href="https://code.claude.com/docs/en/headless"><code>claude -p --bare --output-format json</code></a>,
   where <code>--bare</code> skips auto-discovery of hooks, skills and instruction files so the run is
   reproducible, and <code>--allowedTools</code> pins what it may do.</li>
-<li><strong>Codex</strong> — <a href="https://learn.chatgpt.com/docs/cli/reference"><code>codex exec --json</code></a>, with
+<li><strong>Codex</strong>: <a href="https://learn.chatgpt.com/docs/cli/reference"><code>codex exec --json</code></a>, with
   <code>--output-schema</code> to constrain the final message and <code>--ephemeral</code> to avoid persisting
   session files on a shared runner.</li>
-<li><strong>OpenHands</strong> — <a href="https://docs.openhands.dev/openhands/usage/cli/headless"><code>--headless --json</code></a>,
-  one JSON object per event — but headless always auto-approves, so the sandbox and hooks are
+<li><strong>OpenHands</strong>: <a href="https://docs.openhands.dev/openhands/usage/cli/headless"><code>--headless --json</code></a>,
+  one JSON object per event, but headless always auto-approves, so the sandbox and hooks are
   the only remaining controls.</li>
-<li><strong>GitHub Copilot</strong> — <a href="https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference"><code>-p</code> in the CLI</a>
+<li><strong>GitHub Copilot</strong>: <a href="https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-programmatic-reference"><code>-p</code> in the CLI</a>
   for a single non-interactive run.</li>
 </ul>
 </div>
@@ -2293,7 +2293,7 @@ writes and judges its own work has removed the gate the pipeline exists for.</p>
 <h2 id="policy-as-code-opa">Policy as code: OPA<a class="headerlink" href="#policy-as-code-opa" title="Permanent link">&para;</a></h2>
 <p><a href="https://openpolicyagent.org/">Open Policy Agent</a> lets you express rules as policy-as-code and
 evaluate them deterministically. It is already used for policy enforcement in CI/CD, Kubernetes,
-applications and API gateways — and it maps directly onto the deterministic shell around the agent
+applications and API gateways, and it maps directly onto the deterministic shell around the agent
 described in <a href="../../agents/#the-deepest-principle">Engineering Agents</a>.</p>
 <p>Policies can look like:</p>
 <div class="highlight"><pre><span></span><code>Agent may write:        tests/**
@@ -2304,7 +2304,7 @@ Architecture change:    requires human approval
 Safety-related code:    requires a second reviewer
 CVE remediation:        SAST must pass before commit
 </code></pre></div>
-<p>Note that these are all about <strong>writes and actions</strong>, never reads — consistent with
+<p>Note that these are all about <strong>writes and actions</strong>, never reads; this is consistent with
 <a href="../../ownership/">Ownership</a>: every agent may read the whole repository. In Rego, the
 write-scope rule is the work item's change surface checked against the domain metadata:</p>
 <div class="highlight"><pre><span></span><code><span class="k">package</span><span class="w"> </span><span class="n">agent</span><span class="p">.</span><span class="n">write</span>
@@ -2320,11 +2320,11 @@ write-scope rule is the work item's change surface checked against the domain me
 <span class="p">}</span>
 </code></pre></div>
 <p>A harness hook is where that decision lands in practice: a <code>PreToolUse</code> hook queries OPA and denies
-the call when the answer is no — see
+the call when the answer is no: see
 <a href="../../agents/runtime/#how-this-is-enforced-in-practice">How this is enforced in practice</a>.</p>
 <p>Notice what that means: <strong>the AI doesn't enforce these rules. OPA does.</strong> Even if the agent
 concludes <em>"I think I'm allowed to change this"</em>, the answer is simply <code>DENIED</code>. The
-<a href="../../governance/#progressive-autonomy">progressive-autonomy table</a> belongs here too — it is
+<a href="../../governance/#progressive-autonomy">progressive-autonomy table</a> belongs here too: it is
 policy, not prose.</p>
 <h2 id="backstage">Backstage<a class="headerlink" href="#backstage" title="Permanent link">&para;</a></h2>
 <p><a href="https://backstage.io/">Backstage</a> is an open-source framework for developer portals and software
@@ -2433,11 +2433,11 @@ Enrich it with the domain knowledge model described in
 infrastructure you already trust.</p>
 <h2 id="mcp-is-an-interoperability-layer-not-the-architecture">MCP is an interoperability layer, not the architecture<a class="headerlink" href="#mcp-is-an-interoperability-layer-not-the-architecture" title="Permanent link">&para;</a></h2>
 <p>The <a href="https://modelcontextprotocol.io/">Model Context Protocol</a> is useful for standardizing how
-agents reach tools and external systems — GitHub, Jira, the filesystem, documentation, build
-infrastructure — through one protocol instead of bespoke integrations.</p>
+agents reach tools and external systems (GitHub, Jira, the filesystem, documentation, build
+infrastructure) through one protocol instead of bespoke integrations.</p>
 <p>It was created by Anthropic and has since been adopted across harnesses: Claude Code, Codex,
 Copilot's cloud agent and CLI, and OpenHands all act as MCP clients. That cross-vendor adoption is
-what makes it worth using — a tool you expose once stays reachable from whichever harness you run
+what makes it worth using: a tool you expose once stays reachable from whichever harness you run
 next year.</p>
 <p>But MCP does not solve:</p>
 <ul>
@@ -2450,7 +2450,7 @@ next year.</p>
 <li>recovery</li>
 </ul>
 <p>It is closer to an interoperability layer. Treat MCP servers as one way of implementing the
-<a href="../../agents/runtime/#separate-intelligence-from-capabilities">capability layer</a> — with the
+<a href="../../agents/runtime/#separate-intelligence-from-capabilities">capability layer</a>, with the
 credentials held by the server, never by the model.</p>
 <h2 id="what-stays-custom">What stays custom<a class="headerlink" href="#what-stays-custom" title="Permanent link">&para;</a></h2>
 <p>Reuse is not the same as building nothing. The line runs like this:</p>
@@ -2463,29 +2463,29 @@ credentials held by the server, never by the model.</p>
 </thead>
 <tbody>
 <tr>
-<td>DAG execution — Argo / Tekton</td>
+<td>DAG execution: Argo / Tekton</td>
 <td>Work items and the living DAG</td>
 </tr>
 <tr>
-<td>CI and test execution — Jenkins, native frameworks</td>
+<td>CI and test execution: Jenkins, native frameworks</td>
 <td>Ownership domains, leases, change surfaces</td>
 </tr>
 <tr>
-<td>Policy evaluation — OPA</td>
+<td>Policy evaluation: OPA</td>
 <td>The policies themselves, derived from domains and risk classes</td>
 </tr>
 <tr>
-<td>Software catalog — Backstage</td>
+<td>Software catalog: Backstage</td>
 <td>The domain knowledge model on top of it</td>
 </tr>
 <tr>
-<td>Isolation — worktrees, containers, Kubernetes</td>
+<td>Isolation: worktrees, containers, Kubernetes</td>
 <td>The reasoning layer: planning, agents, review</td>
 </tr>
 </tbody>
 </table>
 <p>The left column has an operational history. The right column is the part that encodes how <em>your</em>
-organisation works — which is why <a href="../primitives/#where-to-invest">Five Primitives</a> argues for
+organisation works, which is why <a href="../primitives/#where-to-invest">Five Primitives</a> argues for
 making it first-class.</p>
 
 

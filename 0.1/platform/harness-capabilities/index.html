@@ -2030,7 +2030,7 @@
 <p>Every argument on this site is stated as a requirement rather than a product feature, so that it
 survives the harness being replaced. This page collects those requirements into one checklist, and
 records how four harnesses answer it today.</p>
-<p>The point is not to pick a winner. It is that <strong>the requirements outlive the products</strong> — and that
+<p>The point is not to pick a winner. It is that <strong>the requirements outlive the products</strong>, and that
 the last row is the same for all of them.</p>
 <h2 id="the-matrix">The matrix<a class="headerlink" href="#the-matrix" title="Permanent link">&para;</a></h2>
 <table>
@@ -2067,28 +2067,28 @@ the last row is the same for all of them.</p>
 </tr>
 <tr>
 <td><a href="../../decomposition/dag/#dependencies-arent-enough-change-surfaces">Path-scoped write rules</a></td>
-<td>Yes — <code>Edit(src/**)</code></td>
-<td>Yes — filesystem globs to <code>read</code>/<code>write</code>/<code>deny</code></td>
-<td>Partial — a write bound to a named file</td>
+<td>Yes: <code>Edit(src/**)</code></td>
+<td>Yes: filesystem globs to <code>read</code>/<code>write</code>/<code>deny</code></td>
+<td>Partial: a write bound to a named file</td>
 <td><strong>No</strong></td>
 </tr>
 <tr>
 <td><a href="../../agents/runtime/#how-this-is-enforced-in-practice">Deterministic pre-execution deny</a></td>
-<td>Yes — <code>PreToolUse</code> hook</td>
-<td>Yes — <code>PreToolUse</code> hook</td>
-<td>Structural — branch scope, cannot merge</td>
+<td>Yes: <code>PreToolUse</code> hook</td>
+<td>Yes: <code>PreToolUse</code> hook</td>
+<td>Structural: branch scope, cannot merge</td>
 <td>Hooks yes; the security layer cannot deny</td>
 </tr>
 <tr>
 <td><a href="../../agents/roles/">Role separation with own context</a></td>
-<td>Yes — subagents</td>
+<td>Yes: subagents</td>
 <td>Subagents <strong>inherit</strong> parent context</td>
 <td>Custom agents, isolated execution</td>
 <td>File-based agents; delegation is synchronous</td>
 </tr>
 <tr>
 <td><a href="../../agents/runtime/#budgets">Per-work-item budget ceiling</a></td>
-<td>No — organisation spend limits</td>
+<td>No: organisation spend limits</td>
 <td>Token caps only</td>
 <td>Credits, with org and user budgets</td>
 <td>Org monthly (commercial); none in the OSS SDK</td>
@@ -2135,13 +2135,13 @@ refuse a tool call before it executes can enforce any policy you can compute. On
 <em>ask a human</em> pushes every boundary back onto review, which is exactly the bottleneck agents were
 supposed to relieve.</p>
 <p><strong>Differences within a row matter more than the row's presence.</strong> "Subagents: yes" hides that one
-implementation gives each role a fresh context window while another inherits the parent's — which
+implementation gives each role a fresh context window while another inherits the parent's, which
 decides whether role separation buys you anything.</p>
 <h2 id="scoring-a-harness-youre-considering">Scoring a harness you're considering<a class="headerlink" href="#scoring-a-harness-youre-considering" title="Permanent link">&para;</a></h2>
 <p>The same checklist, as questions to ask a vendor:</p>
 <ol>
 <li>Can two tasks run against this repository at once without sharing a writable checkout?</li>
-<li>Can I express "may write only under these paths" — and is it enforced by the runtime, not the
+<li>Can I express "may write only under these paths", and is it enforced by the runtime, not the
    prompt?</li>
 <li>Can something deny a tool call before it runs, without a human in the loop?</li>
 <li>Can a role be given its own context, its own tools and its own model?</li>
@@ -2151,7 +2151,7 @@ decides whether role separation buys you anything.</p>
 <li>What does it record about what the agent did, and for how long?</li>
 </ol>
 <p>Questions 1 to 4 are about whether the harness can hold a boundary. Questions 5 to 8 are about
-whether you can operate it at scale. A harness that fails 3 is not disqualified — but you will be
+whether you can operate it at scale. A harness that fails 3 is not disqualified, but you will be
 building your enforcement somewhere else, and you should know that before you adopt it.</p>
 <div class="admonition warning">
 <p class="admonition-title">This is the fastest-dating page on the site</p>

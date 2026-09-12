@@ -2058,7 +2058,7 @@ is a check that says no.</p>
 </tr>
 <tr>
 <td><code>AGENTS.md</code></td>
-<td>Usually respected — but not guaranteed</td>
+<td>Usually respected, but not guaranteed</td>
 </tr>
 <tr>
 <td>A failing check</td>
@@ -2071,18 +2071,18 @@ practices increasingly emphasise. OpenAI, for example, describes exposing tests,
 state, logs, metrics and observability directly to agents so they can verify their own work.</p>
 <div class="admonition tip">
 <p class="admonition-title">Self-correction is the real prize</p>
-<p>A violation caught by a check is not a review finding — it is an input to the agent's next
+<p>A violation caught by a check is not a review finding; it is an input to the agent's next
 iteration. Every rule you make executable moves work from the reviewer's queue into the
 agent's inner loop, which is the only place where extra iterations are cheap.</p>
 </div>
 <h2 id="where-to-start">Where to start<a class="headerlink" href="#where-to-start" title="Permanent link">&para;</a></h2>
 <p>You do not need a complete architecture description to benefit. Encode, in this order:</p>
 <ol>
-<li><strong>Layering</strong> — the dependency direction rules you already believe in</li>
-<li><strong>Module boundaries</strong> — which packages may import which</li>
-<li><strong>Forbidden dependencies</strong> — specific known-bad edges, including third-party ones</li>
-<li><strong>Public API surface</strong> — what is allowed to be referenced from outside a module</li>
-<li><strong>Ownership conformance</strong> — changes stay inside the declared <a href="../../ownership/codeowners/">domain paths</a></li>
+<li><strong>Layering</strong>: the dependency direction rules you already believe in</li>
+<li><strong>Module boundaries</strong>: which packages may import which</li>
+<li><strong>Forbidden dependencies</strong>: specific known-bad edges, including third-party ones</li>
+<li><strong>Public API surface</strong>: what is allowed to be referenced from outside a module</li>
+<li><strong>Ownership conformance</strong>: changes stay inside the declared <a href="../../ownership/codeowners/">domain paths</a></li>
 </ol>
 <p>Each one converts a class of review comment into a build failure.</p>
 

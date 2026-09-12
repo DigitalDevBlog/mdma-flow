@@ -2281,7 +2281,7 @@ everything, any more than you would want every Unix process running as root.</p>
 </tbody>
 </table>
 <p>This is one of the main ingredients of genericity. Each capability is a service that holds its
-own credentials — the model asks for an operation, it never handles the token. See
+own credentials; the model asks for an operation, it never handles the token. See
 <a href="../../governance/agent-identity/#credentials-never-enter-the-models-context">Credentials never enter the model's context</a>.</p>
 <h2 id="tool-design-matters-more-than-prompt-design">Tool design matters more than prompt design<a class="headerlink" href="#tool-design-matters-more-than-prompt-design" title="Permanent link">&para;</a></h2>
 <p>A common mistake is spending enormous effort perfecting the system prompt. For serious engineering
@@ -2298,7 +2298,7 @@ get_coverage(target)
 apply_patch(patch)
 get_git_diff()
 </code></pre></div>
-<p>Now operations are observable, constrainable and auditable. You can still provide a shell — but
+<p>Now operations are observable, constrainable and auditable. You can still provide a shell, but
 perhaps only inside a disposable sandbox.</p>
 <h2 id="explicit-permissions-per-agent-role">Explicit permissions per agent role<a class="headerlink" href="#explicit-permissions-per-agent-role" title="Permanent link">&para;</a></h2>
 <p>Every agent role should have explicit capabilities:</p>
@@ -2346,14 +2346,14 @@ perhaps only inside a disposable sandbox.</p>
 </code></pre></div>
 <p>Three things to notice:</p>
 <ul>
-<li><strong>Reads are unrestricted.</strong> Everyone — and every agent — can read the whole repository;
+<li><strong>Reads are unrestricted.</strong> Everyone, and every agent, can read the whole repository;
   <a href="../../ownership/">restricting reads makes agents dumber</a>. Permissions constrain writes,
   commands, network and Git operations.</li>
 <li><strong>Agents push branches, never merge.</strong> That is what lets them open PRs, while trunk stays
   behind the <a href="../../integration/merge-queue/#making-the-queue-fast-enough-to-trust">merge queue</a>.</li>
 <li><strong>The role profile is an upper bound.</strong> A work item narrows it further. The effective write
   scope of a running task is <em>role permission ∩ work item <code>scope.writes</code> ∩ the domain lease it
-  holds</em> — and the runtime or a <a href="../../platform/mature-stack/#policy-as-code-opa">policy engine</a>
+  holds</em>, and the runtime or a <a href="../../platform/mature-stack/#policy-as-code-opa">policy engine</a>
   enforces that intersection, not the prompt.</li>
 </ul>
 <h3 id="how-this-is-enforced-in-practice">How this is enforced in practice<a class="headerlink" href="#how-this-is-enforced-in-practice" title="Permanent link">&para;</a></h3>
@@ -2383,20 +2383,20 @@ perhaps only inside a disposable sandbox.</p>
 <div class="admonition example">
 <p class="admonition-title">In the harnesses</p>
 <ul>
-<li><strong>Claude Code</strong> — <a href="https://code.claude.com/docs/en/permissions">permission rules</a> take
+<li><strong>Claude Code</strong>: <a href="https://code.claude.com/docs/en/permissions">permission rules</a> take
   tool-and-path patterns, such as <code>allow: Edit(src/**)</code> and <code>deny: Write(/etc/**)</code>. A
   <a href="https://code.claude.com/docs/en/hooks"><code>PreToolUse</code> hook</a> blocks a call outright by
   returning <code>"permissionDecision": "deny"</code> or exiting 2. Path-scoped instructions live in
   <code>.claude/rules/*.md</code> behind a <code>paths:</code> frontmatter field.</li>
-<li><strong>Codex</strong> — <a href="https://learn.chatgpt.com/docs/sandboxing"><code>sandbox_mode</code></a> sets the technical
+<li><strong>Codex</strong>: <a href="https://learn.chatgpt.com/docs/sandboxing"><code>sandbox_mode</code></a> sets the technical
   ceiling, and a named <a href="https://learn.chatgpt.com/docs/config-file/config-reference">permissions profile</a>
   maps path globs to <code>read</code>, <code>write</code> or <code>deny</code>, with <code>.git</code> and <code>.codex</code> read-only by default.
   <a href="https://learn.chatgpt.com/docs/hooks">Hooks</a> in <code>.codex/hooks.json</code> block on <code>PreToolUse</code>
   with the same deny convention.</li>
-<li><strong>GitHub Copilot</strong> — the CLI takes <a href="https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/allowing-tools"><code>--allow-tool</code> and <code>--deny-tool</code></a>,
+<li><strong>GitHub Copilot</strong>: the CLI takes <a href="https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/allowing-tools"><code>--allow-tool</code> and <code>--deny-tool</code></a>,
   where deny wins, and a write permission can be bound to a specific file. The cloud agent is
   constrained structurally instead: it pushes only to its own branch and cannot merge.</li>
-<li><strong>OpenHands</strong> — tool allowlists are whole-tool only. There is <strong>no path-scoped permission
+<li><strong>OpenHands</strong>: tool allowlists are whole-tool only. There is <strong>no path-scoped permission
   and no deny construct</strong>: its <a href="https://docs.openhands.dev/sdk/api-reference/openhands.sdk.security">security layer</a>
   classifies risk to decide whether to <em>ask</em>, not whether to refuse, and headless runs always
   auto-approve. Its hooks can block on <code>PreToolUse</code> via exit code 2, but matchers key on tool
@@ -2415,7 +2415,7 @@ hook enforces it on every tool call.</p>
 Codex and OpenHands, so one script ports across all three:</p>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
 <span class="c1"># PreToolUse: refuse writes outside the active work item's change surface.</span>
-<span class="c1"># Illustrative — `work-item` here is your own control-plane CLI.</span>
+<span class="c1"># Illustrative: `work-item` here is your own control-plane CLI.</span>
 <span class="nv">path</span><span class="o">=</span><span class="k">$(</span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.tool_input.file_path // empty'</span><span class="k">)</span>
 <span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$path</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
 
@@ -2448,16 +2448,16 @@ Codex and OpenHands, so one script ports across all three:</p>
 notes, a blown budget is usually a sign of an under-specified work item, not of a lazy agent.</p>
 <div class="admonition example">
 <p class="admonition-title">In the harnesses</p>
-<p>Budgets are the weakest link in every harness, and weakest exactly where you need them — per
+<p>Budgets are the weakest link in every harness, and weakest exactly where you need them: per
 task.</p>
 <ul>
-<li><strong>Codex</strong> — enforced token caps: <code>rollout_budget.limit_tokens</code>, <code>tool_output_token_limit</code>,
+<li><strong>Codex</strong>: enforced token caps: <code>rollout_budget.limit_tokens</code>, <code>tool_output_token_limit</code>,
   <code>model_auto_compact_token_limit</code>. No monetary cap.</li>
-<li><strong>GitHub Copilot</strong> — usage-based credits with budgets set at enterprise, cost-centre and
+<li><strong>GitHub Copilot</strong>: usage-based credits with budgets set at enterprise, cost-centre and
   user level, and the option to cap spend rather than allow overage.</li>
-<li><strong>Claude Code</strong> — spend limits at organisation level; per-run cost reported in JSON output.
+<li><strong>Claude Code</strong>: spend limits at organisation level; per-run cost reported in JSON output.
   No hard per-session cap.</li>
-<li><strong>OpenHands</strong> — a hard monthly organisation budget in the commercial tiers, which can block
+<li><strong>OpenHands</strong>: a hard monthly organisation budget in the commercial tiers, which can block
   new conversations at 100%. The open-source SDK tracks cost but enforces no ceiling.</li>
 </ul>
 <p>Notice the granularity: an organisation and a month, or raw tokens. None of them enforces
@@ -2510,7 +2510,7 @@ and belongs here.</p>
 </tr>
 </tbody>
 </table>
-<p>A mature agent system will look a lot like a compute scheduler — which is one more reason to keep
+<p>A mature agent system will look a lot like a compute scheduler, which is one more reason to keep
 the model choice out of your <a href="../../platform/primitives/">primitives</a>.</p>
 <h2 id="decoupling-from-the-model">Decoupling from the model<a class="headerlink" href="#decoupling-from-the-model" title="Permanent link">&para;</a></h2>
 <p>Routing only works if nothing downstream names a model. Three rules keep it that way:</p>
@@ -2523,8 +2523,8 @@ the model choice out of your <a href="../../platform/primitives/">primitives</a>
    after an upgrade, <a href="../evidence/#provenance">provenance</a> tells you which changes came from which
    model. That is what turns "models are swappable" from an aspiration into an operational fact.</li>
 </ol>
-<p>All four harnesses let a role pin its own model — Claude Code and OpenHands in agent frontmatter,
-Codex in the agent's TOML, Copilot per custom agent — so the tier mapping is expressible wherever
+<p>All four harnesses let a role pin its own model (Claude Code and OpenHands in agent frontmatter,
+Codex in the agent's TOML, Copilot per custom agent), so the tier mapping is expressible wherever
 you happen to run.</p>
 
 

@@ -2048,18 +2048,18 @@ central knowledge
 distributed execution
 </code></pre></div>
 <h2 id="reading-the-path">Reading the path<a class="headerlink" href="#reading-the-path" title="Permanent link">&para;</a></h2>
-<p><strong>Stages 1–2 are about one agent being trustworthy.</strong> Nothing later works without a
+<p><strong>Stages 1 and 2 are about one agent being trustworthy.</strong> Nothing later works without a
 closed verification loop; skipping to parallelism with an agent that can't verify its own work
 just produces unverified work faster.</p>
 <p><strong>Stage 3 is where the <a href="../../platform/primitives/">work item</a> arrives.</strong> It is the smallest
-primitive and the one everything else attaches to — which is why it is the thing to
+primitive and the one everything else attaches to: which is why it is the thing to
 <a href="../../platform/primitives/#where-to-invest">build first</a>.</p>
 <p><strong>Stage 5 is where the rest of this site becomes load-bearing.</strong> Before it, one agent works at a
 time and ownership is trivial. From it onwards, <a href="../../foundations/semantic-conflicts/">semantic conflicts</a>,
-write leases and the merge queue decide whether parallelism helps or hurts — and your architecture
+write leases and the merge queue decide whether parallelism helps or hurts, and your architecture
 decides how much parallelism is available at all.</p>
 <p><strong>Stage 6 comes late on purpose.</strong> Splitting one agent into specialists is only worth it once you
-can see a bottleneck the split removes — see
+can see a bottleneck the split removes: see
 <a href="../../agents/roles/#dont-start-with-multi-agent">Don't start with multi-agent</a>. The agent hierarchy
 in the <a href="../">modernization overview</a> lives here, not at stage 1.</p>
 <div class="admonition tip">

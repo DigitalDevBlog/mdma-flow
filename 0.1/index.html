@@ -2001,8 +2001,8 @@
 <p>The important shift is to stop treating the AI agent as <em>"a very smart IDE autocomplete for one
 developer"</em> and instead treat agents as <strong>participants in the engineering system</strong>.</p>
 <p>The strongest practices emerging in 2026 are not new inventions. They are combinations of
-well-proven software-engineering mechanisms — ownership boundaries, small changes, CI, merge
-queues, isolated environments — with newer agent orchestration on top.</p>
+well-proven software-engineering mechanisms (ownership boundaries, small changes, CI, merge
+queues, isolated environments) with newer agent orchestration on top.</p>
 <div class="admonition quote">
 <p class="admonition-title">The principle everything here follows from</p>
 <p><strong>Parallelize reasoning and implementation aggressively, but serialize mutation of shared
@@ -2010,7 +2010,7 @@ state through controlled integration points.</strong></p>
 <p>That principle matters much more than which model you use.</p>
 </div>
 <p>The same shape repeats inside each agent: a probabilistic model proposes, and deterministic
-machinery — permissions, ownership, isolation, tests, policy — decides what is allowed to stand.
+machinery (permissions, ownership, isolation, tests, policy) decides what is allowed to stand.
 See <a href="agents/#the-deepest-principle">Engineering Agents</a>.</p>
 <h2 id="what-youll-find-here">What you'll find here<a class="headerlink" href="#what-youll-find-here" title="Permanent link">&para;</a></h2>
 <table>
@@ -2078,7 +2078,7 @@ this site, each term has exactly one meaning:</p>
 <tbody>
 <tr>
 <td><strong>Work item</strong></td>
-<td>The unit of planned work: objective, scope, dependencies, constraints, budget, required evidence, approval. One schema at task and programme scope — see <a href="platform/primitives/#a-work-item-concretely">Five Primitives</a></td>
+<td>The unit of planned work: objective, scope, dependencies, constraints, budget, required evidence, approval. One schema at task and programme scope: see <a href="platform/primitives/#a-work-item-concretely">Five Primitives</a></td>
 <td>task, goal, executable contract</td>
 </tr>
 <tr>
@@ -2108,22 +2108,22 @@ this site, each term has exactly one meaning:</p>
 </tr>
 <tr>
 <td><strong>Reasoning layer</strong></td>
-<td>The probabilistic part — planner and agents. It proposes</td>
+<td>The probabilistic part: planner and agents. It proposes</td>
 <td>"AI agent control plane" in the infographics</td>
 </tr>
 <tr>
 <td><strong>Control plane</strong></td>
-<td>The deterministic part — policy, orchestration, leases, budgets, audit. It disposes</td>
+<td>The deterministic part: policy, orchestration, leases, budgets, audit. It disposes</td>
 <td>policy layer, orchestration layer</td>
 </tr>
 <tr>
 <td><strong>Orchestrator</strong></td>
 <td>The deterministic scheduler inside the control plane; <a href="agents/runtime/#keep-the-orchestrator-dumb">deliberately dumb</a></td>
-<td>—</td>
+<td>none</td>
 </tr>
 <tr>
 <td><strong>Harness</strong></td>
-<td>The program that runs an agent loop: tools, permissions, sandboxing, hooks, subagents. Claude Code, Codex, Copilot and OpenHands are harnesses — <a href="platform/harness-capabilities/">compared here</a></td>
+<td>The program that runs an agent loop: tools, permissions, sandboxing, hooks, subagents. Claude Code, Codex, Copilot and OpenHands are harnesses: <a href="platform/harness-capabilities/">compared here</a></td>
 <td>agent runtime, coding agent, CLI</td>
 </tr>
 <tr>
