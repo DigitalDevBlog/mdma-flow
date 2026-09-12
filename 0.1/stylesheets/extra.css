@@ -1,13 +1,30 @@
 /* Diagrams and figures.
+
    Kroki returns each diagram at its own intrinsic size, so without this a
    narrow diagram sits hard against the left margin while a wide one fills the
-   column. Centring them makes the set read as one system. Diagram sources are
-   kept within roughly 500-1200px wide so they render at a consistent scale;
-   see docs/diagrams.md. */
+   column. Centring them makes the set read as one system.
+
+   The height cap matters more than it looks. A ten-step vertical pipeline
+   renders over 1,100px tall and fills the whole screen, which reads as
+   "bloated" next to a diagram that happens to be wide and short. Capping the
+   height bounds the vertical footprint of every diagram at once, and
+   javascripts/enlarge.js makes each one openable at full size so nothing is
+   lost by shrinking it here.
+
+   Diagram sources are also kept within roughly 1300px wide; see
+   docs/diagrams.md for the authoring rules. */
+
 .md-typeset p > img,
 .md-typeset p > a > img {
   display: block;
   margin-inline: auto;
   max-width: 100%;
+  max-height: 70vh;
+  width: auto;
   height: auto;
+}
+
+/* Hint that a diagram can be opened at full size. */
+.md-typeset p > a[data-enlarge] > img {
+  cursor: zoom-in;
 }

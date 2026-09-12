@@ -2018,16 +2018,48 @@ required at build time.</p>
 </tr>
 </tbody>
 </table>
-<p>Keep labels quoted, use <code>\n</code> for line breaks, and prefer <code>direction: down</code> for pipelines,
-<code>direction: right</code> for fan-outs.</p>
+<p>Keep labels quoted and use <code>\n</code> for line breaks. Use <code>direction: down</code> for short pipelines and
+fan-ins, and <code>direction: right</code> for anything longer than about four steps — see below for why that
+choice matters more than it looks.</p>
 <h3 id="keeping-diagrams-proportional">Keeping diagrams proportional<a class="headerlink" href="#keeping-diagrams-proportional" title="Permanent link">&para;</a></h3>
-<p>Kroki returns each diagram at its intrinsic size, and the theme scales it down to the content
-column. A diagram 2,500px tall dominates the page; one 2,500px wide is scaled to a third and its
-text becomes unreadable. One rule keeps the set consistent:</p>
 <blockquote>
-<p><strong>No wider than ~1300px, no taller than ~1500px.</strong> Measure rather than eyeball.</p>
+<p><strong>Aspect ratio is the only thing that matters. Aim for wider than tall.</strong></p>
 </blockquote>
-<p>Two D2 behaviours matter for hitting that, both found by measuring:</p>
+<p>Kroki's D2 output carries a <code>viewBox</code> and no <code>width</code> or <code>height</code>, so the SVG has <strong>no intrinsic
+pixel size</strong>. It always stretches to the full width of the content column, and its height follows
+from the aspect ratio. The numbers in <code>viewBox="0 0 1045 284"</code> describe proportions, not pixels — no
+diagram is ever "1,045px wide" to a reader.</p>
+<p>At a content column of roughly 830px:</p>
+<table>
+<thead>
+<tr>
+<th>Aspect (width ÷ height)</th>
+<th>Rendered height</th>
+<th>Reads as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.7</td>
+<td>~225px</td>
+<td>a banner</td>
+</tr>
+<tr>
+<td>1.0</td>
+<td>~830px</td>
+<td>a full screen</td>
+</tr>
+<tr>
+<td>0.3</td>
+<td>~2,700px</td>
+<td>three screens of a single diagram</td>
+</tr>
+</tbody>
+</table>
+<p>So a ten-step vertical pipeline is not "a big diagram" — it is a diagram whose aspect ratio is 0.3,
+and it will fill several screens however short its labels are. Lay the chain out with
+<code>direction: right</code>, or group its steps into <code>grid-columns</code> stages.</p>
+<p>Two D2 behaviours make that harder than it sounds, both found by measuring rather than by reading:</p>
 <table>
 <thead>
 <tr>
@@ -2042,13 +2074,21 @@ text becomes unreadable. One rule keeps the set consistent:</p>
 </tr>
 <tr>
 <td>Edges <em>between children of a grid container</em> inflate the layout badly</td>
-<td>A three-cell grid with internal arrows measured 2,309px wide; the same grid without them measured 761px</td>
+<td>A three-cell grid with internal arrows came out 2,309 × 388; the same grid without them, 761 × 1,292</td>
 </tr>
 </tbody>
 </table>
-<p>So: group related steps with <code>grid-columns</code>, draw edges <strong>between containers</strong> rather than between
-their children, and let the grid convey ordering inside a stage. To check a diagram before
-committing it, POST the source to Kroki and read the <code>width</code> and <code>height</code> off the returned SVG.</p>
+<p>So group related steps with <code>grid-columns</code>, draw edges <strong>between containers</strong> rather than between
+their children, and let the grid convey ordering within a stage.</p>
+<p>Two backstops in the theme cover diagrams that are legitimately tall:</p>
+<ul>
+<li><code>stylesheets/extra.css</code> caps every diagram at 70% of the viewport height, so none can take over
+  the page.</li>
+<li><code>javascripts/enlarge.js</code> wraps each one in a link to the full-size image, so capping loses
+  nothing.</li>
+</ul>
+<p>To check a diagram before committing it, POST the source to Kroki and read the <code>viewBox</code>: width ÷
+height is the aspect, and roughly 830 ÷ aspect is the height a reader will actually see.</p>
 <h2 id="plantuml">PlantUML<a class="headerlink" href="#plantuml" title="Permanent link">&para;</a></h2>
 <p>Used where the diagram is really a <em>flow</em> with forks and branches — activity diagrams need no
 extra layout engine and read well.</p>
@@ -2131,6 +2171,8 @@ adds nothing.</p>
     
     
       <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/enlarge.js"></script>
       
     
   </body>
