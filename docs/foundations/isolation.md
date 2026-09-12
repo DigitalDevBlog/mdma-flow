@@ -6,9 +6,34 @@ Give every unit of work an isolated write context. The most mature pattern today
 
 Agents should not normally share a writable checkout.
 
-Codex explicitly supports this model with built-in Git worktrees so several agents can work on
-the same repository independently. GitHub Copilot's current agent tooling similarly runs
-parallel agent sessions on separate branches.
+Every serious harness now implements some form of this. They differ in *what* they isolate — and
+that difference decides how much you still have to build yourself.
+
+!!! example "In the harnesses"
+    * **Claude Code** — a git worktree per session (`--worktree`) and per
+      [subagent](https://code.claude.com/docs/en/sub-agents) (`isolation: worktree`). Shell
+      commands additionally run in a [sandbox](https://code.claude.com/docs/en/sandboxing)
+      (Seatbelt on macOS, seccomp on Linux and WSL2) restricting which files and network domains
+      they can reach — explicitly not OS-level isolation.
+    * **Codex** — a [worktree per chat](https://learn.chatgpt.com/docs/environments/git-worktrees)
+      in the desktop app, with automatic cleanup. Cloud tasks run in a managed container in two
+      phases: setup has network access, the agent phase is offline by default. Locally,
+      [`sandbox_mode`](https://learn.chatgpt.com/docs/sandboxing) is `read-only`,
+      `workspace-write` or `danger-full-access`.
+    * **GitHub Copilot** — the [cloud agent](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent)
+      runs in an ephemeral GitHub Actions environment, capped at 59 minutes, pushing to a single
+      `copilot/` branch. Worktrees and cloud sandboxes belong to the desktop app, not the cloud
+      agent. Its egress firewall is on by default but does not cover MCP servers or setup steps.
+    * **OpenHands** — a [Docker sandbox](https://docs.openhands.dev/openhands/usage/sandboxes/docker)
+      is the default; a process sandbox with *no* isolation is opt-in. Worktrees appear only for
+      parent/child conversation delegation. In the enterprise product a conversation is not a
+      security boundary: conversations sharing a sandbox share filesystem, credentials and
+      failure domain.
+
+Two things are worth noticing there. Every one of them isolates the *execution environment*, and
+none of them knows what an [ownership domain](../ownership/index.md) is. And the strength of the
+boundary ranges from kernel-enforced to none at all — which is why the level you pick matters
+more than the brand.
 
 So you might have:
 

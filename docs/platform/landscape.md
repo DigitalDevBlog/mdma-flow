@@ -47,6 +47,12 @@ tasks get agents, agents execute continuously, humans review outcomes.
 That's substantially closer to an organisational model than the traditional single-developer
 coding session — the board becomes the queue, and the review becomes the interface.
 
+!!! warning "Symphony is a preview, not a product"
+    OpenAI describes Symphony as a low-key engineering preview for trusted environments, and has
+    said it does not intend to maintain it as a standalone product: it is a reference
+    implementation to fork, with no roadmap or support commitment. Treat the *pattern* as the
+    contribution, not the codebase.
+
 ## OpenHands
 
 [OpenHands](https://www.openhands.dev/) has evolved beyond a single-agent coding UI. Its SDK
@@ -62,6 +68,13 @@ sandboxes, coordinate, and are evaluated against software-engineering benchmarks
 
 If I were prototyping a modernization platform tomorrow, OpenHands would be one of the first
 codebases I would dissect — without necessarily making it the platform's control plane.
+
+Two things to know before you read its material. The paper describes the 2024 platform, while the
+current generation is the Software Agent SDK plus an Agent Server behind an HTTP and WebSocket
+API. And the **Agent Control Plane is the commercial enterprise product**, not the open-source
+one: policy, audit, observability and org-level budgets ship as a licensed Helm chart, while the
+[open-source tier](https://docs.openhands.dev/enterprise/enterprise-vs-oss) gives you the agent
+and its sandboxes.
 
 The more interesting recent development is its **Agent Control Plane**:
 
@@ -102,6 +115,42 @@ parallel-agent modernization.
     For regulated software, the differentiating capability is not code quality — it is policy,
     isolation and auditability. Models improve every few months and are swappable. A control
     plane is where your compliance story lives.
+
+## Claude Code
+
+Of the harnesses, [Claude Code](https://code.claude.com/docs/en/agents) has the most developed
+*control surface* for the mechanisms this site argues for: permission rules that take
+tool-and-path patterns, [hooks](https://code.claude.com/docs/en/hooks) that can deny a tool call
+before it runs, [subagents](https://code.claude.com/docs/en/sub-agents) with their own context and
+restricted tools, and worktree isolation per session or per subagent.
+
+The [Agent SDK](https://code.claude.com/docs/en/agent-sdk/overview) exposes the same harness
+programmatically in Python and TypeScript — the direct counterpart to the OpenHands SDK, and the
+thing to look at if you are embedding agents in your own control plane rather than driving a CLI.
+For pipelines, [`claude -p --bare --output-format json`](https://code.claude.com/docs/en/headless)
+runs non-interactively and returns a structured result; `--bare` skips auto-discovery of hooks,
+skills and instruction files so a CI run is reproducible.
+
+Its gaps are everyone's gaps: no notion of ownership domains, no per-task budget ceiling, and its
+multi-agent team mode is experimental and does not isolate teammates into worktrees.
+
+## GitHub Copilot cloud agent
+
+Copilot's asynchronous agent — renamed from *coding agent* in April 2026 — takes the opposite
+approach to isolation. Instead of running on your machine it runs in an ephemeral GitHub Actions
+environment and pushes to its own branch.
+
+What makes it interesting here is that its constraints are **structural rather than advisory**. It
+[cannot approve or merge its own pull request](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/risks-and-mitigations)
+and cannot push to a protected branch; it has its own secret scope, separate from Actions and
+Codespaces; and a repository ruleset can require an extra approval for a Copilot pull request that
+isn't attributed to a person. Commits are attributed to the agent with the dispatching human as
+co-author, and enterprise audit events carry an `actor_is_agent` flag and a session ID.
+
+That is close to the [agent identity](../governance/agent-identity.md) model argued for on this
+site — imposed by the platform instead of by your control plane. The trade-off is the other side
+of the same coin: the isolation is not yours to configure, and the egress firewall covers neither
+MCP servers nor setup steps.
 
 ## Agent frameworks: LangGraph and Microsoft Agent Framework
 
@@ -186,7 +235,9 @@ environment isolation via worktrees, containers or VMs**. It's nevertheless wort
 | System | Strongest at | Weakest at |
 |--------|--------------|------------|
 | Codex + worktrees | Execution and isolation on a developer's machine | Organisational allocation and policy |
-| Symphony | Turning a task board into a control plane | Ownership boundaries and semantic conflict |
+| Claude Code | Permission rules and blocking hooks; subagents with restricted tools | No ownership model; no per-task budget ceiling |
+| Copilot cloud agent | Platform-enforced identity, branch scope and merge restrictions | Isolation you don't control; firewall gaps around MCP |
+| Symphony | Turning a task board into a control plane | Ownership and semantic conflict — and it is an unmaintained preview |
 | OpenHands Enterprise | Policy, sandboxing, audit — the control plane | Being young; a larger commitment |
 | LangGraph | Explicit, durable, resumable agent state | Ownership, policy and integration — it is a library, not a platform |
 | Microsoft Agent Framework | Enterprise integration: identity, .NET, Azure | Ownership, policy and integration, as with LangGraph |

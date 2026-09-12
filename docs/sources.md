@@ -39,6 +39,38 @@ parallel writers, and the agent-platform ecosystem.
 | 25 | [Backstage Software Catalog and Developer Platform](https://backstage.io/) |
 | 26 | [Model Context Protocol](https://modelcontextprotocol.io/) |
 
+## Harness capabilities
+
+Vendor documentation for the capability comparisons in
+[Isolated Write Contexts](foundations/isolation.md), [The Agent Runtime](agents/runtime.md),
+[Roles & Review](agents/roles.md) and the [Orchestration Landscape](platform/landscape.md).
+Checked September 2026; this is the area of the site that dates fastest.
+
+| # | Source |
+|---|--------|
+| 27 | [Subagents — Claude Code Docs](https://code.claude.com/docs/en/sub-agents) |
+| 28 | [Hooks — Claude Code Docs](https://code.claude.com/docs/en/hooks) |
+| 29 | [Permissions — Claude Code Docs](https://code.claude.com/docs/en/permissions) |
+| 30 | [Sandboxing — Claude Code Docs](https://code.claude.com/docs/en/sandboxing) |
+| 31 | [Headless mode — Claude Code Docs](https://code.claude.com/docs/en/headless) |
+| 32 | [Agent SDK overview — Claude Code Docs](https://code.claude.com/docs/en/agent-sdk/overview) |
+| 33 | [Agents — Claude Code Docs](https://code.claude.com/docs/en/agents) |
+| 34 | [Sandboxing — Codex Docs](https://learn.chatgpt.com/docs/sandboxing) |
+| 35 | [Hooks — Codex Docs](https://learn.chatgpt.com/docs/hooks) |
+| 36 | [Subagents — Codex Docs](https://learn.chatgpt.com/docs/agent-configuration/subagents) |
+| 37 | [Config reference — Codex Docs](https://learn.chatgpt.com/docs/config-file/config-reference) |
+| 38 | [Git worktrees — Codex Docs](https://learn.chatgpt.com/docs/environments/git-worktrees) |
+| 39 | [About Copilot cloud agent — GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent) |
+| 40 | [Risks and mitigations — GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/cloud-agent/risks-and-mitigations) |
+| 41 | [Allowing tools in Copilot CLI — GitHub Docs](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/allowing-tools) |
+| 42 | [Custom agents — GitHub Docs](https://docs.github.com/en/copilot/how-tos/copilot-sdk/features/custom-agents) |
+| 43 | [Custom instructions support — GitHub Docs](https://docs.github.com/en/copilot/reference/custom-instructions-support) |
+| 44 | [Docker sandbox — OpenHands Docs](https://docs.openhands.dev/openhands/usage/sandboxes/docker) |
+| 45 | [File-based agents — OpenHands Docs](https://docs.openhands.dev/sdk/guides/agent-file-based) |
+| 46 | [Headless mode — OpenHands Docs](https://docs.openhands.dev/openhands/usage/cli/headless) |
+| 47 | [Enterprise vs open source — OpenHands Docs](https://docs.openhands.dev/enterprise/enterprise-vs-oss) |
+| 48 | [Security API reference — OpenHands Docs](https://docs.openhands.dev/sdk/api-reference/openhands.sdk.security) |
+
 !!! note "On citations"
     Claims attributed to a vendor above describe what that vendor documents about its own
     product. Everything else on this site — in particular Single Write Authority, ownership
