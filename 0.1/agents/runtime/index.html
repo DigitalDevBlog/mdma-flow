@@ -1429,6 +1429,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Explicit permissions per agent role">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-this-is-enforced-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How this is enforced in practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1458,6 +1475,17 @@
     <span class="md-ellipsis">
       
         Route models dynamically
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decoupling-from-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decoupling from the model
       
     </span>
   </a>
@@ -2029,6 +2057,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Explicit permissions per agent role">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-this-is-enforced-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How this is enforced in practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2058,6 +2103,17 @@
     <span class="md-ellipsis">
       
         Route models dynamically
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decoupling-from-the-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decoupling from the model
       
     </span>
   </a>
@@ -2270,6 +2326,76 @@ perhaps only inside a disposable sandbox.</p>
   holds</em> — and the runtime or a <a href="../../platform/mature-stack/#policy-as-code-opa">policy engine</a>
   enforces that intersection, not the prompt.</li>
 </ul>
+<h3 id="how-this-is-enforced-in-practice">How this is enforced in practice<a class="headerlink" href="#how-this-is-enforced-in-practice" title="Permanent link">&para;</a></h3>
+<p>For that intersection to mean anything, the runtime needs three properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tool- and path-scoped rules</td>
+<td>"May edit <code>tests/**</code>" has to be expressible, not merely "may edit"</td>
+</tr>
+<tr>
+<td>A deterministic pre-execution block</td>
+<td>Something must be able to say <em>no</em> before the write happens, without consulting a model</td>
+</tr>
+<tr>
+<td>Enforcement outside the model's context</td>
+<td>A rule the model can read is a rule the model can be argued out of</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">In the harnesses</p>
+<ul>
+<li><strong>Claude Code</strong> — <a href="https://code.claude.com/docs/en/permissions">permission rules</a> take
+  tool-and-path patterns, such as <code>allow: Edit(src/**)</code> and <code>deny: Write(/etc/**)</code>. A
+  <a href="https://code.claude.com/docs/en/hooks"><code>PreToolUse</code> hook</a> blocks a call outright by
+  returning <code>"permissionDecision": "deny"</code> or exiting 2. Path-scoped instructions live in
+  <code>.claude/rules/*.md</code> behind a <code>paths:</code> frontmatter field.</li>
+<li><strong>Codex</strong> — <a href="https://learn.chatgpt.com/docs/sandboxing"><code>sandbox_mode</code></a> sets the technical
+  ceiling, and a named <a href="https://learn.chatgpt.com/docs/config-file/config-reference">permissions profile</a>
+  maps path globs to <code>read</code>, <code>write</code> or <code>deny</code>, with <code>.git</code> and <code>.codex</code> read-only by default.
+  <a href="https://learn.chatgpt.com/docs/hooks">Hooks</a> in <code>.codex/hooks.json</code> block on <code>PreToolUse</code>
+  with the same deny convention.</li>
+<li><strong>GitHub Copilot</strong> — the CLI takes <a href="https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/allowing-tools"><code>--allow-tool</code> and <code>--deny-tool</code></a>,
+  where deny wins, and a write permission can be bound to a specific file. The cloud agent is
+  constrained structurally instead: it pushes only to its own branch and cannot merge.</li>
+<li><strong>OpenHands</strong> — tool allowlists are whole-tool only. There is <strong>no path-scoped permission
+  and no deny construct</strong>: its <a href="https://docs.openhands.dev/sdk/api-reference/openhands.sdk.security">security layer</a>
+  classifies risk to decide whether to <em>ask</em>, not whether to refuse, and headless runs always
+  auto-approve. Its hooks can block on <code>PreToolUse</code> via exit code 2, but matchers key on tool
+  name rather than path, so the path logic goes in your script.</li>
+</ul>
+</div>
+<p>Three of the four can therefore stop a write before it happens. <strong>None of them knows what an
+<a href="../../ownership/single-write-authority/">ownership domain</a> or a
+<a href="../../decomposition/dag/#dependencies-arent-enough-change-surfaces">change surface</a> is.</strong> So the
+division of labour is:</p>
+<blockquote>
+<p>Your control plane computes the effective write scope for the active work item. The harness
+hook enforces it on every tool call.</p>
+</blockquote>
+<p>A blocking hook is a small program, and the exit-code-2 convention is shared by Claude Code,
+Codex and OpenHands, so one script ports across all three:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># PreToolUse: refuse writes outside the active work item's change surface.</span>
+<span class="c1"># Illustrative — `work-item` here is your own control-plane CLI.</span>
+<span class="nv">path</span><span class="o">=</span><span class="k">$(</span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.tool_input.file_path // empty'</span><span class="k">)</span>
+<span class="o">[</span><span class="w"> </span>-z<span class="w"> </span><span class="s2">"</span><span class="nv">$path</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">0</span>
+
+<span class="k">if</span><span class="w"> </span>!<span class="w"> </span>work-item<span class="w"> </span>current<span class="w"> </span>--matches-write<span class="w"> </span><span class="s2">"</span><span class="nv">$path</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"refused: </span><span class="nv">$path</span><span class="s2"> is outside the change surface of </span><span class="k">$(</span>work-item<span class="w"> </span>current<span class="w"> </span>--id<span class="k">)</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span><span class="w">   </span><span class="c1"># deterministic deny</span>
+<span class="k">fi</span>
+</code></pre></div>
+<p>That is the whole mechanism. The interesting engineering is not in the hook; it is in
+<code>work-item current</code>, which is the part no vendor builds for you.</p>
 <h2 id="budgets">Budgets<a class="headerlink" href="#budgets" title="Permanent link">&para;</a></h2>
 <p>Otherwise an agent can happily spend €300 trying to fix a typo. Each work item carries a budget:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">budget</span><span class="p">:</span>
@@ -2290,6 +2416,23 @@ perhaps only inside a disposable sandbox.</p>
 </ul>
 <p>Cost becomes part of planning. And, as <a href="../../governance/agent-identity/#budget-and-blast-radius">Agent Identity</a>
 notes, a blown budget is usually a sign of an under-specified work item, not of a lazy agent.</p>
+<div class="admonition example">
+<p class="admonition-title">In the harnesses</p>
+<p>Budgets are the weakest link in every harness, and weakest exactly where you need them — per
+task.</p>
+<ul>
+<li><strong>Codex</strong> — enforced token caps: <code>rollout_budget.limit_tokens</code>, <code>tool_output_token_limit</code>,
+  <code>model_auto_compact_token_limit</code>. No monetary cap.</li>
+<li><strong>GitHub Copilot</strong> — usage-based credits with budgets set at enterprise, cost-centre and
+  user level, and the option to cap spend rather than allow overage.</li>
+<li><strong>Claude Code</strong> — spend limits at organisation level; per-run cost reported in JSON output.
+  No hard per-session cap.</li>
+<li><strong>OpenHands</strong> — a hard monthly organisation budget in the commercial tiers, which can block
+  new conversations at 100%. The open-source SDK tracks cost but enforces no ceiling.</li>
+</ul>
+<p>Notice the granularity: an organisation and a month, or raw tokens. None of them enforces
+<em>"this work item gets 90 minutes and 500k tokens."</em> That stays the orchestrator's job.</p>
+</div>
 <h2 id="keep-the-orchestrator-dumb">Keep the orchestrator dumb<a class="headerlink" href="#keep-the-orchestrator-dumb" title="Permanent link">&para;</a></h2>
 <p>This sounds counterintuitive. Don't put all intelligence into a giant model-driven orchestrator.
 The orchestration layer should enforce deterministic rules:</p>
@@ -2339,6 +2482,20 @@ and belongs here.</p>
 </table>
 <p>A mature agent system will look a lot like a compute scheduler — which is one more reason to keep
 the model choice out of your <a href="../../platform/primitives/">primitives</a>.</p>
+<h2 id="decoupling-from-the-model">Decoupling from the model<a class="headerlink" href="#decoupling-from-the-model" title="Permanent link">&para;</a></h2>
+<p>Routing only works if nothing downstream names a model. Three rules keep it that way:</p>
+<ol>
+<li><strong>Work items declare a capability tier, not a model.</strong> "Strong reasoning" and "cheap
+   classification" survive a model release; a specific model ID does not.</li>
+<li><strong>The tier-to-model mapping lives in configuration</strong>, next to the routing table above, and
+   changes by pull request like anything else.</li>
+<li><strong>The model and its version are recorded in the change set's evidence.</strong> When behaviour shifts
+   after an upgrade, <a href="../evidence/#provenance">provenance</a> tells you which changes came from which
+   model. That is what turns "models are swappable" from an aspiration into an operational fact.</li>
+</ol>
+<p>All four harnesses let a role pin its own model — Claude Code and OpenHands in agent frontmatter,
+Codex in the agent's TOML, Copilot per custom agent — so the tier mapping is expressible wherever
+you happen to run.</p>
 
 
 

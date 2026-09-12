@@ -1665,6 +1665,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#claude-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claude Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-copilot-cloud-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub Copilot cloud agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#agent-frameworks-langgraph-and-microsoft-agent-framework" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1988,6 +2010,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#claude-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Claude Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#github-copilot-cloud-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GitHub Copilot cloud agent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#agent-frameworks-langgraph-and-microsoft-agent-framework" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2057,6 +2101,13 @@ OpenAI published this year. The basic model is:</p>
 tasks get agents, agents execute continuously, humans review outcomes.</p>
 <p>That's substantially closer to an organisational model than the traditional single-developer
 coding session — the board becomes the queue, and the review becomes the interface.</p>
+<div class="admonition warning">
+<p class="admonition-title">Symphony is a preview, not a product</p>
+<p>OpenAI describes Symphony as a low-key engineering preview for trusted environments, and has
+said it does not intend to maintain it as a standalone product: it is a reference
+implementation to fork, with no roadmap or support commitment. Treat the <em>pattern</em> as the
+contribution, not the codebase.</p>
+</div>
 <h2 id="openhands">OpenHands<a class="headerlink" href="#openhands" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.openhands.dev/">OpenHands</a> has evolved beyond a single-agent coding UI. Its SDK
 explicitly supports major tasks involving multiple agents and remote execution.</p>
@@ -2069,6 +2120,12 @@ that edit code, use a command line, execute programs, browse for information, op
 sandboxes, coordinate, and are evaluated against software-engineering benchmarks.</p>
 <p>If I were prototyping a modernization platform tomorrow, OpenHands would be one of the first
 codebases I would dissect — without necessarily making it the platform's control plane.</p>
+<p>Two things to know before you read its material. The paper describes the 2024 platform, while the
+current generation is the Software Agent SDK plus an Agent Server behind an HTTP and WebSocket
+API. And the <strong>Agent Control Plane is the commercial enterprise product</strong>, not the open-source
+one: policy, audit, observability and org-level budgets ship as a licensed Helm chart, while the
+<a href="https://docs.openhands.dev/enterprise/enterprise-vs-oss">open-source tier</a> gives you the agent
+and its sandboxes.</p>
 <p>The more interesting recent development is its <strong>Agent Control Plane</strong>:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNpNkE1uAjEMRvc5hTWs6b4skCrEulwhPx6wCHEUe1pGVe9eZ9BAV7GfrOfPSdQwKnHZQaPzRZ3zse5g-DhjUThw0cYZTtkXHODHAYjOGd9GytmmNuM4vqcwuF_nKmeKs8HTUjymvfUV241EbIcMhoKh2DCZn3xeUDTUsLKQciOU7sM7dny0Z-r5Xj7xJQW-P118q5Pi6imo39yuXcFBDHwGwfblA2XSf6n8lEhfDtFnkguJxZiXo-wzYLuHx21r16Otte1wf7XMY4c=?"></p>
 <p>OpenHands describes this specifically as moving from isolated agent tools toward
@@ -2081,6 +2138,34 @@ parallel-agent modernization.</p>
 isolation and auditability. Models improve every few months and are swappable. A control
 plane is where your compliance story lives.</p>
 </div>
+<h2 id="claude-code">Claude Code<a class="headerlink" href="#claude-code" title="Permanent link">&para;</a></h2>
+<p>Of the harnesses, <a href="https://code.claude.com/docs/en/agents">Claude Code</a> has the most developed
+<em>control surface</em> for the mechanisms this site argues for: permission rules that take
+tool-and-path patterns, <a href="https://code.claude.com/docs/en/hooks">hooks</a> that can deny a tool call
+before it runs, <a href="https://code.claude.com/docs/en/sub-agents">subagents</a> with their own context and
+restricted tools, and worktree isolation per session or per subagent.</p>
+<p>The <a href="https://code.claude.com/docs/en/agent-sdk/overview">Agent SDK</a> exposes the same harness
+programmatically in Python and TypeScript — the direct counterpart to the OpenHands SDK, and the
+thing to look at if you are embedding agents in your own control plane rather than driving a CLI.
+For pipelines, <a href="https://code.claude.com/docs/en/headless"><code>claude -p --bare --output-format json</code></a>
+runs non-interactively and returns a structured result; <code>--bare</code> skips auto-discovery of hooks,
+skills and instruction files so a CI run is reproducible.</p>
+<p>Its gaps are everyone's gaps: no notion of ownership domains, no per-task budget ceiling, and its
+multi-agent team mode is experimental and does not isolate teammates into worktrees.</p>
+<h2 id="github-copilot-cloud-agent">GitHub Copilot cloud agent<a class="headerlink" href="#github-copilot-cloud-agent" title="Permanent link">&para;</a></h2>
+<p>Copilot's asynchronous agent — renamed from <em>coding agent</em> in April 2026 — takes the opposite
+approach to isolation. Instead of running on your machine it runs in an ephemeral GitHub Actions
+environment and pushes to its own branch.</p>
+<p>What makes it interesting here is that its constraints are <strong>structural rather than advisory</strong>. It
+<a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/risks-and-mitigations">cannot approve or merge its own pull request</a>
+and cannot push to a protected branch; it has its own secret scope, separate from Actions and
+Codespaces; and a repository ruleset can require an extra approval for a Copilot pull request that
+isn't attributed to a person. Commits are attributed to the agent with the dispatching human as
+co-author, and enterprise audit events carry an <code>actor_is_agent</code> flag and a session ID.</p>
+<p>That is close to the <a href="../../governance/agent-identity/">agent identity</a> model argued for on this
+site — imposed by the platform instead of by your control plane. The trade-off is the other side
+of the same coin: the isolation is not yours to configure, and the egress firewall covers neither
+MCP servers nor setup steps.</p>
 <h2 id="agent-frameworks-langgraph-and-microsoft-agent-framework">Agent frameworks: LangGraph and Microsoft Agent Framework<a class="headerlink" href="#agent-frameworks-langgraph-and-microsoft-agent-framework" title="Permanent link">&para;</a></h2>
 <p><a href="https://docs.langchain.com/oss/python/langgraph/overview">LangGraph</a> is probably the closest
 match if you are looking for the agent-orchestration layer specifically. It deliberately focuses
@@ -2130,9 +2215,19 @@ environment isolation via worktrees, containers or VMs</strong>. It's neverthele
 <td>Organisational allocation and policy</td>
 </tr>
 <tr>
+<td>Claude Code</td>
+<td>Permission rules and blocking hooks; subagents with restricted tools</td>
+<td>No ownership model; no per-task budget ceiling</td>
+</tr>
+<tr>
+<td>Copilot cloud agent</td>
+<td>Platform-enforced identity, branch scope and merge restrictions</td>
+<td>Isolation you don't control; firewall gaps around MCP</td>
+</tr>
+<tr>
 <td>Symphony</td>
 <td>Turning a task board into a control plane</td>
-<td>Ownership boundaries and semantic conflict</td>
+<td>Ownership and semantic conflict — and it is an unmaintained preview</td>
 </tr>
 <tr>
 <td>OpenHands Enterprise</td>

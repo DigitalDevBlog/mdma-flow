@@ -1958,9 +1958,36 @@
 <p><strong>one task → one branch/worktree → one PR.</strong></p>
 </blockquote>
 <p>Agents should not normally share a writable checkout.</p>
-<p>Codex explicitly supports this model with built-in Git worktrees so several agents can work on
-the same repository independently. GitHub Copilot's current agent tooling similarly runs
-parallel agent sessions on separate branches.</p>
+<p>Every serious harness now implements some form of this. They differ in <em>what</em> they isolate — and
+that difference decides how much you still have to build yourself.</p>
+<div class="admonition example">
+<p class="admonition-title">In the harnesses</p>
+<ul>
+<li><strong>Claude Code</strong> — a git worktree per session (<code>--worktree</code>) and per
+  <a href="https://code.claude.com/docs/en/sub-agents">subagent</a> (<code>isolation: worktree</code>). Shell
+  commands additionally run in a <a href="https://code.claude.com/docs/en/sandboxing">sandbox</a>
+  (Seatbelt on macOS, seccomp on Linux and WSL2) restricting which files and network domains
+  they can reach — explicitly not OS-level isolation.</li>
+<li><strong>Codex</strong> — a <a href="https://learn.chatgpt.com/docs/environments/git-worktrees">worktree per chat</a>
+  in the desktop app, with automatic cleanup. Cloud tasks run in a managed container in two
+  phases: setup has network access, the agent phase is offline by default. Locally,
+  <a href="https://learn.chatgpt.com/docs/sandboxing"><code>sandbox_mode</code></a> is <code>read-only</code>,
+  <code>workspace-write</code> or <code>danger-full-access</code>.</li>
+<li><strong>GitHub Copilot</strong> — the <a href="https://docs.github.com/en/copilot/concepts/agents/cloud-agent/about-cloud-agent">cloud agent</a>
+  runs in an ephemeral GitHub Actions environment, capped at 59 minutes, pushing to a single
+  <code>copilot/</code> branch. Worktrees and cloud sandboxes belong to the desktop app, not the cloud
+  agent. Its egress firewall is on by default but does not cover MCP servers or setup steps.</li>
+<li><strong>OpenHands</strong> — a <a href="https://docs.openhands.dev/openhands/usage/sandboxes/docker">Docker sandbox</a>
+  is the default; a process sandbox with <em>no</em> isolation is opt-in. Worktrees appear only for
+  parent/child conversation delegation. In the enterprise product a conversation is not a
+  security boundary: conversations sharing a sandbox share filesystem, credentials and
+  failure domain.</li>
+</ul>
+</div>
+<p>Two things are worth noticing there. Every one of them isolates the <em>execution environment</em>, and
+none of them knows what an <a href="../../ownership/">ownership domain</a> is. And the strength of the
+boundary ranges from kernel-enforced to none at all — which is why the level you pick matters
+more than the brand.</p>
 <p>So you might have:</p>
 <p><img alt="Kroki" src="https://kroki.io/d2/svg/eNpNj8EKwjAMhu95itCrjN13EDb1LbyULnZl2I40Q0V8d9sOSk_J__PlTzI7JiMu-AHZ2UUAmLYwoMqlV_gFxLjojQbctFm1JfgB6F2WxLwCr8JEXdb93d-8dZ6IccQTjpa84KhgdiY8W7oYLT5VfFIQybRwkjs7-XQP904zB3ZRIBQltmAxKnFVxyfYnTFfV0VZXlVKr30JgD-xV1pm?"></p>
 <p>These are parallel <strong>execution environments</strong>, rather than parallel writers to one filesystem.
