@@ -1,0 +1,13 @@
+/* Diagrams and figures.
+   Kroki returns each diagram at its own intrinsic size, so without this a
+   narrow diagram sits hard against the left margin while a wide one fills the
+   column. Centring them makes the set read as one system. Diagram sources are
+   kept within roughly 500-1200px wide so they render at a consistent scale;
+   see docs/diagrams.md. */
+.md-typeset p > img,
+.md-typeset p > a > img {
+  display: block;
+  margin-inline: auto;
+  max-width: 100%;
+  height: auto;
+}

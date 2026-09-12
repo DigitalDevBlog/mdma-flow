@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1982,7 +1984,7 @@
 
 <h1 id="foundations">Foundations<a class="headerlink" href="#foundations" title="Permanent link">&para;</a></h1>
 <p>The architecture I would recommend for a real engineering organisation looks roughly like this.</p>
-<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNqFUk1v2zAMvftXEDltWJfeexhQoEPXYQMK7OuSCy0RthCF8mS5rjH0v4-UHLvdEvQQR3x8pMTHZ10kk1zgK7Bh5KpynIjTFWx-hbiHSygxeJwobuBPBZAimj1FoXx2EYXyxTFhlMOtS5-GGu76fqBe4nuP3G-kxJIJhy70JEXfsd8vgNOrMwMbyd1QR2yJzQRNxK6FNzfXt2_LtQB9i510aOkRm8ACPa2vgfcf1ltygE31VFXofTBYBiwjrUjpO3e1Dg-BrdbQI5lhLrnrg8dEFhawVKHkPnIjk8vd7wAbEUnnqM_gRvBrDSARHhQZtYU7tq8jsmlFs1HemCJRptSvU8yrFFQ5RtTH5VOtz8kno9N2sZcW94P3EOm3LC7JyqoH9M4edfu5BLMDlCT4D3bpIjtEtqVpQLY7NoF1K6nw9Ald8M5MUvEtCc_IA3tRM7o0weWOMZrWJbHhEGmmalGkB0fjolsJL3bcDgfkOYSxJSkStS3ZjY4jEwxqs68UG4IcvdhzRpSY4sB7Ieb_FxQzeScujMoq9t-Km1Sx1TvPjKWJxR1bPJupz2bMarntmNclS3mO1Scwc8Tkp8d1Y9us-wm8aHsiUcSs_m2hrKLXf01OpuadLKn81TBrXP0FI3Z4aQ==?"></p>
+<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNqFUj1v3DAM3f0rCE8JmlyGbjcUCJCiSNECBfq13EJLhC2cTbmyHMco8t9LSj5fkt4hg23x8T2ZfKR1gUx0nrdg_cRF4TgSxy2Uv33Yww3kGFqcKZTwtwCog7PXxrdjx8MW3gsSA5o9BRH9yKcdX3x2AUX-xTFhkMP9MIw0XJZCt2R81_uBVIDDfgWcFpIYWEvujnpiS2xm-Sf2DVzc3X66zEUADA32ckNDj1h7FuipeCoKbFtvMDeUWzgiWbnorMPOs1UNPZIZF8n94FuMZGEFswol95Fr6YYCvAOsxRSttDqDG8FvNYBI2Cky6RXucH0VkE0jvkxSYwxEiVK9TTFvUhCuP8jftLh0qrScdDLabR9kauW3sW0h0B-ZSRzKonjA1tmDb7_WIDcflST4T3bxKm2EzEPTgGx3bDzrBsTM0xJ63zozi-J7FJ6RAgdxM7g4w82OMZjGRVm7MdBCVVGgB0fT6lsOr3bcjB3yEsLUkIjEbUu21Hakg1EX6SuFmiBFL-acECXGMPJeiOn7gmLm1smeBWUt6y5uHffm2VJpYt2MDZ7NVGcz5rhumymNSgbyHKtOYOaAyaPH47Q2yfMTePb1RCIbWby-QlnZq_8uOZla5rGm0lvD5G_xD5oDclo=?"></p>
 <p>Read top to bottom, the shape of the system is: intent becomes a dependency graph, the graph is
 allocated to isolated execution contexts, those contexts produce reviewable change sets, and a
 single controlled gate lets change into trunk.</p>

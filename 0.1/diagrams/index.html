@@ -49,6 +49,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -1903,6 +1905,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#keeping-diagrams-proportional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keeping diagrams proportional
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2007,6 +2020,35 @@ required at build time.</p>
 </table>
 <p>Keep labels quoted, use <code>\n</code> for line breaks, and prefer <code>direction: down</code> for pipelines,
 <code>direction: right</code> for fan-outs.</p>
+<h3 id="keeping-diagrams-proportional">Keeping diagrams proportional<a class="headerlink" href="#keeping-diagrams-proportional" title="Permanent link">&para;</a></h3>
+<p>Kroki returns each diagram at its intrinsic size, and the theme scales it down to the content
+column. A diagram 2,500px tall dominates the page; one 2,500px wide is scaled to a third and its
+text becomes unreadable. One rule keeps the set consistent:</p>
+<blockquote>
+<p><strong>No wider than ~1300px, no taller than ~1500px.</strong> Measure rather than eyeball.</p>
+</blockquote>
+<p>Two D2 behaviours matter for hitting that, both found by measuring:</p>
+<table>
+<thead>
+<tr>
+<th>Behaviour</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>direction:</code> inside a container is ignored</td>
+<td>Nested <code>direction: right</code> does nothing — use <code>grid-columns: N</code> to place children side by side</td>
+</tr>
+<tr>
+<td>Edges <em>between children of a grid container</em> inflate the layout badly</td>
+<td>A three-cell grid with internal arrows measured 2,309px wide; the same grid without them measured 761px</td>
+</tr>
+</tbody>
+</table>
+<p>So: group related steps with <code>grid-columns</code>, draw edges <strong>between containers</strong> rather than between
+their children, and let the grid convey ordering inside a stage. To check a diagram before
+committing it, POST the source to Kroki and read the <code>width</code> and <code>height</code> off the returned SVG.</p>
 <h2 id="plantuml">PlantUML<a class="headerlink" href="#plantuml" title="Permanent link">&para;</a></h2>
 <p>Used where the diagram is really a <em>flow</em> with forks and branches — activity diagrams need no
 extra layout engine and read well.</p>

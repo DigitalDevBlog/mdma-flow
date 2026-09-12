@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -2181,7 +2183,7 @@ same way the <a href="../agents/runtime/#separate-intelligence-from-capabilities
 into roles. A workflow is a <a href="../decomposition/dag/">DAG</a> over them.</p>
 <h2 id="small-verifiable-steps-never-free-running">Small, verifiable steps — never free-running<a class="headerlink" href="#small-verifiable-steps-never-free-running" title="Permanent link">&para;</a></h2>
 <p>Every modernization workflow has the same inner rhythm:</p>
-<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNptj7FOAzEMhvc8hXWM0EhAi8QNXXgFYLrFlziXqDmnSpxUBfHu5DoxsPyypd_fJ9uQyUhIPEIOixel6gjDo4YPtpSLINuJ5xqiBfEEJ06XSHYhWJOlOCjT208a3jxmNEI5fNHEBs9SM90uZvLYQqoZIxA3iulMA3wrgCLXSNqFGDvjjl6ccYdB_Sjp67OG94xcXMrrxGXFGB-goCMwHnmhMqjWa3sNn93prhNjlbSikIV78HVFhkwt0OU_l3Pu1c6bS1XYHcFsIVs01W5zbx00hP5QR_5FFMnpRDuLxY-w74Rf6qhnzw==?"></p>
+<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNptj7FOAzEMhvc8hXWM0EhAi8QNXXgFYLrFlzhN1JxTJU5OBfHu5DoxsPyypd_fJ9uQyUhIPIJNKytVRxgeNXywpVwE2U481xAtiCc4c1oj2RPBkizFQZneftLw5jGjEcrhiyY2eJGa6XYxk8cWUs0YgbhRTBca4FsBFLlG0i7E2Bl39OKMOwzqR0lfnzW8Z-TiUl4mLgvG-AAFHYHxyCcqg2q9ttfw2Z3uOjFWSQsKWbgHXxdkyNQCrf-5nHOvdt5cqsLuCGYL2aKpdpt766Ah9Ic68i-iSE5n2lksfoR9J_wCauhnaQ==?"></p>
 <p>Never ask an agent to <em>"modernize subsystem X."</em> Ask it to <strong>perform small, verifiable
 transformations</strong>, each one a <a href="../integration/">small change set</a> with its own evidence.</p>
 <h2 id="what-stays-outside-the-generic-agent">What stays outside the generic agent<a class="headerlink" href="#what-stays-outside-the-generic-agent" title="Permanent link">&para;</a></h2>
@@ -2236,7 +2238,7 @@ transformations</strong>, each one a <a href="../integration/">small change set<
 </tbody>
 </table>
 <p>For medical imaging, that composition looks like:</p>
-<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNptkT9PAzEMxff7FNExVocqWjp0YKkQMCAh5ltC4qRWE-cuf1oVxHfHuStiKKP9nl_sXzRGUBkDbYUOJ2qaWCijh61on4AgohLSAmVx6bfiqxEi5bODW4POse_GrMzSmLb5bnTwEjmqfQWNSrpOwxEViMEV2yGledpG1J0KrnhKW7HmznA10tMQHKpzy-qB1RcvLZIV8ws9HSicHGgL1aCGGrBbLEQOPEW2NhFUnXvcic3darnuKRYHqSoyqj1LbzHoonJPtcbMGEqc4iKMLL_DWBiO5-NTT1pm-SHTpON4WQi6sUiH-dzTkVEZ3r-irJ6Enk3PMuqTjHwN18XJHGLFNBG9puSDhkj4OYXM2P_DDRujzH3N-f0s0T3M9ssH_NU_dlCelQ==?"></p>
+<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNptkT9PAzEMxff7FNExVocqDjp0YKkQMCAh5ltC4gSriXOXP60K4rvj3BUxlNF-zy_2LxojqIyBtkKHIzVNLJTRw1a0j0AQUQlpgbI491vx1QiR8snBtUHn2HdlerM2pm2-Gx28RI5qX0Cjkq7TcEAFYnTFdkhpmbYRdaeCK57SVvTcGS9GBhqDQ3VqWd2z-uylRbJieWGgPYWjA22hGtRYA3arlciBp8jWJoKqcw87sbnp17cDxeIgVUVG9cHSawy6qDxQrTEzhhLnuAgTy28wFYbj-fg0kJZZvss06zidF4JuKtJhPg10YFSG968oqyehZ9OTjPooI1_DdXEyh1gxzUQvKfmgIRJ-ziEL9v9ww8Yoc1dzfj9LdPeL_fwBf_UPdPOelA==?"></p>
 <p>Change those plug-ins and the same platform could modernize automotive software.</p>
 <h2 id="regulatory-evidence-as-a-by-product">Regulatory evidence as a by-product<a class="headerlink" href="#regulatory-evidence-as-a-by-product" title="Permanent link">&para;</a></h2>
 <p>Because every change set already carries its <a href="../governance/#what-the-evidence-has-to-include">validation evidence</a>

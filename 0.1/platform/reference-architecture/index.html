@@ -53,6 +53,8 @@
       
     
     
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
@@ -2043,7 +2045,7 @@ complementary <em>platform</em> view — which layers the system is built from, 
 and which you should reuse.</p>
 <h2 id="layers">Layers<a class="headerlink" href="#layers" title="Permanent link">&para;</a></h2>
 <p>Your architecture should survive replacing the agent framework. Something like:</p>
-<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNqNVN1u0zAUvu9TWEHibh0SDMQukLKuVBGlqdqyMakS8uzj1IpjZ7bTrEKTuOIBEE_Ao-1JOHaybmMgcVH5xD4_3_nO-cqlBeal0ceEm1YPBo0De0yST3iQQ5LOs4R8HRDiNrSGY1KDdUYPbgaFoQrdJnk6Jc_JPJ9mo4u1bo0tifRQOXL77RdhRjtvqdS--6Z1bc2WKpcMakW1jpXm03Q2Gy_Q4SexQDG91MVahwLk9vsPcppOiBHkPnUPyO8UDIVUAcYz8VK8ECJBYFjTWxMuR_lstcinJBQYx_QcPNhKaum8ZH9NI8RbfpngfW2UZLsALxoEdCE1rHU-T8OzsWyDjzkeEFr0xq61QvTQdXrZ8AL6rpUUwHZMQQhsBYadYy9CmXafNbWFQbZXUHqj78uTg3exUjhbgc3BNTCMX6az05P8c-wp8OItwB3hHunG0YWvs49dj7QAnADGpZPxbLX8k2lZ1QoqdIlBFrYS2mhKvcXmZEE9dIn-xTohN_hjtA6sp_P0JJtmqwsyTS_Gi7VmhnfoCul7cqTi0fKYPxrcsI4s5JKVYJM97NB7l9kbo9BUYX1uBluwUoQBnY0X2ftslK6yfLbWo2yfuEu4TJerw-Uo7SqDZpuK2rLfR-QWV4r5xgLBSbISU1810OCmJx_BFkDi1yMJxBsE4G2jywArnI882E5JzcE-WS94LZg4CuhLbVoFuCN4_WGWn0_Hp5NuRzGHBd6zVlhab3qCKhwsqfBW9XO6alC7YW4OvamnyhSdKzDpUNFdj1BLZ7hkpILK2N0joA7XFvgXjsFPsb4RR52i4l9CGEOUJJ69du80HCfUqW64lw0KvTYOeHRO7lQ5bEXwDms83G-lQ-Z5owC5Dw_BYT9ctqEap-BQS0k_8vAeZxCMSP49mw_QhWAsCtf-odBRq6aEA04dyvfVw0E8xfU_4b8BdW3TZw==?"></p>
+<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNqNU9Fu0zAUfe9XXJXnAmIMRB-QsrZUEV1StWVjUiTk2depVcfOHGdZhSbxxAcgvoBP25dwnXRbR0HiIfL1te_JPcfnCuWQe2XNEIRtTK9XV-iG0P9EC7yAaB5nprFuA8pjUcHdt1_Aram8Y8r4bs_K0tlrpqs-fO0BVGtW4hBKdJU1vdteqZkxLeZ8FiXJZEFFP8Eho2Nl8szklmm4-_4DxtEUrITH3-0A_Vbjc6m0Joxn8ki-lLJPwNSHdzYkR2myWqQzCD-YtPACPbpCGVV5xTuY3Ckx4FbXhamGcHQILOU7cdmnfGm14tvQcBsAmlwZzEw6j8KxdXxNhyktGITw1mVGEx_s9LisRY6-ClcbSRfPiY_UtnnAiVxuSdsVbrw1gQneIKeLyygZn6SfWwJBBO8Q7xX3pDe9SNidnf6N0CvKsBzpUQgpmk6S1fJPoVVRaizoSgvj8Fph00H9S2SAW_o4K4PI0Tw6iWfx6gJm0cVkkRluRddfrvyOudKijTwpE5hdo1MySHk2WcQf4lG0itMkM6P44Van2TJarjoINHxdMLch_byrzYZqT9HlCFc11tj6pM0_MRvfamUEuoNHxTeSy-PQycbYRiO9DKU_Jun5bDKedl4hDIdiRyd3rFy3nQhbkOZQUFZnxuFVTaMS1Os6FshVRXPz1PUVmQHFF8E8O-zlrTzunNsOGQzew242QrhzcwiDHcLaiReilvEjhb1SAg6VeOP3h4VsaTc4EKwip77eZ3-P_591vwE5Wmyo?"></p>
 <p>Read it as alternating layers. The planner and the agents <strong>reason</strong>: they propose plans and
 changes. Everything between and around them is <strong>deterministic</strong>: it decides whether a plan is
 allowed, schedules it, isolates it, verifies what comes out and gates what goes into trunk.</p>
@@ -2122,7 +2124,7 @@ engineering effort on the one row that is actually new. The reuse side is covere
 <h2 id="one-flow-end-to-end">One flow, end to end<a class="headerlink" href="#one-flow-end-to-end" title="Permanent link">&para;</a></h2>
 <p>A goal such as <em>"Remove vulnerability CVE-X across these 20 repositories"</em> moves through the
 layers like this:</p>
-<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNqNUsFu1EAMvecrrOXAAUorEEjsodIKqiIkREUR4pDLNPEkVrJ2ak92u0L8O55JAVVUpZf4zSh-896zW1JsEgmvoZU9V1UnYVzD6rwUxa3sEN59Ozv6XnNoVMzg5YnfT2KURAltBT8qAOvDhGuYUE24-llNY2BGdaaLBdW8Fx2AEm4NnsH7zbl_G2FLGojTb5p0GPFFpDFreBJfxZMYV5lORmoOma0A2IWR2pB11_z5YnNvc4xv26vcHLQTv9l4AbzBZk5oNaceiwrjMFkv6T8cHbrIzFIALGYYyGQMCdvFXlJEew7CmJOAP44fNteQn89uyBJxBx-RB2KDY3CZCY5rvtxcfoWJJhyJ0WCHSvGwqhR3hHtv_VKAv1dE1jyKDAZR1OcUfBzmGp66ZBXuHlbSuZW_IefTI-Lt523w9Vl9yBXCNKn4eDyQHhVByQbXcT37omUh96_L9YxzfvkTaodQTjXfDhlbN-Y74mHkqL1cBcM7PKXBaZLOPDhNqXf-aA4eXov6jw98E5v4Ovsoqw9Hp3C7uwUuSTjKS1TqMn9HDeXvMoWMcly5ljwyKKoyKHKqX3boImk=?"></p>
+<p><img alt="Kroki" src="https://kroki.io/d2/svg/eNqNU01LAzEQve-vGOpRqqIo2INQVBRRFBXxsJeYneyGpsk6ybYW6X93JlsVxaqnN5m8fXnzsZUl1MkGP4IqzH1R1EG5EQzOMhBOwwzh-OF0-Fh6pSnECLs7nG9DtCmQxTiA1wIgNqrFEbRIMfhiWbROseTghqEn1GSroQ6um_o4gl3OCMUjrVgclX4eaAI24TTCJpyMz_pPWT0tHG4Z68TahtkzO8YM-GYpMsFZvRCVHMBMOVspKan01zfjNRLGHFZPvcSyoE68nr6g7hKus6uoDswaMwD21Fj61KAYhehVG5uQ_n6OlWr0KYpWDsB6sDE4lbDqW5AI3_v6W-3LQjeoJ5x-QLJm8ZPzPc5oy5QL9BPrI2wD--ZHt0t_N767FyXCmcU5c25zgNQ7_E_zazb92Xo5_bvpPPOKs5cM64w33TRv0bkgqLalwNP9EP-ycr2f5w47MXSFVGN_-kbPuRU78eClfRm_8fTCWV8h_VAHHhht9t_ryH8MDI_yPguymECejQRSaPEGVOgMHA==?"></p>
 <p><strong>That architecture has a much stronger engineering pedigree than an autonomous swarm of LLM
 agents talking to one another.</strong> Three of its eleven steps involve a model; none of the steps
 that decide what reaches trunk do.</p>
