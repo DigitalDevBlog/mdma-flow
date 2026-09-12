@@ -22,6 +22,9 @@ theme:
     - content.code.copy
     - toc.follow
 
+extra_css:
+  - stylesheets/extra.css
+
 markdown_extensions:
   - admonition
   - pymdownx.details

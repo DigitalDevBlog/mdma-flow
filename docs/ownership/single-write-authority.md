@@ -57,7 +57,7 @@ Not:
 So you can have several writers active at once, one per domain:
 
 ```kroki-d2
-direction: right
+grid-columns: 3
 
 a: "Domain A\n\nHuman + AI\nwriter" {
   style.fill: "#e7f5ff"

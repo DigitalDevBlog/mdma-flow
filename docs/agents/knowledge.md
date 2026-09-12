@@ -56,17 +56,20 @@ repo: "Repository + history + trackers" {
   shape: cylinder
 }
 text: "Text" {
+  grid-columns: 1
   e: "embeddings"
   d: "docs, ADRs"
   i: "issues"
 }
 graph: "Graph" {
+  grid-columns: 1
   s: "symbols"
   c: "calls"
   dep: "dependencies"
   t: "types"
 }
 meta: "Metadata" {
+  grid-columns: 1
   o: "ownership"
   sc: "safety class"
   ts: "test status"

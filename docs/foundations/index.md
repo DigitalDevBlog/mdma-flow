@@ -6,12 +6,12 @@ The architecture I would recommend for a real engineering organisation looks rou
 direction: down
 
 intent: "Work / intent layer" {
-  tracker: "Jira / Linear / GitHub Issues / Plans"
+  grid-columns: 3
+  tracker: "Tracker\n(Jira / Linear / Issues)"
   decompose: "Task decomposition"
   dag: "Dependency graph (DAG)" {
     shape: hexagon
   }
-  tracker -> decompose -> dag
 }
 
 allocation: "Work allocation" {
@@ -46,7 +46,7 @@ trunk: "trunk" {
   shape: cylinder
 }
 
-intent.dag -> allocation
+intent -> allocation
 allocation -> execution.a
 allocation -> execution.b
 allocation -> execution.c

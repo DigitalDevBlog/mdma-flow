@@ -53,7 +53,7 @@ into roles. A workflow is a [DAG](../decomposition/dag.md) over them.
 Every modernization workflow has the same inner rhythm:
 
 ```kroki-d2
-direction: right
+direction: down
 
 u: "1. Understand\nbuild the knowledge model"
 c: "2. Characterize\ncapture the behavioural envelope" {
@@ -104,7 +104,7 @@ runtime: "Generic agent runtime" {
   style.fill: "#f3f0ff"
 }
 domain: "Medical-device plug-ins" {
-  grid-columns: 4
+  grid-columns: 3
   p: "Medical-device\npolicy"
   k: "Imaging domain\nknowledge"
   cpp: "C++ tooling"

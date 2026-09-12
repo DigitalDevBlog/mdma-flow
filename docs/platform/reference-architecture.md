@@ -23,49 +23,41 @@ Your architecture should survive replacing the agent framework. Something like:
 ```kroki-d2
 direction: down
 
-user: "User / API" {
+user: "User / API\nwork items • constraints • approvals" {
   shape: person
 }
-goal: "GOAL & POLICY\nwork items • constraints • approvals"
 planner: "PLANNER — reasoning\ngoal → DAG of work items" {
   style.fill: "#f3f0ff"
 }
 control: "CONTROL PLANE — deterministic" {
+  grid-columns: 3
   style.fill: "#fff9db"
   policy: "Policy engine\nOPA"
-  orch: "Orchestrator\nleases • budgets • lifecycle"
+  orch: "Orchestrator\nleases • budgets"
   wf: "Workflow engine\nArgo / Tekton"
-  policy -> orch -> wf
 }
 exec: "SANDBOX — worktree • container • VM" {
-  agents: "AGENTS — reasoning\nimplement • review • investigate" {
+  grid-columns: 2
+  agents: "AGENTS — reasoning\nimplement • review" {
     style.fill: "#f3f0ff"
   }
-  cap: "CAPABILITY LAYER\ncode • git • build • test • docs • tracker"
-  agents -> cap: "tool calls"
+  cap: "CAPABILITY LAYER\ncode • git • build • test"
 }
-verify: "VERIFICATION\nCI • tests • SAST/SCA • benchmarks • architecture checks"
-queue: "Merge queue" {
-  shape: queue
-}
-trunk: "trunk" {
+verify: "VERIFICATION\nCI • tests • SAST • benchmarks"
+trunk: "Merge queue → trunk" {
   shape: cylinder
   style.fill: "#e6fcf5"
 }
-knowledge: "KNOWLEDGE — shared\ncode graph • domain model • requirements\ncatalog • decisions • episodic memory" {
+knowledge: "KNOWLEDGE — shared\ncode graph • domain model\nrequirements • decisions" {
   shape: stored_data
   style.fill: "#e7f5ff"
 }
 
-user -> goal -> planner
-planner -> control.policy: "proposed plan"
-control.wf -> exec.agents: "schedules"
-exec -> verify: "change sets"
-verify -> queue -> trunk
+user -> planner -> control -> exec -> verify -> trunk
 knowledge -> planner: "context" {
   style.stroke-dash: 4
 }
-knowledge -> exec.agents: "context" {
+knowledge -> exec: "context" {
   style.stroke-dash: 4
 }
 ```
@@ -114,37 +106,49 @@ direction: down
 goal: "Goal: remove CVE-X\nacross 20 repositories" {
   shape: person
 }
-planner: "Planner\nwork items + DAG + constraints" {
-  style.fill: "#f3f0ff"
+plan: "Plan" {
+  grid-columns: 2
+  planner: "Planner\nwork items + DAG" {
+    style.fill: "#f3f0ff"
+  }
+  policy: "Policy validation\nOPA" {
+    style.fill: "#fff9db"
+  }
 }
-policy: "Policy validation\nOPA" {
-  style.fill: "#fff9db"
+run: "Execute" {
+  grid-columns: 2
+  argo: "Argo executes\nthe DAG snapshot" {
+    style.fill: "#fff9db"
+  }
+  agents: "Agents in isolated\nworktrees" {
+    style.fill: "#f3f0ff"
+  }
 }
-argo: "Argo executes\nthe DAG snapshot" {
-  style.fill: "#fff9db"
+check: "Verify" {
+  grid-columns: 3
+  ci: "Jenkins / tests /\nSAST"
+  review: "Reviewer agent" {
+    style.fill: "#f3f0ff"
+  }
+  gate: "Policy gate\nOPA" {
+    style.fill: "#fff9db"
+  }
 }
-agents: "Agents work in isolated\nworktrees, one per work item" {
-  style.fill: "#f3f0ff"
-}
-ci: "Existing Jenkins / test /\nSAST pipelines verify"
-review: "Reviewer agent\nlooks for reasons it's wrong" {
-  style.fill: "#f3f0ff"
-}
-gate: "Policy gate\nOPA" {
-  style.fill: "#fff9db"
-}
-human: "Human approval\nwhere risk requires it" {
-  shape: person
-}
-queue: "Merge queue\nvalidated against latest base" {
-  shape: queue
-}
-trunk: "trunk" {
-  shape: cylinder
-  style.fill: "#e6fcf5"
+land: "Land" {
+  grid-columns: 3
+  human: "Human approval" {
+    shape: person
+  }
+  queue: "Merge queue" {
+    shape: queue
+  }
+  trunk: "trunk" {
+    shape: cylinder
+    style.fill: "#e6fcf5"
+  }
 }
 
-goal -> planner -> policy -> argo -> agents -> ci -> review -> gate -> human -> queue -> trunk
+goal -> plan -> run -> check -> land
 ```
 
 **That architecture has a much stronger engineering pedigree than an autonomous swarm of LLM

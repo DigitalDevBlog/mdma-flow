@@ -151,15 +151,20 @@ Architecture recovery can itself be agentic. An agent can recursively discover:
 ```kroki-d2
 direction: down
 
-repo: "Repository"
-build: "Build system"
-bins: "Executables and libraries"
-mods: "Modules"
-ifaces: "Public interfaces"
-graph: "Dependency graph"
-flows: "Runtime flows"
-concepts: "Domain concepts"
-
+discover: "Discover" {
+  grid-columns: 2
+  repo: "Repository"
+  build: "Build system"
+  bins: "Executables\nand libraries"
+  mods: "Modules"
+}
+derive: "Derive" {
+  grid-columns: 2
+  ifaces: "Public interfaces"
+  graph: "Dependency graph"
+  flows: "Runtime flows"
+  concepts: "Domain concepts"
+}
 out: "Artefacts" {
   style.fill: "#e6fcf5"
   grid-columns: 3
@@ -170,7 +175,7 @@ out: "Artefacts" {
   t: "test map"
 }
 
-repo -> build -> bins -> mods -> ifaces -> graph -> flows -> concepts -> out
+discover -> derive -> out
 ```
 
 Future agents then consume these artefacts instead of rediscovering everything. That is how the

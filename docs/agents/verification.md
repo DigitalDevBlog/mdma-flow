@@ -67,19 +67,28 @@ direction: down
 propose: "Model proposes change" {
   style.fill: "#f3f0ff"
 }
-compile: "Compiler"
-static: "Static analysis"
-unit: "Unit tests"
-integ: "Integration tests"
-system: "System tests"
-behav: "Behaviour comparison"
-perf: "Performance tests"
-sec: "Security checks"
+build: "Build" {
+  grid-columns: 2
+  compile: "Compiler"
+  static: "Static analysis"
+}
+tests: "Tests" {
+  grid-columns: 3
+  unit: "Unit"
+  integ: "Integration"
+  system: "System"
+}
+compare: "Comparison" {
+  grid-columns: 3
+  behav: "Behaviour"
+  perf: "Performance"
+  sec: "Security"
+}
 accept: "Acceptance criteria" {
   style.fill: "#e6fcf5"
 }
 
-propose -> compile -> static -> unit -> integ -> system -> behav -> perf -> sec -> accept
+propose -> build -> tests -> compare -> accept
 ```
 
 The model is probabilistic. **The verification pipeline should be as deterministic as possible.**

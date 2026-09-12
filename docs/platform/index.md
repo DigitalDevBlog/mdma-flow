@@ -25,7 +25,7 @@ Now imagine a system with explicit contracts between:
 direction: right
 
 sys: "System" {
-  grid-columns: 4
+  grid-columns: 2
   acq: "Acquisition"
   recon: "Reconstruction"
   render: "Rendering"

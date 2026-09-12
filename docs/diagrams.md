@@ -49,6 +49,25 @@ unify -> plan: "next"
 Keep labels quoted, use `\n` for line breaks, and prefer `direction: down` for pipelines,
 `direction: right` for fan-outs.
 
+### Keeping diagrams proportional
+
+Kroki returns each diagram at its intrinsic size, and the theme scales it down to the content
+column. A diagram 2,500px tall dominates the page; one 2,500px wide is scaled to a third and its
+text becomes unreadable. One rule keeps the set consistent:
+
+> **No wider than ~1300px, no taller than ~1500px.** Measure rather than eyeball.
+
+Two D2 behaviours matter for hitting that, both found by measuring:
+
+| Behaviour | Consequence |
+|-----------|-------------|
+| `direction:` inside a container is ignored | Nested `direction: right` does nothing — use `grid-columns: N` to place children side by side |
+| Edges *between children of a grid container* inflate the layout badly | A three-cell grid with internal arrows measured 2,309px wide; the same grid without them measured 761px |
+
+So: group related steps with `grid-columns`, draw edges **between containers** rather than between
+their children, and let the grid convey ordering inside a stage. To check a diagram before
+committing it, POST the source to Kroki and read the `width` and `height` off the returned SVG.
+
 ## PlantUML
 
 Used where the diagram is really a *flow* with forks and branches — activity diagrams need no

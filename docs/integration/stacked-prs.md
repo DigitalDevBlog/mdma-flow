@@ -24,7 +24,7 @@ purpose-built tool around this workflow right now.
 This maps directly onto agent DAGs:
 
 ```kroki-d2
-direction: right
+direction: down
 
 tasks: "Task DAG" {
   a: "A"
